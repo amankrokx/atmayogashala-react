@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import "material-icons/iconfont/material-icons.css"
 import App from './App';
-import Meta from './components/meta'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -32,7 +31,6 @@ const theme = createTheme({
 root.render(
     <ThemeProvider theme={theme}>
         <BrowserRouter>
-            <Meta />
             <App />
         </BrowserRouter>
     </ThemeProvider>

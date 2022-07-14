@@ -6,14 +6,13 @@ import Button from "@mui/material/Button"
 import NavBar from "./components/navbar"
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(true)
     return (
         <div className="App">
-            <NavBar state={loggedIn} />
             <AppBar position="absolute" color="transparent" style={{boxShadow: "none"}}>
+            <NavBar state={loggedIn} />
               <Toolbar>
               </Toolbar>
             </AppBar>
