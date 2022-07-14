@@ -1,15 +1,42 @@
-import React from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import "material-icons/iconfont/material-icons.css"
 import App from './App';
+import Meta from './components/meta'
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"))
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#4caf50", // This is an orange looking color
+            light: "#80e27e",
+            dark: "#087f23",
+        },
+        secondary: {
+            main: "#2979ff", //Another orange-ish color
+            light: "#75a7ff",
+            dark: "#004ecb",
+            // contrastText: "#888888"
+        },
+        white: {
+            main: "#ffffff",
+        },
+        contrastThreshold: 3,
+    },
+})
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+    <ThemeProvider theme={theme}>
+        <BrowserRouter>
+            <Meta />
+            <App />
+        </BrowserRouter>
+    </ThemeProvider>
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
