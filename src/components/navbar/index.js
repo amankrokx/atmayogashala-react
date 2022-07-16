@@ -1,5 +1,5 @@
 import AppBar from "@mui/material/AppBar"
-import React from "react"
+import React, { useEffect, useRef } from "react"
 // import { Link } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Toolbar from "@mui/material/Toolbar"
@@ -8,14 +8,16 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 // import "./navbar.css"
 import logo from "../../media/logo.png"
 import { Button } from "@mui/material"
-import loginGoogle from "../../firebase/auth/google"
+import LoginGoogle from "../../firebase/auth/google"
+import { useSnackbar } from "notistack"
+import MiniLogin from "../MiniLogin"
 
 function NavBar(props) {
     const matches = useMediaQuery('(min-width:756px)');
-    // console.log(props)
-    // console.log(loginGoogle())
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+    
     return (
-        <AppBar position="fixed" style={{zIndex: 5}}>
+        <AppBar position="fixed" style={{ zIndex: 5 }}>
             <Container maxWidth="xl">
                 <Toolbar
                     disableGutters
@@ -43,23 +45,7 @@ function NavBar(props) {
                     >
                         {matches ? "Atmayogashala" : "AYS"}
                     </Typography>
-                    {props.state ? (
-                        <Button
-                            variant="text"
-                            color="white"
-                            onClick={loginGoogle}
-                            style={{
-                                float: "right",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            Login
-                        </Button>
-                    ) : (
-                        <Button variant="outlined" color="white">
-                            LogOut
-                        </Button>
-                    )}
+                    <MiniLogin></MiniLogin>
                 </Toolbar>
             </Container>
         </AppBar>

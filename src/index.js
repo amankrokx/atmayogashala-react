@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import "material-icons/iconfont/material-icons.css"
@@ -6,6 +6,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
+import SnackbarUtils from './components/SnackbarUtils';
+import { useSnackbar } from 'notistack';
+import Snack from './components/Snack';
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 const theme = createTheme({

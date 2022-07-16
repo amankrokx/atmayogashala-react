@@ -1,7 +1,9 @@
 import auth from "../index"
 import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "firebase/auth"
+import SnackbarUtils from "../../../components/SnackbarUtils"
 
-const loginGoogle = () => {
+const LoginGoogle = () => {
+  
   const provider = new GoogleAuthProvider()
 //   provider.addScope("https://www.googleapis.com/auth/user.phonenumbers.read")
   signInWithRedirect(auth, provider)
@@ -13,7 +15,8 @@ const loginGoogle = () => {
           // const token = credential.accessToken;
           // The signed-in user info.
           // const user = result.user
-        //   toast("Signed in with Google !")
+          //   toast("Signed in with Google !")
+          SnackbarUtils.success("Logged in with Google !")
           return result
         })
         .catch(error => {
@@ -25,15 +28,17 @@ const loginGoogle = () => {
           const credential = GoogleAuthProvider.credentialFromError(error)
           // console.log(email, credential)
           console.error(error)
-        //   toast(error.message)
+          //   toast(error.message)
+          SnackbarUtils.error(error.message)
           return error
         })
     })
     .catch(error => {
       console.error(error)
+          SnackbarUtils.error(error.message)
     //   toast(error.message)
       return error
     })
 }
 
-export default loginGoogle
+export default LoginGoogle
