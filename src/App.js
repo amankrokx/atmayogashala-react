@@ -44,9 +44,9 @@ function App() {
                             <NavBar state={loggedIn} />
                         </AppBar>
                         <Routes>
-                            <Route exact path="/atmayogashala-react/build/" element={<Home />} />
-                            <Route exact path="/atmayogashala-react/build/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
-                            <Route exact path="/atmayogashala-react/build/but" element={<Button variant="contained">But</Button>} />
+                            <Route exact path="/" element={<Home />} />
+                            <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
+                            <Route exact path="/but" element={<Button variant="contained">But</Button>} />
                         </Routes>
                     </Loader>
                 </Snack>
