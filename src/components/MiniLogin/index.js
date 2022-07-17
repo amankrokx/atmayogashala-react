@@ -12,7 +12,7 @@ import AccountMenu from "./AccountMenu"
 import FirebaseAuth from "react-firebaseui/FirebaseAuth"
 import Typography from '@mui/material/Typography'
 
-// // Configure FirebaseUI.
+// Configure FirebaseUI.
 const uiConfig = {
     // Popup signin flow rather than redirect flow.
     signInFlow: "popup",
@@ -155,7 +155,6 @@ function MiniLogin (props) {
                     >
                         Get Started{" "}
                     </Typography>
-
                     <FirebaseAuth
                         uiConfig={uiConfig}
                         firebaseAuth={auth}
