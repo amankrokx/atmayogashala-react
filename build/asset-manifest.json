@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/atmayogashala-react/build/static/css/main.6886cb75.css",
-    "main.js": "/atmayogashala-react/build/static/js/main.e0777c84.js",
+    "main.js": "/atmayogashala-react/build/static/js/main.7c793057.js",
     "static/js/787.4196348a.chunk.js": "/atmayogashala-react/build/static/js/787.4196348a.chunk.js",
     "static/media/material-icons-two-tone.woff": "/atmayogashala-react/build/static/media/material-icons-two-tone.8e41f5e6fbad90e70672.woff",
     "static/media/material-icons-two-tone.woff2": "/atmayogashala-react/build/static/media/material-icons-two-tone.c142818ceebfd170aa69.woff2",
@@ -16,11 +16,11 @@
     "static/media/logo.png": "/atmayogashala-react/build/static/media/logo.e90922b1382bbc56d13f.png",
     "index.html": "/atmayogashala-react/build/index.html",
     "main.6886cb75.css.map": "/atmayogashala-react/build/static/css/main.6886cb75.css.map",
-    "main.e0777c84.js.map": "/atmayogashala-react/build/static/js/main.e0777c84.js.map",
+    "main.7c793057.js.map": "/atmayogashala-react/build/static/js/main.7c793057.js.map",
     "787.4196348a.chunk.js.map": "/atmayogashala-react/build/static/js/787.4196348a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6886cb75.css",
-    "static/js/main.e0777c84.js"
+    "static/js/main.7c793057.js"
   ]
 }

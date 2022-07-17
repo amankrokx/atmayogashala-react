@@ -9,8 +9,9 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from "@mui/material/IconButton"
 import { useTheme } from "@mui/styles"
 import { SnackbarProvider, useSnackbar } from "notistack"
-import SnackbarUtils from "./components/SnackbarUtils"
 import Snack from "./components/Snack"
+import Loader from "./components/Loader"
+
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(true)
@@ -30,22 +31,24 @@ function App() {
             ref={notistackRef}
             action={key => (
                 <IconButton aria-label="Close" onClick={() => notistackRef.current.closeSnackbar(key)}>
-                    <span className="material-icons" style={{color: theme.palette.white.main}}>close</span>
+                    <span className="material-icons" style={{ color: theme.palette.white.main }}>
+                        close
+                    </span>
                 </IconButton>
             )}
         >
             <div className="App">
                 <Snack>
-                    <AppBar position="absolute" color="transparent" style={{boxShadow: "none"}}>
-                    <NavBar state={loggedIn} />
-                        <Toolbar>
-                        </Toolbar>
-                    </AppBar>
-                    <Routes>
-                        <Route exact path="/" element={<Home />} />
-                        <Route exact path="/prod" element={<Products setSignin={{setLoggedIn, loggedIn}}  />} />
-                        <Route exact path="/but" element={<Button variant="contained">But</Button>} />
-                    </Routes>
+                    <Loader>
+                        <AppBar position="absolute" color="transparent" style={{ boxShadow: "none" }}>
+                            <NavBar state={loggedIn} />
+                        </AppBar>
+                        <Routes>
+                            <Route exact path="/atmayogashala-react/build/" element={<Home />} />
+                            <Route exact path="/atmayogashala-react/build/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
+                            <Route exact path="/atmayogashala-react/build/but" element={<Button variant="contained">But</Button>} />
+                        </Routes>
+                    </Loader>
                 </Snack>
             </div>
         </SnackbarProvider>
