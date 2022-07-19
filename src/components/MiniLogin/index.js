@@ -9,44 +9,48 @@ import IconButton from '@mui/material/IconButton'
 import Badge from "@mui/material/Badge"
 import Menu from "@mui/material/Menu"
 import AccountMenu from "./AccountMenu"
-import FirebaseAuth from "react-firebaseui/FirebaseAuth"
 import Typography from '@mui/material/Typography'
+import LoginWindow from "./LoginWindow"
+import useMediaQuery from "@mui/material/useMediaQuery"
+
+// import FirebaseAuth from "react-firebaseui/FirebaseAuth"
 
 // Configure FirebaseUI.
-const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: "popup",
-    // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-    signInSuccessUrl: "/",
-    // We will display Google and Facebook as auth providers.
-    signInOptions: [
-        GoogleAuthProvider.PROVIDER_ID,
-        {
-            provider: PhoneAuthProvider.PROVIDER_ID,
-            recaptchaParameters: {
-                type: 'image', // 'audio'
-                size: 'invisible', // 'invisible' or 'compact'
-                badge: 'bottomleft' //' bottomright' or 'inline' applies to invisible.
-            },
-            defaultCountry: 'IN', // Set default country to the United Kingdom (+44).
-            loginHint: '+91 9876543210'
-        },
-        {
-            provider: EmailAuthProvider.PROVIDER_ID,
-            requireDisplayName: true,
-            signInMethod: EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
-        },
-    ],
-    privacyPolicyUrl: "./privacy-policy.html",
-    tosUrl: "./privacy-policy.html",
-    autoUpgradeAnonymousUsers: true,
-}
+// const uiConfig = {
+//     // Popup signin flow rather than redirect flow.
+//     signInFlow: "popup",
+//     // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+//     signInSuccessUrl: "/",
+//     // We will display Google and Facebook as auth providers.
+//     signInOptions: [
+//         GoogleAuthProvider.PROVIDER_ID,
+//         {
+//             provider: PhoneAuthProvider.PROVIDER_ID,
+//             recaptchaParameters: {
+//                 type: 'image', // 'audio'
+//                 size: 'invisible', // 'invisible' or 'compact'
+//                 badge: 'bottomleft' //' bottomright' or 'inline' applies to invisible.
+//             },
+//             defaultCountry: 'IN', // Set default country to the United Kingdom (+44).
+//             loginHint: '+91 9876543210'
+//         },
+//         {
+//             provider: EmailAuthProvider.PROVIDER_ID,
+//             requireDisplayName: true,
+//             signInMethod: EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
+//         },
+//     ],
+//     privacyPolicyUrl: "./privacy-policy.html",
+//     tosUrl: "./privacy-policy.html",
+//     autoUpgradeAnonymousUsers: true,
+// }
 
 function MiniLogin (props) {
     const [logged, setLogged] = useState(false)
     const [noNotifs, setNotifs] = useState(0)
+    const matches = useMediaQuery("(min-width:756px)")
 
-    const [anchorEl, setAnchorEl] = React.useState(null)
+    const [anchorEl, setAnchorEl] = React.useState(true)
     const open = Boolean(anchorEl)
     const handleClick = event => {
         setAnchorEl(event.currentTarget)
@@ -149,20 +153,21 @@ function MiniLogin (props) {
                         variant="h4"
                         color="primary"
                         style={{
-                            paddingLeft: 40,
+                            paddingLeft: matches ? "calc((100% - 756px)/2)" : 40,
                             paddingTop: 15,
                         }}
                     >
-                        Get Started{" "}
+                        Get Started
                     </Typography>
-                    <FirebaseAuth
+                    <LoginWindow />
+                    {/* <FirebaseAuth
                         uiConfig={uiConfig}
                         firebaseAuth={auth}
                         style={{
                             left: 0,
                             width: "calc(100% - 20px)",
                         }}
-                    ></FirebaseAuth>
+                    ></FirebaseAuth> */}
                 </Menu>
             </>
         )
