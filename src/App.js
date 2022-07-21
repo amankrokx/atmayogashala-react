@@ -40,15 +40,15 @@ function App() {
             <div className="App">
                 <Snack>
                     <Loader>
-                        <AppBar position="absolute" color="transparent" style={{ boxShadow: "none" }}>
-                            <NavBar state={loggedIn} />
-                        </AppBar>
-                        <Routes>
-                            <Route exact path="/" element={<Home />} />
-                            <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
-                            <Route exact path="/but" element={<Button variant="contained">But</Button>} />
-                        </Routes>
                     </Loader>
+                    <AppBar position="absolute" color="transparent" style={{ boxShadow: "none" }}>
+                        <NavBar state={loggedIn} />
+                    </AppBar>
+                    <Routes>
+                        <Route exact path="/" element={<Home />} />
+                        <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
+                        <Route exact path="/but" element={<Button variant="contained">But</Button>} />
+                    </Routes>
                 </Snack>
             </div>
         </SnackbarProvider>

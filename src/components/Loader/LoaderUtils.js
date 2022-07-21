@@ -10,13 +10,13 @@ class LoaderUtils {
     }
 
     open() {
-        this.#loader.h(false)
+        return this.#loader.h(false)
     }
     close() {
-        this.#loader.h(true)
+        return this.#loader.h(true)
     }
     toggle() {
-        this.#loader.h(!this.#loader.s)
+        return this.#loader.h(!this.#loader.s)
     }
 }
 

@@ -4,28 +4,29 @@ import SnackbarUtils from "../../../components/SnackbarUtils"
 import LoaderUtils from "../../../components/Loader/LoaderUtils"
 
 class LoginPhone {
-    generateRecaptcha() {
-        if (!this.recaptchaVerifier) {
-            this.recaptchaVerifier = new RecaptchaVerifier(
-                "recaptcha-container",
-                {
-                    size: "invisible",
-                    callback: response => {
-                        // reCAPTCHA solved, allow signInWithPhoneNumber.
-                        SnackbarUtils.info("Recaptcha Verified .")
-                    },
-                    "expired-callback": () => {
-                        SnackbarUtils.error("Recaptcha Failed .")
-                    },
-                },
-                auth
-            )
-        }
-    }
+    // generateRecaptcha() {
+        
+    //     this.recaptchaVerifier.render()
+    // }
     sendOtp(phone) {
         return new Promise((resolve, reject) => {
             LoaderUtils.open()
-    
+            if (!this.recaptchaVerifier) {
+                this.recaptchaVerifier = new RecaptchaVerifier(
+                    "recaptcha-container",
+                    {
+                        size: "invisible",
+                        callback: response => {
+                            // reCAPTCHA solved, allow signInWithPhoneNumber.
+                            SnackbarUtils.info("Recaptcha Verified .")
+                        },
+                        "expired-callback": () => {
+                            SnackbarUtils.error("Recaptcha Failed .")
+                        },
+                    },
+                    auth
+                )
+            }
             signInWithPhoneNumber(auth, phone, this.recaptchaVerifier)
                 .then(confirmationResult => {
                     // SMS sent. Prompt user to type the code from the message, then sign the
@@ -49,6 +50,7 @@ class LoginPhone {
                 })
             // resolve(false)
         })
+
     }
 
     verifyOtp(otp) {

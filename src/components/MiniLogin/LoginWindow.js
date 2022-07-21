@@ -30,14 +30,17 @@ function LoginWindow (props) {
         getCC()
     }, [])
 
+    // loginPhone.generateRecaptcha()
+
     const EmailLogin = useCallback(() => {
         // console.log(emailRef.current.value, passwordRef.current.value)
         loginEmail(emailRef.current.value, passwordRef.current.value)
     }, [])
-    const PhoneLogin = () => {
+    const PhoneLogin = useCallback(() => {
         // console.log(phoneRef.current.value, otpRef.current.value)
         loginPhone.sendOtp(phoneRef.current.value).then(s => {setOtpSent(s)}).catch(s => {setOtpSent(s)})
-    }
+        // loginPhone.sendOtp(phoneRef.current.value)
+    }, [])
     const PhoneVerify = useCallback(() => {
         // console.log(phoneRef.current.value, otpRef.current.value)
         loginPhone.verifyOtp(otpRef.current.value)
@@ -223,11 +226,8 @@ function LoginWindow (props) {
                             color="primary"
                             onClick={e => {
                                 e.preventDefault()
-                                if (otpSent) {
-                                    PhoneVerify()
-                                } else {
-                                    PhoneLogin()
-                                }
+                                if (otpSent) PhoneVerify()
+                                else PhoneLogin()
                             }}
                         >
                             {otpSent ? "Verify" : "Send OTP"}

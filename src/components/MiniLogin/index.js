@@ -12,7 +12,7 @@ import AccountMenu from "./AccountMenu"
 import Typography from '@mui/material/Typography'
 import LoginWindow from "./LoginWindow"
 import useMediaQuery from "@mui/material/useMediaQuery"
-import loginPhone from "../../firebase/auth/phone"
+// import loginPhone from "../../firebase/auth/phone"
 
 
 // import FirebaseAuth from "react-firebaseui/FirebaseAuth"
@@ -55,7 +55,7 @@ function MiniLogin (props) {
     const [anchorEl, setAnchorEl] = React.useState(null)
     const open = Boolean(anchorEl)
     const handleClick = event => {
-        loginPhone.generateRecaptcha()
+        // loginPhone.generateRecaptcha()
         setAnchorEl(event.currentTarget)
     }
     const handleClose = () => {
