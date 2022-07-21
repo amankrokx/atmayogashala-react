@@ -12,6 +12,7 @@ import AccountMenu from "./AccountMenu"
 import Typography from '@mui/material/Typography'
 import LoginWindow from "./LoginWindow"
 import useMediaQuery from "@mui/material/useMediaQuery"
+import { useTheme } from "@emotion/react"
 // import loginPhone from "../../firebase/auth/phone"
 
 
@@ -51,7 +52,6 @@ function MiniLogin (props) {
     const [logged, setLogged] = useState(false)
     const [noNotifs, setNotifs] = useState(0)
     const matches = useMediaQuery("(min-width:756px)")
-
     const [anchorEl, setAnchorEl] = React.useState(null)
     const open = Boolean(anchorEl)
     const handleClick = event => {
@@ -68,7 +68,7 @@ function MiniLogin (props) {
                 SnackbarUtils.success("Logged In .")
             } else {
                 setLogged(false)
-                SnackbarUtils.toast("Please Sign In .")
+                // SnackbarUtils.toast("Please Sign In .")
             }
         })
     }, [])
@@ -128,6 +128,7 @@ function MiniLogin (props) {
                             right: 10,
                             minWidth: 300,
                             margin: "0  ",
+                            // background: "linear-gradient(45deg, #ffffff 83%, #4caf50 78%)",
                             "& .MuiAvatar-root": {
                                 width: 32,
                                 height: 32,

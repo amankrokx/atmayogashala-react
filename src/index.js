@@ -31,6 +31,8 @@ const theme = createTheme({
     },
 })
 
+window.theme = theme
+
 root.render(
     <ThemeProvider theme={theme}>
         <BrowserRouter>

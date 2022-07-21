@@ -9,6 +9,7 @@ import Tooltip from "@mui/material/Tooltip"
 import { signOut } from "firebase/auth"
 import auth from "../../firebase/auth"
 import LoaderUtils from "../Loader/LoaderUtils"
+import SnackbarUtils from "../SnackbarUtils"
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null)
@@ -78,8 +79,11 @@ export default function AccountMenu() {
                 </MenuItem>
                 <MenuItem onClick={
                     () => {
-                        signOut(auth)
                         LoaderUtils.open()
+                        signOut(auth).then(() => {
+                            LoaderUtils.close()
+                            SnackbarUtils.toast("Signed Out .")
+                        })
                     }
                 }>
                     <ListItemIcon>

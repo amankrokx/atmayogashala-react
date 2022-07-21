@@ -8,7 +8,6 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 // import "./navbar.css"
 import logo from "../../media/logo.png"
 import MiniLogin from "../MiniLogin"
-import Loader from "../Loader"
 
 function NavBar(props) {
     const matches = useMediaQuery('(min-width:756px)');

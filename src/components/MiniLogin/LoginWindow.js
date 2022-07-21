@@ -2,9 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Container from '@mui/material/Container'
 import { Box, InputAdornment, Slide, TextField, Button } from "@mui/material";
-import { loginEmail } from "../../firebase/auth/email"
+import { loginEmail, signupEmail } from "../../firebase/auth/email"
 import loginPhone from "../../firebase/auth/phone"
-
+import fb from "../../media/facebook.png"
+import google from "../../media/google.png"
+import twitter from "../../media/twitter.png"
+import SnackbarUtils from "../SnackbarUtils";
+import LoginGoogle from "../../firebase/auth/google"
 
 function LoginWindow (props) {
     const [page, setPage] = useState("phoneLogin")
@@ -13,9 +17,11 @@ function LoginWindow (props) {
     const [otpSent, setOtpSent] = useState(false)
     const containerRef = useRef(null)
     const emailRef = useRef(null)
+    const emailSignupRef = useRef(null)
     const phoneRef = useRef(null)
     const otpRef = useRef(null)
     const passwordRef = useRef(null)
+    const passwordSignupRef = useRef(null)
     let timeout = 200
     // const [email, setEmail] = useState("email")
     // https://ipapi.co/country_calling_code/
@@ -35,6 +41,10 @@ function LoginWindow (props) {
     const EmailLogin = useCallback(() => {
         // console.log(emailRef.current.value, passwordRef.current.value)
         loginEmail(emailRef.current.value, passwordRef.current.value)
+    }, [])
+    const EmailSignup = useCallback(() => {
+        // console.log(emailRef.current.value, passwordRef.current.value)
+        signupEmail(emailSignupRef.current.value, passwordSignupRef.current.value)
     }, [])
     const PhoneLogin = useCallback(() => {
         // console.log(phoneRef.current.value, otpRef.current.value)
@@ -56,6 +66,8 @@ function LoginWindow (props) {
                 minHeight: 500,
                 // background: "#eee",
                 margin: "0 auto",
+                flexDirection: "column",
+                alignItems: "center",
             }}
             ref={containerRef}
         >
@@ -135,21 +147,127 @@ function LoginWindow (props) {
                                 margin: "0 0 10px auto",
                                 fontSize: 12,
                                 color: "grey",
+                                cursor: "pointer",
                             }}
                         >
                             Forgot Password ?
                         </span>
+                        <span
+                            style={{
+                                margin: "auto",
+                                fontSize: 13,
+                                color: "grey",
+                                marginBottom: 10,
+                                cursor: "pointer",
+                            }}
+                            onClick={() => setPage("emailSignup")}
+                        >
+                            Signup with Email .
+                        </span>
                         <Button variant="contained" color="primary" onClick={EmailLogin}>
                             Login
                         </Button>
-                        {/* <span
+                        <Button variant="text" color="primary" size="small" style={{ margin: "10px 0" }} onClick={() => setPage("phoneLogin")}>
+                            Use Phone
+                        </Button>
+                    </div>
+                </Box>
+            </Slide>
+            <Slide direction="down" in={page === "emailSignup"} container={containerRef.current} unmountOnExit {...{ timeout, easing: "ease-in" }}>
+                <Box
+                    component="form"
+                    noValidate
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        flexWrap: "nowrap",
+                        width: "100%",
+                        alignItems: "center",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignContent: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <br />
+                        <TextField
+                            color="primary"
+                            id="emailLogin"
+                            variant="outlined"
+                            label="Email"
+                            type="email"
+                            // defaultValue=""
+                            helperText="johncena@wwe.com"
+                            placeholder="Enter Email"
+                            required
+                            fullWidth
+                            inputRef={emailSignupRef}
+                            // value={email}
+                            // onChange={(e) => setEmail(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <span className="material-icons">email</span>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <br />
+                        <br />
+                        <TextField
+                            color="primary"
+                            id="outlined-password-input"
+                            label="Password"
+                            type={passVisible ? "text" : "password"}
+                            helperText="Set a Password"
+                            placeholder="********"
+                            required
+                            fullWidth
+                            inputRef={passwordSignupRef}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <span className="material-icons">lock</span>
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <span className="material-icons" aria-label="toggle password visibility" onClick={() => setPassVisible(!passVisible)} edge="end">
+                                            {passVisible ? "visibility_off" : "visibility"}
+                                        </span>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <span
                             style={{
-                                margin: "10px 0 0 auto",
-                                fontSize: 13,
+                                margin: "0 0 10px auto",
+                                fontSize: 12,
+                                color: "grey",
+                                cursor: "pointer",
                             }}
                         >
-                            Use Phone instead .
-                        </span> */}
+                            Forgot Password ?
+                        </span>
+                        <span
+                            style={{
+                                margin: "auto",
+                                fontSize: 13,
+                                color: "grey",
+                                marginBottom: 10,
+                                cursor: "pointer",
+                            }}
+                            onClick={() => setPage("emailLogin")}
+                        >
+                            Already have an Account ? Login .
+                        </span>
+                        <Button variant="contained" color="primary" onClick={EmailSignup}>
+                            Signup
+                        </Button>
                         <Button variant="text" color="primary" size="small" style={{ margin: "10px 0" }} onClick={() => setPage("phoneLogin")}>
                             Use Phone
                         </Button>
@@ -246,6 +364,17 @@ function LoginWindow (props) {
                     </div>
                 </Box>
             </Slide>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    width: 200,
+                }}
+            >
+                <img src={fb} style={{ cursor: "pointer" }} onClick={() => SnackbarUtils.warning("Not Yet Available .")} alt="Login with Facebook"></img>
+                <img src={twitter} style={{ cursor: "pointer" }} onClick={() => SnackbarUtils.warning("Not Yet Available .")} alt="Login with Twitter"></img>
+                <img src={google} style={{ cursor: "pointer" }} onClick={LoginGoogle} alt="Login with Google"></img>
+            </div>
         </Container>
     )
 }
