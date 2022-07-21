@@ -1,5 +1,5 @@
 import  Container from "@mui/material/Container"
-import { EmailAuthProvider, GoogleAuthProvider, onAuthStateChanged, PhoneAuthProvider, getAuth } from "firebase/auth"
+import { onAuthStateChanged } from "firebase/auth"
 import React, { useEffect, useState } from "react"
 // import LoginGoogle from "../../firebase/auth/google"
 import SnackbarUtils from "../SnackbarUtils"
@@ -12,6 +12,8 @@ import AccountMenu from "./AccountMenu"
 import Typography from '@mui/material/Typography'
 import LoginWindow from "./LoginWindow"
 import useMediaQuery from "@mui/material/useMediaQuery"
+import loginPhone from "../../firebase/auth/phone"
+
 
 // import FirebaseAuth from "react-firebaseui/FirebaseAuth"
 
@@ -50,9 +52,10 @@ function MiniLogin (props) {
     const [noNotifs, setNotifs] = useState(0)
     const matches = useMediaQuery("(min-width:756px)")
 
-    const [anchorEl, setAnchorEl] = React.useState(true)
+    const [anchorEl, setAnchorEl] = React.useState(null)
     const open = Boolean(anchorEl)
     const handleClick = event => {
+        loginPhone.generateRecaptcha()
         setAnchorEl(event.currentTarget)
     }
     const handleClose = () => {
@@ -169,6 +172,14 @@ function MiniLogin (props) {
                         }}
                     ></FirebaseAuth> */}
                 </Menu>
+                <div
+                    id="recaptcha-container"
+                    style={{
+                        position: "fixed",
+                        bottom: 0,
+                        left: 0,
+                    }}
+                ></div>
             </>
         )
     }

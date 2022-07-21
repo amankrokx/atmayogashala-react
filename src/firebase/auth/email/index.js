@@ -1,5 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import auth from ".."
+import SnackbarUtils from "../../../components/SnackbarUtils"
+
 
 let signupEmail = (userid, password) => {
     // console.log('Signup with email loaded')
@@ -8,11 +10,13 @@ let signupEmail = (userid, password) => {
             // Signed in
             // const user = userCredential.user;
             console.log("Signed up with email")
+            SnackbarUtils.success("Signed up with Email !")
             return userCredential
         })
         .catch(error => {
             console.error(error)
-            return error
+            SnackbarUtils.error(error.message)
+            // return error
         })
 }
 
@@ -22,14 +26,15 @@ let loginEmail = (userid, password) => {
         .then(userCredential => {
             // Signed in
             // const user = userCredential.user;
-            toast("Signed in with Email !")
+            SnackbarUtils.success("Signed in with Email !")
             return userCredential
         })
         .catch(error => {
             console.error(error)
+            SnackbarUtils.error(error.message)
             // ..
-            return error
+            // return error
         })
 }
 
-export default { signupEmail, loginEmail }
+export { signupEmail, loginEmail }
