@@ -12,41 +12,6 @@ import AccountMenu from "./AccountMenu"
 import Typography from '@mui/material/Typography'
 import LoginWindow from "./LoginWindow"
 import useMediaQuery from "@mui/material/useMediaQuery"
-import { useTheme } from "@emotion/react"
-// import loginPhone from "../../firebase/auth/phone"
-
-
-// import FirebaseAuth from "react-firebaseui/FirebaseAuth"
-
-// Configure FirebaseUI.
-// const uiConfig = {
-//     // Popup signin flow rather than redirect flow.
-//     signInFlow: "popup",
-//     // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-//     signInSuccessUrl: "/",
-//     // We will display Google and Facebook as auth providers.
-//     signInOptions: [
-//         GoogleAuthProvider.PROVIDER_ID,
-//         {
-//             provider: PhoneAuthProvider.PROVIDER_ID,
-//             recaptchaParameters: {
-//                 type: 'image', // 'audio'
-//                 size: 'invisible', // 'invisible' or 'compact'
-//                 badge: 'bottomleft' //' bottomright' or 'inline' applies to invisible.
-//             },
-//             defaultCountry: 'IN', // Set default country to the United Kingdom (+44).
-//             loginHint: '+91 9876543210'
-//         },
-//         {
-//             provider: EmailAuthProvider.PROVIDER_ID,
-//             requireDisplayName: true,
-//             signInMethod: EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
-//         },
-//     ],
-//     privacyPolicyUrl: "./privacy-policy.html",
-//     tosUrl: "./privacy-policy.html",
-//     autoUpgradeAnonymousUsers: true,
-// }
 
 function MiniLogin (props) {
     const [logged, setLogged] = useState(false)
@@ -164,14 +129,6 @@ function MiniLogin (props) {
                         Get Started
                     </Typography>
                     <LoginWindow />
-                    {/* <FirebaseAuth
-                        uiConfig={uiConfig}
-                        firebaseAuth={auth}
-                        style={{
-                            left: 0,
-                            width: "calc(100% - 20px)",
-                        }}
-                    ></FirebaseAuth> */}
                 </Menu>
                 <div
                     id="recaptcha-container"

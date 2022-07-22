@@ -61,9 +61,9 @@ function LoginWindow (props) {
             maxWidth="lg"
             style={{
                 display: "flex",
-                height: "fit-content",
+                height: "min-content",
                 width: matches ? 756 : "calc(100% - 40px)",
-                minHeight: 500,
+                minHeight: 400,
                 // background: "#eee",
                 margin: "0 auto",
                 flexDirection: "column",
