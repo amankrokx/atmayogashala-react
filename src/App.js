@@ -39,11 +39,11 @@ function App() {
         >
             <div className="App">
                 <Snack>
-                    <Loader>
-                    </Loader>
+                    <Loader></Loader>
                     <AppBar position="absolute" color="transparent" style={{ boxShadow: "none" }}>
                         <NavBar state={loggedIn} />
                     </AppBar>
+                    <Toolbar></Toolbar>
                     <Routes>
                         <Route exact path="/" element={<Home />} />
                         <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />

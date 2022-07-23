@@ -10,7 +10,7 @@ import logo from "../../media/logo.png"
 import MiniLogin from "../MiniLogin"
 
 function NavBar(props) {
-    const matches = useMediaQuery('(min-width:756px)');
+    const matches = useMediaQuery('(min-width:756px)')
     
     return (
         <AppBar position="fixed" style={{ zIndex: 5 }}>
