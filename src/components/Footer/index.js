@@ -13,7 +13,7 @@ import { useRef } from 'react'
 import SnackbarUtils from "../SnackbarUtils"
 import { useState } from 'react'
 
-export default function (props) {
+function Footer(props) {
     let styles = {
         icon : {
             verticalAlign: 'middle',
@@ -169,12 +169,12 @@ export default function (props) {
                         style={{ margin: "30px 20px", width: "calc(100% - 40px)" }}
                         color="primary"
                         error={emailError}
-                        helperText={"Invalid Email"}
+                        helperText={emailError ? "Invalid Email" : null}
                         inputRef={newsletterInput}
                         InputProps={{
                             onChange: setEmailColor,
                             onKeyDown: (e) => {
-                                if (e.key == 'Enter') subscribeNewsleter()
+                                if (e.key === 'Enter') subscribeNewsleter()
                             },
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -208,3 +208,5 @@ export default function (props) {
         </footer>
     )
 }
+
+export default Footer

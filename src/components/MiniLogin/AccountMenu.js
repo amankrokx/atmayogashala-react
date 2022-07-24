@@ -20,11 +20,12 @@ export default function AccountMenu() {
     const handleClose = () => {
         setAnchorEl(null)
     }
+
     return (
         <React.Fragment>
             <Tooltip title="Account settings">
                 <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }} aria-controls={open ? "account-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined}>
-                    <Avatar sx={{ width: 32, height: 32, fontSize: "1em" }} >AK</Avatar>
+                    <Avatar sx={{ width: 32, height: 32, fontSize: "1em" }}>AK</Avatar>
                 </IconButton>
             </Tooltip>
             <Menu
@@ -69,6 +70,14 @@ export default function AccountMenu() {
                     <Avatar /> My account
                 </MenuItem>
                 <Divider />
+                <MenuItem onClick={() => document.requestFullScreen()}>
+                    <ListItemIcon>
+                        <span className="material-icons" fontSize="small">
+                            fullscreen
+                        </span>
+                    </ListItemIcon>
+                    Fullscreen
+                </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
                         <span className="material-icons" fontSize="small">
@@ -77,15 +86,15 @@ export default function AccountMenu() {
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={
-                    () => {
+                <MenuItem
+                    onClick={() => {
                         LoaderUtils.open()
                         signOut(auth).then(() => {
                             LoaderUtils.close()
                             SnackbarUtils.toast("Signed Out .")
                         })
-                    }
-                }>
+                    }}
+                >
                     <ListItemIcon>
                         <span className="material-icons" fontSize="small">
                             logout
