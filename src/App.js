@@ -11,6 +11,7 @@ import { useTheme } from "@mui/styles"
 import { SnackbarProvider, useSnackbar } from "notistack"
 import Snack from "./components/Snack"
 import Loader from "./components/Loader"
+import Footer from "./components/Footer"
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                         <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
                         <Route exact path="/but" element={<Button variant="contained">But</Button>} />
                     </Routes>
+                    <Footer />
                 </Snack>
             </div>
         </SnackbarProvider>

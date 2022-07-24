@@ -25,6 +25,7 @@ function Home() {
                     textAlign: "center",
                     wordWrap: "break-word",
                     padding: 50,
+                    paddingBottom: 30
                 }}
             >
                 Get the Best Yoga courses curated by top Instructors .

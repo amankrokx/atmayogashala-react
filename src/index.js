@@ -17,6 +17,7 @@ const theme = createTheme({
             main: "#4caf50", // This is an orange looking color
             light: "#80e27e",
             dark: "#087f23",
+            contrastText: "#fff"
         },
         secondary: {
             main: "#2979ff", //Another orange-ish color
