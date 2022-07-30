@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 import Products from "./pages/Products"
+import AdminDashboard from "./pages/AdminDashboard"
 import Home from "./pages/Home"
 import Button from "@mui/material/Button"
 import NavBar from "./components/navbar"
@@ -47,6 +48,7 @@ function App() {
                     <Toolbar></Toolbar>
                     <Routes>
                         <Route exact path="/" element={<Home />} />
+                        <Route exact path="/admin_dashboard" element={<AdminDashboard />} />
                         <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
                         <Route exact path="/but" element={<Button variant="contained">But</Button>} />
                     </Routes>

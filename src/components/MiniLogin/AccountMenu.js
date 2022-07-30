@@ -10,6 +10,7 @@ import { signOut } from "firebase/auth"
 import auth from "../../firebase/auth"
 import LoaderUtils from "../Loader/LoaderUtils"
 import SnackbarUtils from "../SnackbarUtils"
+import { Link } from "react-router-dom"
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null)
@@ -63,6 +64,11 @@ export default function AccountMenu() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+                <Link to="admin_dashboard">
+                    { auth.currentUser.email === "amankumar.spj410@gmail.com" ? <MenuItem>
+                        <Avatar /> Dashboard
+                    </MenuItem> : null }
+                </Link>
                 <MenuItem>
                     <Avatar /> Profile
                 </MenuItem>

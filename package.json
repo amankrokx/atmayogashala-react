@@ -15,6 +15,7 @@
         "express": "^4.18.1",
         "firebase": "^9.9.0",
         "material-icons": "^1.11.5",
+        "mongodb": "^4.8.1",
         "notistack": "^2.0.5",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -25,6 +26,7 @@
     "homepage": "/",
     "scripts": {
         "start": "react-scripts start",
+        "serve": "nodemon server.js",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
