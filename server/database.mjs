@@ -14,7 +14,7 @@ class Database {
                 collections.forEach((v, index, arr) => {
                     this.db.createCollection(v, (err, res) => {
                         if (err && err.codeName === "NamespaceExists") {
-                            console.log(err)
+                            // console.log(err)
                             arr.length = index + 1
                             this.flag = true
                             console.log(`Collection ${v} exists !`)
@@ -24,7 +24,7 @@ class Database {
             } catch (error) {
                 if (! this.flag) {
                     console.log("\n-------Serious Error !-------\n")
-                    throw error
+                    // throw error
                 } else console.log("colection already exists, chill")
             }
         })
@@ -57,6 +57,16 @@ class Database {
         })
     }
 
+    deleteOne = ({collection, query}) => {
+        return new Promise((resolve, reject) => {
+            console.log(query)
+            this.db.collection(collection).deleteOne(query, (err, result) => {
+                if (err) reject(err)
+                else resolve(result)
+            })
+        })
+    }
+
     find = ({collection, query, limit = Math.max, sort = {}}) => {
         return new Promise((resolve, reject) => {
             this.db.collection(collection).find(query).sort(sort).limit(limit).toArray((err, result) => {
@@ -67,7 +77,7 @@ class Database {
     }
 }
 
-export default new Database("mongodb://localhost:27017/")
+export default new Database(process.env.MONGODB_URI || "mongodb://localhost:27017/")
 
 // module.exports = {
 //     connect: callback => {

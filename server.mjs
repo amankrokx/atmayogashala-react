@@ -3,9 +3,11 @@ import path, {dirname} from "path"
 import { fileURLToPath } from "url"
 import express from "express"
 import testRoute from "./server/modules/testRoute.mjs"
-import database from "./server/database.mjs"
 import getAds from "./server/modules/getAds.mjs"
-
+import addAd from "./server/modules/addAd.mjs"
+import { config } from "dotenv"
+config()
+console.log(process.env.NODE_ENV)
 
 const app = express()
 // const path = require("path")
@@ -20,8 +22,10 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true")
     next()
 })
+app.use(express.json())
 app.get('/api', testRoute)
-app.get('/getAds', getAds(database))
+app.get('/getAds', getAds)
+app.post('/addAd', addAd)
 // static resources should just be served as they are
 app.use(express.static(path.resolve(__dirname, "build"), { maxAge: "30d" }))
 app.get('*', (req, res) => {

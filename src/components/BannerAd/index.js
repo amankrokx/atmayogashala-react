@@ -1,8 +1,7 @@
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
-
-
+import backPath from "../../backPath"
 
 function BannerAd(props) {
     const matches = useMediaQuery("(min-width:756px)")
@@ -10,16 +9,18 @@ function BannerAd(props) {
     const [adIndex, setAdIndex] = useState(-1)
     
     useEffect(() => {
-        fetch('http://localhost:3069/getAds').then(data => data.json()).then(res => {
-            setAds(res)
-            setAdIndex(0)
-            const timer = window.setInterval(() => {
-                setAdIndex(count => (count + 1) % 5)
-            }, 3000)
-            return () => {
-                window.clearInterval(timer)
-            }
-        })
+        fetch(backPath + '/getAds')
+            .then(data => data.json())
+            .then(res => {
+                setAds(res)
+                setAdIndex(0)
+                const timer = window.setInterval(() => {
+                    setAdIndex(count => (count + 1) % res.length)
+                }, 4000)
+                return () => {
+                    window.clearInterval(timer)
+                }
+            })
     }, [])
     return (
         <div
@@ -40,7 +41,7 @@ function BannerAd(props) {
             <div
                 style={{
                     display: "flex",
-                    position: 'relative',
+                    position: "relative",
                     flexDirection: "column",
                     alignContent: "center",
                     flexWrap: "nowrap",
@@ -52,7 +53,7 @@ function BannerAd(props) {
                 }}
             >
                 <Typography variant={matches ? "h6" : "caption"} color="#fff" style={{ textAlign: "end" }}>
-                    {(adIndex > -1) ? ads[adIndex].name : "This Festive Season,"}
+                    {adIndex > -1 ? ads[adIndex].name : "This Festive Season,"}
                 </Typography>
                 <Typography
                     variant={matches ? "h3" : "h5"}
@@ -62,14 +63,12 @@ function BannerAd(props) {
                         textAlign: "end",
                     }}
                 >
-                    Get 10% off !
+                    {adIndex > -1 ? ads[adIndex].title : "Get 10% off !"}
                 </Typography>
                 <Typography variant={matches ? "h5" : "caption"} color="secondary" style={{ textAlign: "end" }}>
-                    On all Courses and subscriptions
+                    {adIndex > -1 ? ads[adIndex].body : "On all Courses and subscriptions"}
                 </Typography>
-                <span style={{position: 'absolute', bottom: 5, left: 5, color: "white", fontSize: 12}}>
-                    {(adIndex > -1) ? new Date(ads[adIndex].date).toDateString() : null}
-                </span>
+                <span style={{ position: "absolute", bottom: 5, left: 5, color: "white", fontSize: 12 }}>{adIndex > -1 ? new Date(ads[adIndex].date).toDateString() : null}</span>
             </div>
             <div
                 style={{
@@ -77,6 +76,7 @@ function BannerAd(props) {
                     display: "flex",
                     justifyContent: "space-around",
                     width: matches ? "50%" : "60%",
+                    position: 'relative'
                 }}
             >
                 <img
@@ -86,6 +86,10 @@ function BannerAd(props) {
                         height: "inherit",
                     }}
                 ></img>
+                <span style={{ position: "absolute", top: 5, right: 5, color: "white", fontSize: 12 }}>
+                    {adIndex > -1 ? ads[adIndex]._id : null}
+                </span>
+
             </div>
         </div>
     )
