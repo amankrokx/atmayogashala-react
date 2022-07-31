@@ -2,20 +2,12 @@ import React from "react"
 import { Breadcrumbs, Button, Dialog, DialogTitle, Menu, MenuItem, useMediaQuery, TextField } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import { Link } from 'react-router-dom'
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell from "@mui/material/TableCell"
-import TableContainer from "@mui/material/TableContainer"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
-import Paper from "@mui/material/Paper"
+import { Link, Route, Routes } from 'react-router-dom'
+import AdGenerator from "../components/AdGenerator"
+
 
 const AdminDashboard = () => {
-    const matches = useMediaQuery("(min-width:756px)")
     const [anchorEl, setAnchorEl] = React.useState(null)
-    const [close, setClose] = React.useState(true)
     const open = Boolean(anchorEl)
     const handleClick = event => {
         setAnchorEl(event.currentTarget)
@@ -35,7 +27,7 @@ const AdminDashboard = () => {
                 >
                     <Breadcrumbs separator=">" color="white" aria-label="BreadCrumbs">
                         <Link
-                            to="home"
+                            to="/"
                             style={{
                                 color: "white",
                                 textDecoration: "none",
@@ -44,7 +36,7 @@ const AdminDashboard = () => {
                             Home
                         </Link>
                         <Link
-                            to="home"
+                            to="/admin_dashboard"
                             style={{
                                 color: "white",
                                 textDecoration: "none",
@@ -53,13 +45,15 @@ const AdminDashboard = () => {
                             Dashboard
                         </Link>
                         <Link
-                            to="home"
+                            to=""
                             style={{
                                 color: "white",
                                 textDecoration: "none",
                             }}
                         >
-                            ADs
+                            {
+                                window.location.toString().split("/")[4]
+                            }
                         </Link>
                     </Breadcrumbs>
                     <Button color="white" aria-controls={open ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} onClick={handleClick}>
@@ -74,130 +68,33 @@ const AdminDashboard = () => {
                             "aria-labelledby": "basic-button",
                         }}
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <Link
+                            to="ads"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>Ads</MenuItem>
+                        </Link>
                         <MenuItem onClick={handleClose}>My account</MenuItem>
                         <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
                 </Toolbar>
             </AppBar>
-            <h3 style={{ paddingLeft: 20 }}>Active ADs</h3>
-            <TableContainer sx={{ minWidth: 300, maxWidth: matches ? "calc(100% - 80px)" : "100%", margin: "auto" }} component={Paper}>
-                <Table aria-label="Active Advertisements table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center">AD Name</TableCell>
-                            <TableCell align="center">Created on</TableCell>
-                            <TableCell align="center">Edit / View</TableCell>
-                            <TableCell align="center">Delete</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>1 Minute 10 breaths</TableCell>
-                            <TableCell align="center">{new Date().toDateString()}</TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="secondary">
-                                    <span className="material-icons">edit</span>
-                                </Button>
-                            </TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="error">
-                                    <span className="material-icons">delete</span>
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>1 Minute 10 breaths</TableCell>
-                            <TableCell align="center">{new Date().toDateString()}</TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="secondary">
-                                    <span className="material-icons">edit</span>
-                                </Button>
-                            </TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="error">
-                                    <span className="material-icons">delete</span>
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>1 Minute 10 breaths</TableCell>
-                            <TableCell align="center">{new Date().toDateString()}</TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="secondary">
-                                    <span className="material-icons">edit</span>
-                                </Button>
-                            </TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="error">
-                                    <span className="material-icons">delete</span>
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>1 Minute 10 breaths</TableCell>
-                            <TableCell align="center">{new Date().toDateString()}</TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="secondary">
-                                    <span className="material-icons">edit</span>
-                                </Button>
-                            </TableCell>
-                            <TableCell align="center">
-                                <Button variant="text" color="error">
-                                    <span className="material-icons">delete</span>
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Dialog open={close} onClose={() => setClose(false)}>
-                <Paper elevation={3} sx={{ padding: 3 }}>
-                    <DialogTitle>Advertisement Info</DialogTitle>
-                    <TextField
-                        sx={{ margin: 1 }}
-                        label="AdName"
-                        value={"1 Minute 10 breaths"}
-                        //   onChange={}
-                        variant="outlined"
-                    />
-                    <TextField
-                        sx={{ margin: 1 }}
-                        label="Title"
-                        value={"Enroll Now !"}
-                        //   onChange={}
-                        variant="outlined"
-                    />
-                    <TextField
-                        sx={{ margin: 1 }}
-                        label="Body"
-                        value={"for free Course"}
-                        //   onChange={}
-                        variant="outlined"
-                    />
-                    <TextField
-                        sx={{ margin: 1 }}
-                        //   value={"for free COurse"}
-                        //   onChange={}
-                        variant="outlined"
-                        label="Background Image"
-                        type="file"
-                    />
-                    <br ></br>
-                    <br ></br>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                    }}>
-                        <Button variant="text" color="error">
-                        Discard
-                        </Button>
-                        <Button variant="contained" color="primary">
-                        Create
-                        </Button>
-                    </div>
-                </Paper>
-            </Dialog>
+            <Routes>
+                <Route exact path="ads" element={<AdGenerator />} />
+                <Route exact path="home" element={<AdGenerator />} />
+                <Route
+                    exact
+                    path="/"
+                    element={
+                        <center>
+                            <h1>Welcome to Admin Dashboard.</h1>
+                        </center>
+                    }
+                />
+            </Routes>
         </>
     )
 }
