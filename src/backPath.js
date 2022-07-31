@@ -1,3 +1,3 @@
-const backPath = "http://localhost:3069"
+const backPath = ""
 
 export default backPath
