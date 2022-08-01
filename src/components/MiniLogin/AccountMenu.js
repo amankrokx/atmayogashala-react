@@ -65,7 +65,7 @@ export default function AccountMenu() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
                 <Link to="admin_dashboard">
-                    { auth.currentUser.email === "amankumar.spj410@gmail.com" ? <MenuItem>
+                    { true ? <MenuItem>
                         <Avatar /> Dashboard
                     </MenuItem> : null }
                 </Link>

@@ -67,6 +67,19 @@ class Database {
         })
     }
 
+    updateOne = ({collection, query, data}) => {
+        return new Promise((resolve, reject) => {
+            console.log(query)
+            this.db.collection(collection).updateOne(query, {$set : data },(err, result) => {
+                if (err) {
+                    console.log(err)
+                    reject(err)
+                }
+                else resolve(result)
+            })
+        })
+    }
+
     find = ({collection, query, limit = Math.max, sort = {}}) => {
         return new Promise((resolve, reject) => {
             this.db.collection(collection).find(query).sort(sort).limit(limit).toArray((err, result) => {
@@ -77,7 +90,7 @@ class Database {
     }
 }
 
-export default new Database(process.env.MONGODB_URI || "mongodb://localhost:27017/")
+export default new Database(process.env.MONGODB_URI || "mongodb+srv://amankrokx:ouH5RUUoWcw636mi@cluster0.ktkwxhl.mongodb.net/?retryWrites=true&w=majority" || "mongodb://localhost:27017/")
 
 // module.exports = {
 //     connect: callback => {
