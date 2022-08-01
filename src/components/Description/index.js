@@ -126,6 +126,11 @@ export default function RecipeReviewCard(props) {
           <Typography paragraph style={{fontSize: 15}}>
             {props.info.description2}
           </Typography>
+          <ul>
+            {props.info.des2.map((values, index, array) => <li key={index}>
+              {values}
+            </li>)}
+          </ul>
           <Typography paragraph style={{fontSize: 15}}>
             {props.info.description3}
           </Typography>

@@ -129,7 +129,7 @@ const AdForm = (props) => {
                         Discard
                     </Button>
                     <Button variant="contained" color="primary" onClick={submit}>
-                        Create
+                        {_id ? "Update" : "Create"}
                     </Button>
                 </div>
             </Paper>
@@ -212,7 +212,7 @@ const AdGenerator = () => {
                                 <TableCell>{value.name}</TableCell>
                                 <TableCell align="center">{new Date(value.date).toDateString()}</TableCell>
                                 <TableCell align="center">
-                                    <Button variant="text" color="secondary">
+                                    <Button variant="text" color="secondary" onClick={() => makeAd(false, index)}>
                                         <span className="material-icons">edit</span>
                                     </Button>
                                 </TableCell>

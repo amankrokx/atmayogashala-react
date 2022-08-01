@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 import Products from "./pages/Products"
-<<<<<<< HEAD
-import Prod_description from "./pages/Prod_description"
-=======
 import AdminDashboard from "./pages/AdminDashboard"
->>>>>>> c3486fdcb1033bea4bb574bd5c2323b73d0c4cea
 import Home from "./pages/Home"
 import Button from "@mui/material/Button"
 import NavBar from "./components/navbar"
@@ -17,6 +13,7 @@ import { SnackbarProvider, useSnackbar } from "notistack"
 import Snack from "./components/Snack"
 import Loader from "./components/Loader"
 import Footer from "./components/Footer/index.js"
+import Prod_description from "./pages/Prod_description"
 
 
 function App() {

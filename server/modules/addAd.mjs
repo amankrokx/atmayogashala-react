@@ -23,6 +23,21 @@ const addAd = (req, res) => {
         }})
         res.send("success")
     }
+    else if (req.body.mode === "update") {
+        database.updateOne({collection: 'ads', query: {_id: ObjectId(req.body.data.values._id)}, data: {
+            title: req.body.data.values.title,
+            name: req.body.data.values.name,
+            body: req.body.data.values.body,
+            date: req.body.data.date
+        }})
+        .then(resd => {
+            console.log(resd)
+            res.send("success")
+        })
+        .catch(err => {
+            res.send(err.toString())
+        })
+    }
 }
 
 export default addAd

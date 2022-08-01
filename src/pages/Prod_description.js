@@ -25,6 +25,7 @@ function Prod_description() {
                 date: "23/23/2023",
                 description1: "Something as description about the course to be included here for the card .",
                 description2: "Technical points",
+                des2: ["point a", "point B", "point c"],
                 description3: "Yoga points",
                 tagline: "This is a space to put on a tagline for the course",
                 rating: 4.5,
