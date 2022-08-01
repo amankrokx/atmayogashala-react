@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 import Products from "./pages/Products"
+import Prod_description from "./pages/Prod_description"
 import Home from "./pages/Home"
 import Button from "@mui/material/Button"
 import NavBar from "./components/navbar"
@@ -11,7 +12,7 @@ import { useTheme } from "@mui/styles"
 import { SnackbarProvider, useSnackbar } from "notistack"
 import Snack from "./components/Snack"
 import Loader from "./components/Loader"
-import Footer from "./components/Footer"
+import Footer from "./components/Footer/index.js"
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                         <Route exact path="/" element={<Home />} />
                         <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
                         <Route exact path="/but" element={<Button variant="contained">But</Button>} />
+                        <Route exact path="/cou1" element={<Prod_description/>} />
                     </Routes>
                     <Footer />
                 </Snack>
