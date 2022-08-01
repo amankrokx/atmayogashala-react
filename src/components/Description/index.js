@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Chip from "@mui/material/Chip"
 import Rating from "@mui/material/Rating"
-
+import Button from "@mui/material/Button"
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,20 +37,6 @@ export default function RecipeReviewCard(props) {
         margin: '10px',
         fontSize: '30px',
      }}>
-      {/* <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: '#000000' }} aria-label="recipe">
-            I
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <span className='material-icons'>more_vert</span>
-          </IconButton>
-        }
-        title={props.info.title}
-        subheader={props.info.date} 
-      /> */}
 
       <Typography style={{margin: 10}}>
         <Chip
@@ -113,9 +99,9 @@ export default function RecipeReviewCard(props) {
         </CardContent>
       </div>
 
-      <CardActions disableSpacing style={{justifyContent: 'space around', marginLeft: 5}}>
+      <CardActions disableSpacing style={{justifyContent: 'space around', marginLeft: 5,}}>
         <IconButton aria-label="add to favorites">
-          <span className='material-icons'>favorite</span>
+          <span className='material-icons' style={{color: ""}}>favorite</span>
         </IconButton>
         <IconButton aria-label="share">
           <span className='material-icons'>share</span>
@@ -123,24 +109,76 @@ export default function RecipeReviewCard(props) {
       </CardActions>
         <CardContent>
           <Typography paragraph style={{fontSize: 20, fontWeight: 'bold'}}>Description: </Typography>
-          <Typography paragraph style={{fontSize: 15}}>
-            {props.info.description2}
-          </Typography>
-          <ul>
-            {props.info.des2.map((values, index, array) => <li key={index}>
-              {values}
-            </li>)}
-          </ul>
-          <Typography paragraph style={{fontSize: 15}}>
-            {props.info.description3}
-          </Typography>
-          <Typography paragraph style={{fontSize: 15}}>
-            {props.info.description3}
-          </Typography>
-          <Typography style={{alignSelf: 'center'}}>
+
+          <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <Typography paragraph style={{fontSize: 15, fontWeight: 700}}>
+              {props.info.description2}
+              <ul style={{
+              fontSize: 13,
+                fontWeight: 400,
+              textAlign: 'left',
+              marginLeft: 10,
+              lineHeight: 2,
+              }}>
+                {props.info.des2.map((values, index, array) => <li key={index}>
+                  {values}
+                </li>)}
+              </ul>
+            </Typography>
+
+            <Typography paragraph style={{fontSize: 15, fontWeight: 700}}>
+              {props.info.description3}
+              <ul style={{
+                fontSize: 13,
+                fontWeight: 400,
+                textAlign: 'left',
+                marginLeft: 10,
+                lineHeight: 2,
+              }}>
+                {props.info.des3.map((values, index, array) => <li key={index}>
+                  {values}
+                </li>)}
+              </ul>
+            </Typography>
+
+            <Typography paragraph style={{fontSize: 15, fontWeight: 700}}>
+              {props.info.description3}
+              <ul style={{
+                fontSize: 13,
+                fontWeight: 400,
+                textAlign: 'left',
+                marginLeft: 10,
+                lineHeight: 2,
+              }}>
+                {props.info.des3.map((values, index, array) => <li key={index}>
+                  {values}
+                </li>)}
+              </ul>
+            </Typography>
+          </div>
+
+
+          <Typography style={{alignSelf: 'center', textAlign: 'center', fontSize: 18, fontWeight: 700}}>
             {props.info.tagline}
           </Typography>
         </CardContent>
+
+        <CardActions style={{ justifyContent: "center", paddingRight: 20, paddingBottom: 15 }}>
+            <Button size="large" style={{ marginRight: 20 }}>
+              Learn More
+            </Button>
+            <Button size="large" variant="contained">
+                <span className="material-icons" style={{ fontSize: 20, marginRight: 10 }}>
+                    add_shopping_cart
+                </span>
+                Buy
+            </Button>
+        </CardActions>
     </Card>
   );
 }
