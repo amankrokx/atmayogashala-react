@@ -9,7 +9,7 @@ function BannerAd(props) {
     const [adIndex, setAdIndex] = useState(-1)
     
     useEffect(() => {
-        fetch(backPath + '/getAds')
+        fetch(backPath() + '/getAds')
             .then(data => data.json())
             .then(res => {
                 setAds(res)
