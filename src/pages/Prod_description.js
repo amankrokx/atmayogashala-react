@@ -1,8 +1,10 @@
 import React from "react"
 import Button from '@mui/material/Button'
 import Toolbar from "@mui/material/Toolbar"
+import Typography from '@mui/material/Typography';
 import LoaderUtils from "../components/Loader/LoaderUtils"
 import Card from "../components/Description"
+import Course_card from "../components/Card"
 import pp from "../media/product4.jpg"
 import { ratingClasses } from "@mui/material"
 
@@ -10,11 +12,6 @@ function Prod_description() {
     return (
         <div>
             <Toolbar></Toolbar>
-
-            {/* <Button variant="outlined" color="success" onClick={() => LoaderUtils.toggle()}>
-                Done !
-            </Button> */}
-            {/* <h1>Welcome to my website!</h1> */}
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-around'
@@ -43,6 +40,66 @@ function Prod_description() {
             }}></Card>
             {/* <Card></Card> */}
             </div>
+            <Typography style={{
+                margin: 30,
+                alignSelf: 'center',
+                fontWeight: 700,
+                fontSize: 18,
+            }}>
+                Recomended Courses: 
+            </Typography>
+            <div style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    flexWrap: "wrap",
+                    alignItems: "flex-start",
+                }}>
+                <Course_card 
+                    info={{
+                            photo: pp,
+                            title: "Fit Yogi",
+                            description: "Something as description about the course to be included here fro the card .",
+                            rating: 3.5,
+                            price: 1999,
+                            author: {
+                                name: "Aman",
+                            },
+                        }}></Course_card>
+                <Course_card 
+                    info={{
+                            photo: pp,
+                            title: "Fit Yogi",
+                            description: "Something as description about the course to be included here fro the card .",
+                            rating: 3.5,
+                            price: 1999,
+                            author: {
+                                name: "Aman",
+                            },
+                        }}></Course_card>
+                <Course_card 
+                    info={{
+                            photo: pp,
+                            title: "Fit Yogi",
+                            description: "Something as description about the course to be included here fro the card .",
+                            rating: 3.5,
+                            price: 1999,
+                            author: {
+                                name: "Aman",
+                            },
+                        }}></Course_card>
+                <Course_card 
+                    info={{
+                            photo: pp,
+                            title: "Fit Yogi",
+                            description: "Something as description about the course to be included here fro the card .",
+                            rating: 3.5,
+                            price: 1999,
+                            author: {
+                                name: "Aman",
+                            },
+                        }}></Course_card>
+            </div>
+
         </div>
     )
 }
