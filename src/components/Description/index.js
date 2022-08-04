@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Chip from "@mui/material/Chip"
 import Rating from "@mui/material/Rating"
 import Button from "@mui/material/Button"
+import Divider from '@mui/material/Divider';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -130,7 +131,7 @@ export default function RecipeReviewCard(props) {
                 </li>)}
               </ul>
             </Typography>
-
+            <Divider orientation='vertical' flexItem/>
             <Typography paragraph style={{fontSize: 15, fontWeight: 700}}>
               {props.info.description3}
               <ul style={{
@@ -145,7 +146,7 @@ export default function RecipeReviewCard(props) {
                 </li>)}
               </ul>
             </Typography>
-
+            <Divider orientation='vertical' flexItem />
             <Typography paragraph style={{fontSize: 15, fontWeight: 700}}>
               {props.info.description3}
               <ul style={{
@@ -180,5 +181,7 @@ export default function RecipeReviewCard(props) {
             </Button>
         </CardActions>
     </Card>
+
+    
   );
 }
