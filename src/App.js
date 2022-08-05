@@ -52,7 +52,7 @@ function App() {
                         <Route exact path="/admin_dashboard/*" element={<AdminDashboard />} />
                         <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
                         <Route exact path="/but" element={<Button variant="contained">But</Button>} />
-                        <Route exact path="/cou1" element={<Prod_description/>} />
+                        <Route exact path="/course/*" element={<Prod_description/>} />
                     </Routes>
                     <Footer />
                 </Snack>
