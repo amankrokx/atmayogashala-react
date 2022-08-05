@@ -6,6 +6,10 @@ import testRoute from "./server/modules/testRoute.mjs"
 import getAds from "./server/modules/getAds.mjs"
 import addAd from "./server/modules/addAd.mjs"
 import { config } from "dotenv"
+import bodyParser from "body-parser"
+import multer from "multer"
+import storage from "./server/firebase/storage/index.mjs"
+const upload = multer()
 config()
 console.log(process.env.NODE_ENV)
 
@@ -25,8 +29,9 @@ app.use(function (req, res, next) {
 app.use(express.json())
 app.get('/api', testRoute)
 app.get('/getAds', getAds)
-app.post('/addAd', addAd)
+app.post('/addAd', upload.any(), addAd)
 // static resources should just be served as they are
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.resolve(__dirname, "build"), { maxAge: "30d" }))
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/build/index.html'))

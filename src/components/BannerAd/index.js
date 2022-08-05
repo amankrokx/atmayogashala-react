@@ -68,7 +68,7 @@ function BannerAd(props) {
                 <Typography variant={matches ? "h5" : "caption"} color="secondary" style={{ textAlign: "end" }}>
                     {adIndex > -1 ? ads[adIndex].body : "On all Courses and subscriptions"}
                 </Typography>
-                <span style={{ position: "absolute", bottom: 5, left: 5, color: "white", fontSize: 12 }}>{adIndex > -1 ? new Date(ads[adIndex].date).toDateString() : null}</span>
+                <span style={{ position: "absolute", bottom: 5, left: 5, color: "white", fontSize: 8 }}>{adIndex > -1 ? new Date(ads[adIndex].date).toDateString() : null}</span>
             </div>
             <div
                 style={{
@@ -80,13 +80,13 @@ function BannerAd(props) {
                 }}
             >
                 <img
-                    src={props.info.photoPrimary}
+                    src={adIndex > -1 ? ads[adIndex].imageUrl : props.info.photoPrimary}
                     alt="Banner AD clip"
                     style={{
                         height: "inherit",
                     }}
                 ></img>
-                <span style={{ position: "absolute", top: 5, right: 5, color: "white", fontSize: 12 }}>
+                <span style={{ position: "absolute", top: 5, right: 5, color: "white", fontSize: 8 }}>
                     {adIndex > -1 ? ads[adIndex]._id : null}
                 </span>
 

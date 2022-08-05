@@ -90,7 +90,11 @@ class Database {
     }
 }
 
-export default new Database(process.env.MONGODB_URI || "mongodb+srv://amankrokx:ouH5RUUoWcw636mi@cluster0.ktkwxhl.mongodb.net/?retryWrites=true&w=majority" || "mongodb://localhost:27017/")
+let dbString = ""
+if (process.env.NODE_ENV != "production")
+    dbString = "mongodb://localhost:27017/"
+else dbString = "mongodb+srv://amankrokx:ouH5RUUoWcw636mi@cluster0.ktkwxhl.mongodb.net/?retryWrites=true&w=majority"
+    export default new Database(process.env.MONGODB_URI || dbString)
 
 // module.exports = {
 //     connect: callback => {
