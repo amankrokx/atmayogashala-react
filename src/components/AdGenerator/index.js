@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { Button, Dialog, DialogTitle, useMediaQuery, TextField } from "@mui/material"
+import { Button, Dialog, DialogTitle, useMediaQuery, TextField, Tooltip } from "@mui/material"
 import SnackbarUtils from "../SnackbarUtils"
 import { useState } from "react"
 import { useEffect } from "react"
@@ -222,14 +222,18 @@ const AdGenerator = () => {
                                 <TableCell>{value.name}</TableCell>
                                 <TableCell align="center">{new Date(value.date).toDateString()}</TableCell>
                                 <TableCell align="center">
-                                    <Button variant="text" color="secondary" onClick={() => makeAd(false, index)}>
-                                        <span className="material-icons">edit</span>
-                                    </Button>
+                                    <Tooltip title="Edit AD" arrow>
+                                        <Button variant="text" color="secondary" onClick={() => makeAd(false, index)}>
+                                            <span className="material-icons">edit</span>
+                                        </Button>
+                                    </Tooltip>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Button variant="text" color="error" onClick={() => deleteAd(value._id)}>
-                                        <span className="material-icons">delete</span>
-                                    </Button>
+                                    <Tooltip title="Delete AD" arrow>
+                                        <Button variant="text" color="error" onClick={() => deleteAd(value._id)}>
+                                            <span className="material-icons">delete</span>
+                                        </Button>
+                                    </Tooltip>
                                 </TableCell>
                             </TableRow>
                         ))}

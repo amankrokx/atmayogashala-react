@@ -1,7 +1,41 @@
 import { MongoClient } from "mongodb"
 
 // const url = "mongodb://localhost:27017/placement"
-let collections = ["ads"]
+let collections = ["ads", "courses", "courseList"]
+
+/**
+ * courseList
+ *      Name        <string>
+ *      _id         <database generated id>
+ *      foreginID   < courses[_id]>
+ *      active      <boolean>
+ *      buyers      <Number>
+ * 
+ * courses
+ *      Name        <string>
+ *      _id         <database generated id>
+ *      created     <Date>
+ *      Prerequis   <String []array>
+ *      cover       <Firebase storage URL>
+ *      price       <Number>
+ *      shortDesc   <String>
+ *      desc        <String>
+ *      rating      <Float>
+ *      buyers      <Number>
+ *      duration    <Number minutes>
+ *      syllabus    <Chapter _id[]array>
+ * 
+ * chapters
+ *      Name        <string>
+ *      _id         <database generated id>
+ *      created     <Date>
+ *      shortDesc   <string>
+ *      cover       <Firebase storage URL>
+ *      procedure   <HTML String>
+ *      duration    <Number minutes>
+ *      video       <Youtube URL>
+ *      photo       <Firebase storage URL>
+ */
 
 class Database {
     constructor (url) {

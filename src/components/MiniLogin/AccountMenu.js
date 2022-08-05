@@ -64,10 +64,31 @@ export default function AccountMenu() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-                <Link to="admin_dashboard">
-                    { true ? <MenuItem>
-                        <Avatar /> Dashboard
-                    </MenuItem> : null }
+                <Link
+                    to="/"
+                    style={{
+                        color: "inherit",
+                        textDecoration: "none",
+                    }}
+                >
+                    {true ? (
+                        <MenuItem>
+                            <Avatar /> Home
+                        </MenuItem>
+                    ) : null}
+                </Link>
+                <Link
+                    to="admin_dashboard"
+                    style={{
+                        color: "inherit",
+                        textDecoration: "none",
+                    }}
+                >
+                    {true ? (
+                        <MenuItem>
+                            <Avatar /> Dashboard
+                        </MenuItem>
+                    ) : null}
                 </Link>
                 <MenuItem>
                     <Avatar /> Profile

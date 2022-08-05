@@ -4,7 +4,7 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import { Link, Route, Routes } from 'react-router-dom'
 import AdGenerator from "../components/AdGenerator"
-
+import CourseManager from "../components/CourseManager"
 
 const AdminDashboard = () => {
     const [anchorEl, setAnchorEl] = React.useState(null)
@@ -77,14 +77,22 @@ const AdminDashboard = () => {
                         >
                             <MenuItem onClick={handleClose}>Ads</MenuItem>
                         </Link>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                        <Link
+                            to="courses"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>Courses</MenuItem>
+                        </Link>
                         <MenuItem onClick={handleClose}>Logout</MenuItem>
                     </Menu>
                 </Toolbar>
             </AppBar>
             <Routes>
                 <Route exact path="ads" element={<AdGenerator />} />
-                <Route exact path="home" element={<AdGenerator />} />
+                <Route exact path="courses" element={<CourseManager />} />
                 <Route
                     exact
                     path="/"

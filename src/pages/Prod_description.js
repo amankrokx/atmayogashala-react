@@ -58,6 +58,7 @@ function Prod_description() {
                 LoaderUtils.close()
             })
             .catch(err => {
+                setCourseDetails()
                 SnackbarUtils.error("Failed to find this course .")
                 console.error(err)
                 LoaderUtils.close()

@@ -9,7 +9,7 @@ import getCourse from "./server/modules/getCourse.mjs"
 import { config } from "dotenv"
 import bodyParser from "body-parser"
 import multer from "multer"
-
+import { getCourseList } from "./server/modules/addCourses.mjs"
 
 const upload = multer()
 config()
@@ -32,6 +32,7 @@ app.use(express.json())
 app.get('/api', testRoute)
 app.get('/getAds', getAds)
 app.get('/getCourse/*', getCourse)
+app.get('/getCourseList', getCourseList)
 app.post('/addAd', upload.any(), addAd)
 // static resources should just be served as they are
 app.use(bodyParser.urlencoded({extended: true}))
