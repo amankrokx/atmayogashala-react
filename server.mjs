@@ -9,8 +9,10 @@ import getCourse from "./server/modules/getCourse.mjs"
 import { config } from "dotenv"
 import bodyParser from "body-parser"
 import multer from "multer"
-import { getCourseList } from "./server/modules/addCourses.mjs"
+import { getCourseList, getChapterList } from "./server/modules/addCourses.mjs"
+import addVideo from "./server/modules/addVideo.mjs"
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const upload = multer()
 config()
 console.log(process.env.NODE_ENV)
@@ -18,7 +20,6 @@ console.log(process.env.NODE_ENV)
 const app = express()
 // const path = require("path")
 const PORT = process.env.PORT || 3069
-const __dirname = dirname(fileURLToPath(import.meta.url))
 // const testRoute = require("./server/modules/testRoute")
 // const database = require("./server/database")
 app.use(function (req, res, next) {
@@ -32,7 +33,9 @@ app.use(express.json())
 app.get('/api', testRoute)
 app.get('/getAds', getAds)
 app.get('/getCourse/*', getCourse)
+app.post('/addVideo', upload.single('video'), addVideo)
 app.get('/getCourseList', getCourseList)
+app.get('/getChapterList', getChapterList)
 app.post('/addAd', upload.any(), addAd)
 // static resources should just be served as they are
 app.use(bodyParser.urlencoded({extended: true}))
