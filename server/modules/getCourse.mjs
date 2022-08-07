@@ -10,7 +10,7 @@ const getCourse = (req, res) => {
                 photo: null,
                 title: "Fit Yogi",
                 date: "69/69/6969",
-                description1: "Big main description",
+                description1: "Big main description dafhga vafhbv s w fljh ej qugrbg lkraugeufbf dnf erg mzvyw gfkjwrvf kjwbf auyf jwhefweygf lwF JAGRFVKUA ",
                 description2: "Technical points",
                 des2: [
                     "Technical description about the course",

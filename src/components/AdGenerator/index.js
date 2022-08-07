@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { Button, Dialog, DialogTitle, useMediaQuery, TextField, Tooltip } from "@mui/material"
+import { Button, Dialog, DialogTitle, useMediaQuery, TextField, Tooltip, InputAdornment } from "@mui/material"
 import SnackbarUtils from "../SnackbarUtils"
 import { useState } from "react"
 import { useEffect } from "react"
@@ -73,13 +73,16 @@ const AdForm = (props) => {
     }
 
     return (
-        <Dialog open={close} onClose={() => {
-            SnackbarUtils.warning("Changes Discarded !")
-            setClose(false)
-            setTimeout(() => {
-                props.setOpenMaker({ open: false, details: null })
-            }, 300)
-            }}>
+        <Dialog
+            open={close}
+            onClose={() => {
+                SnackbarUtils.warning("Changes Discarded !")
+                setClose(false)
+                setTimeout(() => {
+                    props.setOpenMaker({ open: false, details: null })
+                }, 300)
+            }}
+        >
             <Paper elevation={3} sx={{ padding: 3 }}>
                 <DialogTitle>Advertisement Info</DialogTitle>
                 <TextField
@@ -90,7 +93,7 @@ const AdForm = (props) => {
                     onChange={handleInput}
                     value={values.name}
                     inputRef={nameRef}
-                    />
+                />
                 <TextField
                     sx={{ margin: 1 }}
                     label="Title"
@@ -99,7 +102,7 @@ const AdForm = (props) => {
                     //   onChange={}
                     variant="outlined"
                     inputRef={titleRef}
-                    />
+                />
                 <TextField
                     sx={{ margin: 1 }}
                     label="Body"
@@ -119,6 +122,11 @@ const AdForm = (props) => {
                     type="file"
                     accept="image/*"
                     inputRef={imageRef}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start" >
+                            <span className="material-icons" >image</span>
+                        </InputAdornment>
+                    }}
                 />
                 <br></br>
                 <br></br>
@@ -128,13 +136,17 @@ const AdForm = (props) => {
                         justifyContent: "flex-end",
                     }}
                 >
-                    <Button variant="text" color="error" onClick={() => {
-                        SnackbarUtils.warning("Changes Discarded !")
-                        setClose(false)
-                        setTimeout(() => {
-                            props.setOpenMaker({ open: false, details: null })
-                        }, 300)
-                    }}>
+                    <Button
+                        variant="text"
+                        color="error"
+                        onClick={() => {
+                            SnackbarUtils.warning("Changes Discarded !")
+                            setClose(false)
+                            setTimeout(() => {
+                                props.setOpenMaker({ open: false, details: null })
+                            }, 300)
+                        }}
+                    >
                         Discard
                     </Button>
                     <Button variant="contained" color="primary" onClick={submit}>

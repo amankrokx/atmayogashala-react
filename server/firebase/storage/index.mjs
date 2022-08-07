@@ -1,6 +1,5 @@
 import firebaseApp from "../index.mjs";
 import { getStorage } from "firebase-admin/storage"
-import * as fs from "fs"
 import path, { dirname } from "path"
 import { fileURLToPath } from "url"
 
@@ -29,6 +28,13 @@ class Storage {
                     resolve(results[0])
                 })
             }))
+        })
+    }
+
+    deleteFile(filePath) {
+        return new Promise((resolve, reject) => {
+            const fileRef = this.adRef.file(filePath)
+            fileRef.delete().then((res) => resolve(res)).catch(err => reject(err))
         })
     }
 

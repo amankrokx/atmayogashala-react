@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar"
 
 export default function ImgMediaCard(props) {
     return (
-        <Card sx={{ width: 345, margin: '10px' }}>
+        <Card sx={{ width: 345, minWidth: 345, margin: '10px' }}>
             <CardMedia component="img" alt="green iguana" height="160" image={props.info.photo} />
             <CardContent>
                 <Typography

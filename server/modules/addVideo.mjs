@@ -6,6 +6,11 @@ import fs from "fs"
 const addVideo = (req, res) => {
     // console.log()
     // const uintarray = new Uint8Array(req.file.buffer)
+    res.json({
+        status: "success",
+        videoId: "some id",
+    })
+    return
     uploadVideo(
         {
             titile: "sample video again",

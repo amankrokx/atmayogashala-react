@@ -9,7 +9,7 @@ import getCourse from "./server/modules/getCourse.mjs"
 import { config } from "dotenv"
 import bodyParser from "body-parser"
 import multer from "multer"
-import { getCourseList, getChapterList } from "./server/modules/addCourses.mjs"
+import { getCourseList, getChapterList, addCourse, addChapter } from "./server/modules/addCourses.mjs"
 import addVideo from "./server/modules/addVideo.mjs"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -36,7 +36,9 @@ app.get('/getCourse/*', getCourse)
 app.post('/addVideo', upload.single('video'), addVideo)
 app.get('/getCourseList', getCourseList)
 app.get('/getChapterList', getChapterList)
-app.post('/addAd', upload.any(), addAd)
+app.post('/addCourse', upload.single('coverPhoto'), addCourse)
+app.post("/addChapter", upload.any(), addChapter)
+app.post('/addAd', upload.single(), addAd)
 // static resources should just be served as they are
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.resolve(__dirname, "build"), { maxAge: "30d" }))

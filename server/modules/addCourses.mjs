@@ -1,4 +1,24 @@
 
+const addChapter = (req, res) => {
+    console.log("getting chapter")
+    console.log(req.body)
+    console.log(req.files)
+    res.json({
+        status: "success",
+        message: ""
+    })
+}
+
+const addCourse = (req, res) => {
+    console.log("getting course")
+    console.log(req.body)
+    console.log(req.files)
+    res.json({
+        status: "success",
+        message: ""
+    })
+}
+
 const getCourseList = (req, res) => {
     console.log("get Course List")
     res.json({
@@ -60,4 +80,4 @@ const getChapterList = (req, res) => {
     })
 }
 
-export { getCourseList, getChapterList }
+export { getCourseList, getChapterList, addCourse, addChapter }

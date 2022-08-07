@@ -8,7 +8,6 @@ import backPath from "../backPath";
 import LoaderUtils from "../components/Loader/LoaderUtils";
 import SnackbarUtils from "../components/SnackbarUtils";
 
-
 function Prod_description() {
     const [courseDetails, setCourseDetails] = useState({
         status: 'success',
@@ -95,8 +94,12 @@ function Prod_description() {
                 style={{
                     display: "flex",
                     justifyContent: "space-evenly",
-                    flexWrap: "wrap",
+                    flexWrap: "nowrap",
                     alignItems: "flex-start",
+                    overflowX: "scroll",
+                    overflowY: "hidden",
+                    padding: 20,
+                    width: "100%",
                 }}
             >
                 <Course_card
