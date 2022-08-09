@@ -156,8 +156,8 @@ const CourseManager = () => {
                     )}
                 </Table>
             </TableContainer>
-            {(openEditor.open && openEditor.tab === "course") ? <CourseEditor chapterLists={chapterLists} details={openEditor} setOpenEditor={setOpenEditor} updateState={setReload} /> : null}
-            {(openEditor.open && openEditor.tab === "chapter") ? <ChapterEditor details={openEditor} setOpenEditor={setOpenEditor} updateState={setReload} /> : null}
+            {openEditor.open && openEditor.tab === "course" ? <CourseEditor chapterLists={chapterLists} setCourseLists={setCourseLists} details={openEditor} setOpenEditor={setOpenEditor} updateState={setReload} /> : null}
+            {openEditor.open && openEditor.tab === "chapter" ? <ChapterEditor details={openEditor} setChapterLists={setChapterLists} setOpenEditor={setOpenEditor} updateState={setReload} /> : null}
         </>
     )
 }

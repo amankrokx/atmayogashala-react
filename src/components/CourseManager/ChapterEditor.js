@@ -16,7 +16,7 @@ const ChapterEditor = props => {
     const [videoTab, setVideoTab] = useState(props.details && props.details.details && props.details.details.videoUrl ? "url" : "upload")
     const [req, setReq] = useState(null)
     const [videoUrl, setVideoUrl] = useState("")
-    const [disableUrl, setDisableUrl] = useState(null)
+    const [disableUrl, setDisableUrl] = useState(false)
     const imageRef = useRef()
     const coverImageRef = useRef()
     const [values, setValues] = useState(props.details.details ? props.details.details : {
@@ -25,24 +25,29 @@ const ChapterEditor = props => {
         chapterDuration: "",
         chapterLongDescription: "",
         chapterSearchTags: "",
-        chapterVideoUrl: null 
+        chapterVideoUrl: "" 
     })
     const tagsRef = useRef()
     const urlRef = useRef()
     const videoRef = useRef()
 
     const uploadChapter = () => {
+        if (req) {
+            // Uploading in progress
+            SnackbarUtils.warning("Wait for Video Upload to Finish.")
+            return
+        }
         const formData = new FormData()
         console.log(values)
         for (const value in values) {
             if (values[value]) formData.append(value, values[value])
         }
         formData.append("mode", props.details.details && props.details.details._id ? "update" : "create")
-        if (imageRef.current.files.length > 0) formData.append("chapterImage", imageRef.current.files)
-        if (imageRef.current.files.length > 0) formData.append("chapterCoverImage", coverImageRef.current.files)
+        if (imageRef.current.files.length > 0) formData.append("chapterImage", imageRef.current.files[0])
+        if (coverImageRef.current.files.length > 0) formData.append("chapterCoverImage", coverImageRef.current.files[0])
         formData.append('date', new Date())
         LoaderUtils.open()
-        fetch(backPath() + "/addCourse", {
+        fetch(backPath() + "/addChapter", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -57,6 +62,7 @@ const ChapterEditor = props => {
                 // is a success or not
                 LoaderUtils.close()
                 if (res.status === "success") {
+                    props.setChapterLists(list => list.push(res.data))
                     SnackbarUtils.success(props.details.details && props.details.details._id ? "Updated !" : "Created !")
                     props.updateState(state => state + 1)
                     setTimeout(() => {
@@ -97,6 +103,7 @@ const ChapterEditor = props => {
                     setTimeout(() => {
                         setDisableUrl(true)
                         setValues({ ...values, chapterVideoUrl: "https://www.youtube.com/watch?v=" + data.videoId })
+                        setReq(null)
                     }, 400)
                 }
             }

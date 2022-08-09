@@ -111,9 +111,9 @@ class Database {
         })
     }
 
-    find = ({collection, query, limit = Math.max, sort = {}}) => {
+    find = ({collection, query, limit = 99999999, sort = {}, projection = {}}) => {
         return new Promise((resolve, reject) => {
-            this.db.collection(collection).find(query).sort(sort).limit(limit).toArray((err, result) => {
+            this.db.collection(collection).find(query, {projection}).sort(sort).limit(limit).toArray((err, result) => {
                 if (err) reject(err)
                 else resolve(result)
             })

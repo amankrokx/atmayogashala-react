@@ -40,42 +40,50 @@ const addAd = (req, res) => {
                 .catch(err => res.send(err.toString()))
     }
     else if (req.body.mode === "create") {
-        if (req.files && req.files.length > 0) {
-            req.files[0].originalname = Date.now().toString() + req.files[0].originalname
-            storage.uploadAdImage(req.files[0]).then(url => {
-                database.insertOne({collection: 'ads', data: {
+        console.log(req.file)
+        if (req.file && req.file.fieldname) {
+            req.file.originalname = Date.now().toString() + req.file.originalname
+            storage
+                .uploadAdImage(req.file)
+                .then(url => {
+                    database.insertOne({
+                        collection: "ads",
+                        data: {
+                            title: req.body.title,
+                            name: req.body.name,
+                            body: req.body.body,
+                            date: req.body.date,
+                            imageUrl: url,
+                            imagePath: "Ads/" + req.file.originalname,
+                        },
+                    })
+                    // console.log(url)
+                    res.send("success")
+                })
+                .catch(err => {
+                    res.send(err)
+                    throw err
+                })
+        } else {
+            database.insertOne({
+                collection: "ads",
+                data: {
                     title: req.body.title,
                     name: req.body.name,
                     body: req.body.body,
                     date: req.body.date,
-                    imageUrl: url,
-                    imagePath: "Ads/" + req.files[0].originalname
-
-                }})
-                // console.log(url)
-                res.send("success")
-            }).catch(err => {
-                res.send(err)
-                throw err
+                    imageUrl: null,
+                    imagePath: null,
+                },
             })
-        }
-        else {
-            database.insertOne({collection: 'ads', data: {
-                title: req.body.title,
-                name: req.body.name,
-                body: req.body.body,
-                date: req.body.date,
-                imageUrl: null,
-                imagePath: null
-            }})
             res.send("success")
         }
     }
     else if (req.body.mode === "update") {
-        if (req.files && req.files.length > 0) {
-            req.files[0].originalname = Date.now().toString() + req.files[0].originalname
+        if (req.file && req.file.fieldname) {
+            req.file.originalname = Date.now().toString() + req.file.originalname
             storage
-                .uploadAdImage(req.files[0])
+                .uploadAdImage(req.file)
                 .then(url => {
                     database
                         .updateOne({
@@ -87,7 +95,7 @@ const addAd = (req, res) => {
                                 body: req.body.body,
                                 date: req.body.date,
                                 imageUrl: url,
-                                imagePath: "Ads/" + req.files[0].originalname
+                                imagePath: "Ads/" + req.file.originalname,
                             },
                         })
                         .then(resd => {
@@ -103,21 +111,25 @@ const addAd = (req, res) => {
                     res.send(err.toString())
                     throw err
                 })
-        }
-        else {
-            database.updateOne({collection: 'ads', query: {_id: ObjectId(req.body._id)}, data: {
-                title: req.body.title,
-                name: req.body.name,
-                body: req.body.body,
-                date: req.body.date
-            }})
-            .then(resd => {
-                console.log(resd)
-                res.send("success")
-            })
-            .catch(err => {
-                res.send(err.toString())
-            })
+        } else {
+            database
+                .updateOne({
+                    collection: "ads",
+                    query: { _id: ObjectId(req.body._id) },
+                    data: {
+                        title: req.body.title,
+                        name: req.body.name,
+                        body: req.body.body,
+                        date: req.body.date,
+                    },
+                })
+                .then(resd => {
+                    console.log(resd)
+                    res.send("success")
+                })
+                .catch(err => {
+                    res.send(err.toString())
+                })
         }
     }
 }

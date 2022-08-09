@@ -14,6 +14,61 @@ const CourseEditor = props => {
     const [close, setClose] = useState(true)
     const [autoCompleteOpen, setAutoCompleteOpen] = useState(false)
     const tagsRef = useRef()
+    const coverImageRef = useRef()
+    const [values, setValues] = useState(
+        props.details.details
+            ? props.details.details
+            : {
+                courseName: "",
+                courseShortDescription: "",
+                courseLongDescription: "",
+                coursePrice: "",
+                courseChapters: "",
+                courseSearchTags: "",
+            }
+    )
+
+    const uploadCourse = () => {
+        const formData = new FormData()
+        for (const value in values) {
+            if (values[value]) formData.append(value, values[value])
+        }
+        formData.append("mode", props.details.details && props.details.details._id ? "update" : "create")
+        if (coverImageRef.current.files.length > 0) formData.append("chapterCoverImage", coverImageRef.current.files[0])
+        formData.append("date", new Date())
+        LoaderUtils.open()
+        fetch(backPath() + "/addCourse", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            // headers: {
+            //     "Content-Type": "application/json",
+            // },
+            redirect: "follow", // manual, *follow, error
+            body: formData, // body data type must match "Content-Type" header
+        })
+            .then(data => data.json())
+            .then(res => {
+                // is a success or not
+                LoaderUtils.close()
+                if (res.status === "success") {
+                    props.setCourseLists(list => list.push(res.data))
+                    SnackbarUtils.success(props.details.details && props.details.details._id ? "Updated !" : "Created !")
+                    props.updateState(state => state + 1)
+                    setTimeout(() => {
+                        props.setOpenEditor({ open: false, tab: null, details: null })
+                    }, 300)
+                } else {
+                    console.error(res)
+                    SnackbarUtils.error("Error : " + res.message)
+                }
+            })
+            .catch(err => {
+                console.error(err)
+                SnackbarUtils.error(err)
+                LoaderUtils.close()
+            })
+    }
 
     return (
         <Dialog
@@ -34,32 +89,27 @@ const CourseEditor = props => {
                     <span className="material-icons-outlined">post_add</span> Chapter Editor
                 </DialogTitle>
                 <Stack spacing={2}>
-                    <TextField
-                        label="Course Name"
-                        defaultValue={null}
-                        //   onChange={}
-                        variant="outlined"
-                    />
+                    <TextField label="Course Name" value={values.courseName} onChange={event => setValues({ ...values, courseName: event.target.value })} variant="outlined" />
                     <TextField
                         label="Course Short Descrpition"
-                        defaultValue={null}
-                        //   onChange={}
+                        value={values.courseShortDescription}
+                        onChange={event => setValues({ ...values, courseShortDescription: event.target.value })}
                         variant="outlined"
                     />
                     <TextField
                         label="Course Price ( Rupees )"
-                        defaultValue={null}
+                        value={values.coursePrice}
+                        onChange={event => setValues({ ...values, coursePrice: event.target.value })}
                         type="number"
-                        //   onChange={}
                         variant="outlined"
                     />
                     <TextField
                         label="Course Long Description"
-                        defaultValue={null}
+                        value={values.courseLongDescription}
+                        onChange={event => setValues({ ...values, courseLongDescription: event.target.value })}
                         multiline
                         minRows={4}
                         maxRows={9}
-                        //   onChange={}
                         variant="outlined"
                     />
                     <Autocomplete
@@ -68,6 +118,8 @@ const CourseEditor = props => {
                         onOpen={() => setAutoCompleteOpen(true)}
                         onClose={() => setAutoCompleteOpen(false)}
                         options={props.chapterLists.map(option => option.name)}
+                        // value={values.courseChapters}
+                        onChange={(event, newInputValue) => setValues({ ...values, courseChapters: newInputValue })}
                         // freeSolo
                         renderTags={(value, getTagProps) => value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)}
                         renderInput={params => <TextField {...params} variant="outlined" label="Include Chapters" placeholder="Chapter List" />}
@@ -79,9 +131,7 @@ const CourseEditor = props => {
                         // onClose={() => setAutoCompleteOpen(false)}
                         options={[]}
                         freeSolo
-                        onChange={(event, newInputValue) => {
-                            console.log(newInputValue)
-                        }}
+                        onChange={(event, newInputValue) => setValues({ ...values, courseSearchTags: newInputValue })}
                         renderTags={(value, getTagProps) => value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)}
                         renderInput={params => <TextField {...params} inputRef={tagsRef} variant="outlined" label="Search Tags" placeholder="Tags..." />}
                     />
@@ -93,6 +143,7 @@ const CourseEditor = props => {
                         defaultValue={null}
                         type="file"
                         helperText="Upload Photo for chapter Cover"
+                        inputRef={coverImageRef}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -125,7 +176,10 @@ const CourseEditor = props => {
                     >
                         Discard
                     </Button>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={() => {
+                        console.log(values, coverImageRef.current.files)
+                        uploadCourse()
+                    }}>
                         Create
                     </Button>
                 </div>
