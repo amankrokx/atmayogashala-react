@@ -43,9 +43,9 @@ function App() {
             <div className="App">
                 <Snack>
                     <Loader></Loader>
-                    <AppBar position="absolute" color="transparent" style={{ boxShadow: "none" }}>
+                    {/* <AppBar position="absolute" color="transparent" style={{ boxShadow: "none" }}> */}
                         <NavBar state={loggedIn} />
-                    </AppBar>
+                    {/* </AppBar> */}
                     <Toolbar></Toolbar>
                     <Routes>
                         <Route exact path="/" element={<Home />} />
