@@ -45,6 +45,7 @@ function Prod_description() {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include",
             // headers: {
             //     "Content-Type": "text/plain",
             // },

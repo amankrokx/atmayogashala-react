@@ -12,13 +12,15 @@ function BannerAd(props) {
         fetch(backPath() + '/getAds')
             .then(data => data.json())
             .then(res => {
-                setAds(res)
-                setAdIndex(0)
-                const timer = window.setInterval(() => {
-                    setAdIndex(count => (count + 1) % res.length)
-                }, 4000)
-                return () => {
-                    window.clearInterval(timer)
+                if (res.status === "success") {
+                    setAds(res)
+                    setAdIndex(0)
+                    const timer = window.setInterval(() => {
+                        setAdIndex(count => (count + 1) % res.length)
+                    }, 4000)
+                    return () => {
+                        window.clearInterval(timer)
+                    }
                 }
             })
     }, [])

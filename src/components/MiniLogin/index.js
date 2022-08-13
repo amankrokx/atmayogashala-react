@@ -12,12 +12,14 @@ import AccountMenu from "./AccountMenu"
 import Typography from '@mui/material/Typography'
 import LoginWindow from "./LoginWindow"
 import useMediaQuery from "@mui/material/useMediaQuery"
+import verifyCred from "./verifyCred"
 
 function MiniLogin (props) {
     const [logged, setLogged] = useState(false)
     const [noNotifs, setNotifs] = useState(0)
     const matches = useMediaQuery("(min-width:756px)")
     const [anchorEl, setAnchorEl] = React.useState(null)
+    const [access, setAccess] = useState('user')
     const open = Boolean(anchorEl)
     const handleClick = event => {
         // loginPhone.generateRecaptcha()
@@ -26,9 +28,14 @@ function MiniLogin (props) {
     const handleClose = () => {
         setAnchorEl(null)
     }
+    if (access === "admin") SnackbarUtils.toast("Welcome Admin !")
     useEffect(() => {
         onAuthStateChanged(auth, user => {
             if (user) {
+                if (user.email === "amankumar.spj410@gmail.com") verifyCred(user).then(a => setAccess(a)).catch(err => SnackbarUtils.error(err))
+                // user.getIdToken(true).then(idToken => {
+                //     console.log(idToken)
+                // })
                 setLogged(true)
                 SnackbarUtils.success("Logged In .")
             } else {

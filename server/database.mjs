@@ -39,6 +39,7 @@ class Database {
         this.flag = false
         MongoClient.connect(url, async (err, dbp) => {
             if (err) throw err
+            this.client = dbp
             this.db = dbp.db('atmaYogaShala')
             console.log("DB connected !")
             try {

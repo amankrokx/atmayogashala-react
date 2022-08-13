@@ -37,6 +37,7 @@ const AdForm = (props) => {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include",
             // headers: {
             //     "Content-Type": "application/json",
             // },
@@ -185,6 +186,7 @@ const AdGenerator = () => {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include",
             // headers: {
             //     "Content-Type": "application/json",
             // },

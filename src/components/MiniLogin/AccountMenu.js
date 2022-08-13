@@ -11,6 +11,7 @@ import auth from "../../firebase/auth"
 import LoaderUtils from "../Loader/LoaderUtils"
 import SnackbarUtils from "../SnackbarUtils"
 import { Link } from "react-router-dom"
+import backPath from "../../backPath"
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null)
@@ -20,6 +21,28 @@ export default function AccountMenu() {
     }
     const handleClose = () => {
         setAnchorEl(null)
+    }
+
+    const logout = () => {
+        LoaderUtils.open()
+        signOut(auth).then(() => {
+            fetch(backPath() + "/logout", {
+                method: "GET", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: "include",
+                // headers: {
+                //     "Content-Type": "application/json",
+                // },
+                redirect: "follow", // manual, *follow, error
+            }).then(res => res.text()).then(r => {
+                LoaderUtils.close()
+                if (r === "success") SnackbarUtils.toast("Signed Out .")
+                else SnackbarUtils.error("Unable to Logout .")
+            }).catch(e => {
+                SnackbarUtils.error("Unable to Logout .")
+            })
+        })
     }
 
     return (
@@ -114,13 +137,7 @@ export default function AccountMenu() {
                     Settings
                 </MenuItem>
                 <MenuItem
-                    onClick={() => {
-                        LoaderUtils.open()
-                        signOut(auth).then(() => {
-                            LoaderUtils.close()
-                            SnackbarUtils.toast("Signed Out .")
-                        })
-                    }}
+                    onClick={logout}
                 >
                     <ListItemIcon>
                         <span className="material-icons" fontSize="small">
