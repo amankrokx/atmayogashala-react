@@ -5,7 +5,6 @@ import AdminDashboard from "./pages/AdminDashboard"
 import Home from "./pages/Home"
 import Button from "@mui/material/Button"
 import NavBar from "./components/navbar"
-import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from "@mui/material/IconButton"
 import { useTheme } from "@mui/styles"
