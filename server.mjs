@@ -37,16 +37,14 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true")
     next()
 })
-let dbString = ""
-if (process.env.NODE_ENV != "production") dbString = "mongodb://localhost:27017/"
-else dbString = "mongodb+srv://amankrokx:ouH5RUUoWcw636mi@cluster0.ktkwxhl.mongodb.net/?retryWrites=true&w=majority"
+
 app.use(
     session({
         secret: process.env.COOKIE_SECRET,
         sameSite: true,
         path: "/",
         store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URI || dbString,
+            mongoUrl: process.env.MONGODB_URI || "mongodb://localhost:27017/",
             dbName: "atmaYogaShala",
             ttl: 14 * 24 * 60 * 60, // 14 Days
             touchAfter: 600, // writes to db every 10 minutes

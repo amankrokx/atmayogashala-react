@@ -228,6 +228,7 @@ const addCourse = (req, res) => {
             req.files.length > 0
         ) {
             parseInt(k.coursePrice) > 0 ? (k.coursePrice = parseInt(k.coursePrice)) : 0
+            k.courseChapters = k.courseChapters.split(',')
             const ar = req.files[0].originalname.split(".")
             req.files[0].originalname = k.courseName + "." + ar[ar.length - 1]
             storage

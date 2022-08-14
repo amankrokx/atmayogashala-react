@@ -145,9 +145,9 @@ function Home() {
                 >
                     <ZoomCard delay="1100ms" title="Explore" description="A long paragraph A long paragraphA long paragraphA long paragraphA long paragraphA long paragraphA long paragraph"></ZoomCard>
                     <Typography variant={matches ? "h2" : "h4"} color={theme.palette.white.main}>
-                        <span style={{ marginLeft: matches ? -30 : 0 }}>1 Minute</span>
+                        <span style={{ marginLeft: matches ? -30 : 0, fontWeight: "bold", display: 'inline' }}>1 Minute</span>
                         <br></br>
-                        <span style={{ marginLeft: matches ? 30 : 0 }}>10 Breaths</span>
+                        <span style={{ marginLeft: matches ? 30 : 0, fontWeight: "bold", display: 'inline' }}>10 Breaths</span>
                     </Typography>
                     <ZoomCard
                         delay="800ms"

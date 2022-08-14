@@ -87,7 +87,7 @@ const CourseEditor = props => {
         >
             <Paper elevation={3} sx={{ padding: 4, minWidth: 520 }}>
                 <DialogTitle>
-                    <span className="material-icons-outlined">post_add</span> Chapter Editor
+                    <span className="material-icons-outlined">post_add</span> Course Editor
                 </DialogTitle>
                 <Stack spacing={2}>
                     <TextField label="Course Name" value={values.courseName} onChange={event => setValues({ ...values, courseName: event.target.value })} variant="outlined" />
@@ -118,11 +118,22 @@ const CourseEditor = props => {
                         open={autoCompleteOpen}
                         onOpen={() => setAutoCompleteOpen(true)}
                         onClose={() => setAutoCompleteOpen(false)}
-                        options={props.chapterLists.map(option => option.name)}
+                        options={props.chapterLists}
+                        getOptionLabel={option => option.name}
                         // value={values.courseChapters}
-                        onChange={(event, newInputValue) => setValues({ ...values, courseChapters: newInputValue })}
+                        onChange={(event, newInputValue) => {
+                            // console.log(newInputValue)
+                            if (newInputValue && newInputValue.length > 0) {
+                                let idList = []
+                                newInputValue.map((val) => {
+                                    idList.push(val._id)
+                                })
+                                // console.log(idList)
+                                setValues({ ...values, courseChapters: idList })
+                            }
+                        }}
                         // freeSolo
-                        renderTags={(value, getTagProps) => value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)}
+                        renderTags={(value, getTagProps) => value.map((option, index) => <Chip variant="outlined" label={option.name} {...getTagProps({ index })} />)}
                         renderInput={params => <TextField {...params} variant="outlined" label="Include Chapters" placeholder="Chapter List" />}
                     />
                     <Autocomplete
@@ -177,10 +188,14 @@ const CourseEditor = props => {
                     >
                         Discard
                     </Button>
-                    <Button variant="contained" color="primary" onClick={() => {
-                        console.log(values, coverImageRef.current.files)
-                        uploadCourse()
-                    }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            console.log(values, coverImageRef.current.files)
+                            uploadCourse()
+                        }}
+                    >
                         Create
                     </Button>
                 </div>

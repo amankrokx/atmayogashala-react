@@ -28,7 +28,10 @@ function MiniLogin (props) {
     const handleClose = () => {
         setAnchorEl(null)
     }
-    if (access === "admin") SnackbarUtils.toast("Welcome Admin !")
+    useEffect(() => {
+        if (access === "admin") SnackbarUtils.toast("Welcome Admin !")
+    }, [access])
+    
     useEffect(() => {
         onAuthStateChanged(auth, user => {
             if (user) {

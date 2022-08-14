@@ -122,40 +122,4 @@ class Database {
     }
 }
 
-let dbString = ""
-if (process.env.NODE_ENV != "production")
-    dbString = "mongodb://localhost:27017/"
-else dbString = "mongodb+srv://amankrokx:ouH5RUUoWcw636mi@cluster0.ktkwxhl.mongodb.net/?retryWrites=true&w=majority"
-    export default new Database(process.env.MONGODB_URI || dbString)
-
-// module.exports = {
-//     connect: callback => {
-//         MongoClient.connect(url, async (err, db) => {
-//             if (err) throw err
-//             console.log("DB connected !")
-//             dbo = await db.db("placement")
-//             try {
-//                 collections.forEach((v, index, arr) => {
-//                     dbo.createCollection("users", (err, res) => {
-//                         if (err && err.codeName === "NamespaceExists") {
-//                             arr.length = index + 1
-//                             flag = true
-//                             console.log(`Collection ${v} exists !`)
-//                         } else if (!err) console.log("Collection created !")
-//                     })
-//                 })
-//             } catch (error) {
-//                 if (!flag) {
-//                     console.log("\n-------Serious Error !-------\n")
-//                     throw error
-//                 } else console.log("colection already exists, chill")
-//             } finally {
-//                 return callback(err, dbo)
-//             }
-//         })
-//     },
-
-//     getdb: () => {
-//         return dbo
-//     },
-// }
+export default new Database(process.env.MONGODB_URI || "mongodb://localhost:27017/")

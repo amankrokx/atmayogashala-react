@@ -6,11 +6,10 @@ import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
-import { Button, Dialog, DialogTitle, useMediaQuery, TextField, InputAdornment, Tooltip, Tab, Tabs, Stack, Divider, Typography, Box } from "@mui/material"
+import { Button, useMediaQuery, Tooltip, Tab, Tabs } from "@mui/material"
 import SnackbarUtils from "../SnackbarUtils"
 import { useState } from "react"
 import { useEffect } from "react"
-import { useRef } from "react"
 import backPath from "../../backPath"
 import LoaderUtils from "../Loader/LoaderUtils"
 import ChapterEditor from "./ChapterEditor"
@@ -33,7 +32,16 @@ const CourseManager = () => {
         console.log(`fetching ${tab} lists`)
         LoaderUtils.open()
         const path = (tab === "course") ? "/getCourseList" : "/getChapterList"
-        fetch(backPath() + path)
+        fetch(backPath() + path, {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include",
+            // headers: {
+            //     "Content-Type": "application/json",
+            // },
+            redirect: "follow", // manual, *follow, error
+        })
             .then(res => res.json())
             .then(data => {
                 LoaderUtils.close()
