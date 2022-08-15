@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import LoaderUtils from "../components/Loader/LoaderUtils"
 import Card from "../components/Card"
 import pp from "../media/product4.jpg"
@@ -15,7 +15,8 @@ import { useTheme } from "@mui/material/styles"
 import moveImg from "../media/move.jpg"
 import relaxImg from "../media/relax.jpg"
 import breatheImg from "../media/breath.jpg"
-
+import SnackbarUtils from "../components/SnackbarUtils"
+import backPath from "../backPath"
 
 function ZoomCard (props) {
     const theme = useTheme()
@@ -75,7 +76,9 @@ function ZoomCard (props) {
                         paddingTop: 34,
                         boxSizing: 'border-box',
                         backdropFilter: 'blur(3px)',
-                        transition: 'height 0.2s ease-in-out'
+                        transition: 'height',
+                        transitionDuration: '0.2s',
+                        transitionTimingFunction: theme.transitions.easing.easeIn,
                     }}
                 >
                     <Typography color="secondary">
@@ -94,6 +97,37 @@ function Home() {
     const chipClick = (e) => {
         console.log(e)
     }
+    const [courses, setCourses] = useState([])
+
+    useEffect(() => {
+        LoaderUtils.open()
+        fetch(backPath() + "/getCourseList?orderBy=popularity", {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "include",
+            // headers: {
+            //     "Content-Type": "application/json",
+            // },
+            redirect: "follow", // manual, *follow, error
+        })
+            .then(data => data.json())
+            .then(res => {
+                // is a success or not
+                LoaderUtils.close()
+                if (res.status === "success") {
+                    setCourses(res.list)
+                } else {
+                    console.error(res)
+                    SnackbarUtils.error("Error : " + res.message)
+                }
+            })
+            .catch(err => {
+                console.error(err)
+                SnackbarUtils.error(err)
+                LoaderUtils.close()
+            })
+    }, [])
 
     return (
         <div>
@@ -145,9 +179,9 @@ function Home() {
                 >
                     <ZoomCard delay="1100ms" title="Explore" description="A long paragraph A long paragraphA long paragraphA long paragraphA long paragraphA long paragraphA long paragraph"></ZoomCard>
                     <Typography variant={matches ? "h2" : "h4"} color={theme.palette.white.main}>
-                        <span style={{ marginLeft: matches ? -30 : 0, fontWeight: "bold", display: 'inline' }}>1 Minute</span>
+                        <span style={{ marginLeft: matches ? -30 : 0, fontWeight: "bold", display: "inline", textShadow: theme.shadows[10] }}>1 Minute</span>
                         <br></br>
-                        <span style={{ marginLeft: matches ? 30 : 0, fontWeight: "bold", display: 'inline' }}>10 Breaths</span>
+                        <span style={{ marginLeft: matches ? 30 : 0, fontWeight: "bold", display: "inline", textShadow: theme.shadows[15] }}>10 Breaths</span>
                     </Typography>
                     <ZoomCard
                         delay="800ms"
@@ -196,7 +230,23 @@ function Home() {
                     alignItems: "flex-start",
                 }}
             >
-                <Card
+                {courses.map(course => (
+                    <Card key={course._id}
+                        info={{
+                            _id: course._id,
+                            photo: course.cover,
+                            title: course.name,
+                            description: course.shortDesc,
+                            rating: course.rating || 0,
+                            price: course.price,
+                            author: {
+                                name: course.authorName || "AYS",
+                            },
+                        }}
+                    ></Card>
+                ))}
+                
+                {/* <Card
                     info={{
                         photo: pp,
                         title: "Fit Yogi",
@@ -207,31 +257,7 @@ function Home() {
                             name: "Aman",
                         },
                     }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
+                ></Card> */}
             </div>
             <BannerAd
                 info={{

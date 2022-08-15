@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e199ff3e.css",
+    "main.js": "/static/js/main.4666600c.js",
+    "static/js/787.4196348a.chunk.js": "/static/js/787.4196348a.chunk.js",
+    "static/media/material-icons-two-tone.woff": "/static/media/material-icons-two-tone.8e41f5e6fbad90e70672.woff",
+    "static/media/material-icons-two-tone.woff2": "/static/media/material-icons-two-tone.c142818ceebfd170aa69.woff2",
+    "static/media/material-icons-round.woff": "/static/media/material-icons-round.8fce91b9f9c627c2c260.woff",
+    "static/media/material-icons-outlined.woff": "/static/media/material-icons-outlined.caaa30bfc2787b8a34d9.woff",
+    "static/media/material-icons-round.woff2": "/static/media/material-icons-round.b48566658cf6cdc085ef.woff2",
+    "static/media/material-icons.woff": "/static/media/material-icons.53abdaab74ac66470536.woff",
+    "static/media/material-icons-sharp.woff": "/static/media/material-icons-sharp.2da22890bca946c7a100.woff",
+    "static/media/material-icons-outlined.woff2": "/static/media/material-icons-outlined.73319595f421ef8247b1.woff2",
+    "static/media/material-icons-sharp.woff2": "/static/media/material-icons-sharp.0cf959b1473bddd82508.woff2",
+    "static/media/material-icons.woff2": "/static/media/material-icons.ff72a62dc27e9ea444b6.woff2",
+    "static/media/product4.jpg": "/static/media/product4.8db4fbec9b22a2784446.jpg",
+    "static/media/adprimary.png": "/static/media/adprimary.440d0760e1f9df76274f.png",
+    "static/media/logo.png": "/static/media/logo.e90922b1382bbc56d13f.png",
+    "static/media/AdBackground.webp": "/static/media/AdBackground.84dde86795cde4cf6230.webp",
+    "index.html": "/index.html",
+    "main.e199ff3e.css.map": "/static/css/main.e199ff3e.css.map",
+    "main.4666600c.js.map": "/static/js/main.4666600c.js.map",
+    "787.4196348a.chunk.js.map": "/static/js/787.4196348a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e199ff3e.css",
+    "static/js/main.4666600c.js"
+  ]
+}

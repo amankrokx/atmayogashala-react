@@ -40,12 +40,12 @@ const addChapter = (req, res) => {
                             // Both photos uploaded, add to db
                             const data = {
                                 name: k.chapterName,
-                                created: k.date,
+                                created: new Date(k.date),
                                 active: false,
                                 buyers: 0,
                                 longDesc: k.chapterLongDescription ? k.chapterLongDescription : null,
                                 shortDesc: k.chapterShortDescription,
-                                duration: k.chapterDuration,
+                                duration: parseInt(k.chapterDuration),
                                 video: k.chapterVideoUrl ? k.chapterVideoUrl : null,
                                 photo: chapterUrl,
                                 cover: coverUrl,
@@ -236,7 +236,7 @@ const addCourse = (req, res) => {
                 .then(courseUrl => {
                     const data = {
                         name: k.courseName,
-                        created: k.date,
+                        created: new Date(k.date),
                         active: false,
                         buyers: 0,
                         longDesc: k.courseLongDescription,
@@ -282,25 +282,65 @@ const addCourse = (req, res) => {
 const getCourseList = (req, res) => {
     console.log("get Course List")
     // only for admins !!!!!!!!!!!!!!!!!!!!
-    database
-        .find({ collection: "courses", projection: { _id: 1, name: 1, created: 1, active: 1, buyers: 1 } })
-        .then(list => {
-            res.json({
-                status: "success",
-                list,
+    if (req.params && req.params.ref === "admin" && req.session.isAdmin)
+        database
+            .find({ collection: "courses", projection: { _id: 1, name: 1, created: 1, active: 1, buyers: 1 } })
+            .then(list => {
+                res.json({
+                    status: "success",
+                    list,
+                })
             })
-        })
-        .catch(err => {
-            res.json({
-                status: "error",
-                message: err.toString(),
+            .catch(err => {
+                res.json({
+                    status: "error",
+                    message: err.toString(),
+                })
             })
-        })
+    else {
+        let query = {}
+        let projection = {}
+        let sort = {}
+        if (req.query) {
+            const k = req.query
+            if (!(req.session && req.session.isAdmin)) query.active = true
+            if (k.orderBy === "popularity") sort = {buyers : -1}
+            if (k._id) {
+                query._id = ObjectId(k._id)
+            }
+            else {
+                if (k.s) {
+                    query.$or = [{ name: new RegExp(".*" + decodeURI(k.s).replaceAll(" ", ".*") + ".*", "i") }, { tags: new RegExp(".*" + decodeURI(k.s).replace(" ", ".*") + ".*", "i") }]
+                }
+                // projection = {_id: 1, name: 1, created: 1, shortDesc: 1, duration: 1, cover: 1}
+
+            }
+            console.log(k, query)
+            database
+                .find({
+                    collection: "courses",
+                    projection,
+                    query,
+                })
+                    .then(list => {
+                        res.json({
+                            status: "success",
+                            list,
+                        })
+                    })
+                    .catch(err => {
+                        res.json({
+                            status: "error",
+                            message: err.toString(),
+                        })
+                    })
+        }
+    }
 }
 const getChapterList = (req, res) => {
     console.log("get Course List")
     // only for admins !!!!!!!!!!!!!!!!!!!!
-    database.find({collection: "chapters", projection: {_id: 1, name: 1, created: 1, active : 1, buyers: 1}}).then(list => {
+    database.find({collection: "chapters", projection: {_id: 1, name: 1, created: 1, active : 1, buyers: 1}}).sort(sort).then(list => {
         res.json({
             status: "success",
             list

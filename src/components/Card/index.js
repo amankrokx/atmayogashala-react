@@ -8,10 +8,11 @@ import Typography from "@mui/material/Typography"
 import Rating from "@mui/material/Rating"
 import Chip from "@mui/material/Chip"
 import Avatar from "@mui/material/Avatar"
+import { Link } from "react-router-dom"
 
 export default function ImgMediaCard(props) {
     return (
-        <Card sx={{ width: 345, minWidth: 345, margin: '10px' }}>
+        <Card sx={{ width: 345, minWidth: 345, margin: "10px" }}>
             <CardMedia component="img" alt="green iguana" height="160" image={props.info.photo} />
             <CardContent>
                 <Typography
@@ -30,7 +31,11 @@ export default function ImgMediaCard(props) {
                             <span className="material-icons">share</span>
                         </Button>
                         <Chip
-                            avatar={<Avatar alt={props.info.author.name} src={props.info.author.photo || null}>{props.info.author.photo ? null : props.info.author.name.charAt(0)}</Avatar>}
+                            avatar={
+                                <Avatar alt={props.info.author.name} src={props.info.author.photo || null}>
+                                    {props.info.author.photo ? null : props.info.author.name.charAt(0)}
+                                </Avatar>
+                            }
                             label={props.info.author.name}
                             color="secondary"
                             size="small"
@@ -42,22 +47,32 @@ export default function ImgMediaCard(props) {
                     {props.info.description}
                 </Typography>
                 <Rating name="read-only" value={props.info.rating} precision={0.5} defaultValue={1} readOnly style={{ marginTop: 10 }} />
-                <div style={{display: 'flex', alignItems: 'center'}}>
+                <div style={{ display: "flex", alignItems: "center" }}>
                     <span>₹</span>
                     <span style={{ marginLeft: 5 }}>{props.info.price}</span>
-                    <span className="material-icons" style={{fontSize: 18, marginLeft: 5}}>sell</span>
+                    <span className="material-icons" style={{ fontSize: 18, marginLeft: 5 }}>
+                        sell
+                    </span>
                 </div>
             </CardContent>
-            <CardActions style={{ justifyContent: "flex-end", paddingRight: 20, paddingBottom: 15 }}>
-                <Button size="small" style={{ marginRight: 10 }}>
-                    Learn More
-                </Button>
-                <Button size="small" variant="contained">
-                    <span className="material-icons" style={{ fontSize: 18, marginRight: 5 }}>
-                        add_shopping_cart
-                    </span>
-                    Buy
-                </Button>
+            <CardActions style={{ justifyContent: "flex-end", paddingRight: 20, paddingBottom: 15 }} onClick={() => {}}>
+                <Link
+                    to={'/course/' + props.info._id}
+                    style={{
+                        color: "inherit",
+                        textDecoration: "none",
+                    }}
+                >
+                    <Button size="small" style={{ marginRight: 10 }}>
+                        Learn More
+                    </Button>
+                    <Button size="small" variant="contained">
+                        <span className="material-icons" style={{ fontSize: 18, marginRight: 5 }}>
+                            add_shopping_cart
+                        </span>
+                        Buy
+                    </Button>
+                </Link>
             </CardActions>
         </Card>
     )

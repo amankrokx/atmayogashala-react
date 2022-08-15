@@ -10,35 +10,25 @@ import SnackbarUtils from "../components/SnackbarUtils";
 
 function Prod_description() {
     const [courseDetails, setCourseDetails] = useState({
-        status: 'success',
-        photo: pp,
-        title: "Fit Yogi",
-        date: "23/23/2023",
-        description1:
-            "Something as description about the course to be included here for the card . Buy this course and improve your body and mind in terns of everything. One minute ten breadth is a wondreful fun act yoga for quic recapture of your Body and mind state.",
-        description2: "Technical points",
-        des2: [
-            "Technical description about the course",
-            "Course pricing and benefits in terms of online mode pof yoga teaching",
-            "How effective is online yoga and be regular to see results",
-            "Minimum system requirements and other detailed stuff",
-        ],
-        description3: "Yoga points",
-        des3: [
-            "Technical description about the course",
-            "Course pricing and benefits in terms of online mode pof yoga teaching",
-            "How effective is online yoga and be regular to see results",
-            "Minimum system requirements and other detailed stuff",
-        ],
-        tagline: "This is a space to put on a tagline for the course",
-        rating: 4.5,
-        price: 1999,
-        author: {
-            name: "Infinite_n00b",
-        },
-    })
+                _id: "62f91db7478ffb7c1fdfd3b6",
+                cover: null,
+                name: "Fit Yogi",
+                created: "69/69/6969",
+                shortDesc: "This is a space to put on a tagline for the course",
+                longDesc: "This is a space to put on a tagline for the course",
+                rating: 4.5,
+                price: 1999,
+                author: {
+                    name: "Infinite_n00b",
+                },
+                buyers: 0,
+                tags: "these are the search tags",
+                chapters: "62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d",
+                message: "No course found."
+            })
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         LoaderUtils.open()
         let course = window.location.pathname.split("/")[2].toString()
         fetch(backPath() + '/getCourse/' + course, {
@@ -54,7 +44,7 @@ function Prod_description() {
         }).then(res => res.json())
             .then(data => {
                 setCourseDetails(data)
-                // console.log(data)
+                console.log(data)
                 LoaderUtils.close()
             })
             .catch(err => {

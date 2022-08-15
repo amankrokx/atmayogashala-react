@@ -38,6 +38,7 @@ export default function RecipeReviewCard(props) {
           sx={{
               maxWidth: "100%",
               margin: "10px",
+              width: "100%",
               fontSize: "30px",
           }}
       >
@@ -71,14 +72,14 @@ export default function RecipeReviewCard(props) {
                           fontWeight: 600,
                       }}
                   >
-                      {props.info.title}
+                      {props.info.name}
                   </span>
                   <span
                       style={{
                           fontSize: "10px",
                       }}
                   >
-                      {props.info.date}
+                      {props.info.created}
                   </span>
               </div>
           </Typography>
@@ -96,7 +97,7 @@ export default function RecipeReviewCard(props) {
                   component="img"
                   height="380"
                   // width = "400"
-                  image={props.info.photo || photo}
+                  image={props.info.cover || photo}
                   alt="Fit yogi"
                   style={{
                       margin: "10px",
@@ -110,7 +111,7 @@ export default function RecipeReviewCard(props) {
                   }}
               >
                   <Typography variant="body2" color="text.secondary" fontSize={"20px"}>
-                      {props.info.description1}
+                      {props.info.shortDesc}
                   </Typography>
               </CardContent>
           </div>
@@ -127,8 +128,8 @@ export default function RecipeReviewCard(props) {
           </CardActions>
           <CardContent>
               <Typography style={{ fontSize: 20, fontWeight: "bold" }}>Description: </Typography>
-
-              <div
+                  <div>{props.info.longDesc}</div>
+              {/* <div
                   style={{
                       display: "flex",
                       flexDirection: "row",
@@ -186,20 +187,17 @@ export default function RecipeReviewCard(props) {
                           ))}
                       </ul>
                   </Typography>
-              </div>
+              </div> */}
 
               <Typography style={{ alignSelf: "center", textAlign: "center", fontSize: 18, fontWeight: 700 }}>{props.info.tagline}</Typography>
           </CardContent>
 
-          <CardActions style={{ justifyContent: "center", paddingRight: 20, paddingBottom: 15 }}>
-              <Button size="large" style={{ marginRight: 20 }}>
-                  Learn More
-              </Button>
+          <CardActions style={{ justifyContent: "end", paddingRight: 20, paddingBottom: 15 }}>
               <Button size="large" variant="contained">
                   <span className="material-icons" style={{ fontSize: 20, marginRight: 10 }}>
                       add_shopping_cart
                   </span>
-                  Buy
+                  Buy Now
               </Button>
           </CardActions>
       </Card>

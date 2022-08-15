@@ -31,7 +31,7 @@ const CourseManager = () => {
     useEffect(() => {
         console.log(`fetching ${tab} lists`)
         LoaderUtils.open()
-        const path = (tab === "course") ? "/getCourseList" : "/getChapterList"
+        const path = (tab === "course") ? "/getCourseList?ref=admin" : "/getChapterList?ref=admin"
         fetch(backPath() + path, {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
