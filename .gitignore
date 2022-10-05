@@ -1,5 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-/server/firebase/firebase-admin-service-account.mjs
+./server/firebase/firebase-admin-service-account.mjs
 
 # dependencies
 /node_modules
