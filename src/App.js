@@ -40,21 +40,18 @@ function App() {
             )}
         >
             <div className="App">
-                <Snack>
-                    <Loader></Loader>
-                    {/* <AppBar position="absolute" color="transparent" style={{ boxShadow: "none" }}> */}
-                        <NavBar state={loggedIn} />
-                    {/* </AppBar> */}
-                    <Toolbar></Toolbar>
-                    <Routes>
-                        <Route exact path="/" element={<Home />} />
-                        <Route exact path="/admin_dashboard/*" element={<AdminDashboard />} />
-                        <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
-                        <Route exact path="/but" element={<Button variant="contained">But</Button>} />
-                        <Route exact path="/course/*" element={<Prod_description/>} />
-                    </Routes>
-                    <Footer />
-                </Snack>
+                <Snack></Snack>
+                <Loader></Loader>
+                <NavBar state={loggedIn} />
+                <Toolbar></Toolbar>
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/admin_dashboard/*" element={<AdminDashboard />} />
+                    <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
+                    <Route exact path="/but" element={<Button variant="contained">But</Button>} />
+                    <Route exact path="/course/*" element={<Prod_description/>} />
+                </Routes>
+                <Footer />
             </div>
         </SnackbarProvider>
     )

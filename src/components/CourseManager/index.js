@@ -22,7 +22,7 @@ const CourseManager = () => {
     const [chapterLists, setChapterLists] = useState([])
     const [openEditor, setOpenEditor] = useState({open : false, tab: null, details: null})
     const [reload, setReload] = useState(0)
-    const [tab, setTab] = React.useState("course")
+    const [tab, setTab] = React.useState("chapter")
 
     const handleChange = (event, newValue) => {
         setTab(newValue)
@@ -60,8 +60,14 @@ const CourseManager = () => {
     }
 
     const openCourseCreator = (isNew = true, which, id) => {
+        // check if new or edit and open editor
+        // if edit, fetch details from server
+        // if new, open editor with empty details
+        // ################################################################ Start from here tomorrow @ 10:30 AM ################################################################
         if (isNew) setOpenEditor({open: true, tab: which, details: null})
-        else setOpenEditor({open: true, tab: which, details: (id > -1) ? courseLists[id] : null})
+        else setOpenEditor({open: true, tab: which, details: (id > -1) ? (
+            tab === "course" ? courseLists[id] : chapterLists[id]
+            ) : null})
     }
     return (
         <>
@@ -108,7 +114,9 @@ const CourseManager = () => {
                                         <TableCell align="center">{value._id}</TableCell>
                                         <TableCell align="center">
                                             <Tooltip title="View / Edit Course" arrow>
-                                                <Button variant="text" color="secondary">
+                                                <Button variant="text" color="secondary" onClick={() => {
+                                                    openCourseCreator(false, "course", index)
+                                                }}>
                                                     <span className="material-icons">edit</span>
                                                 </Button>
                                             </Tooltip>
@@ -139,7 +147,9 @@ const CourseManager = () => {
                                         <TableCell align="center">{value._id}</TableCell>
                                         <TableCell align="center">
                                             <Tooltip title="View / Edit Chapter" arrow>
-                                                <Button variant="text" color="secondary">
+                                                <Button variant="text" color="secondary" onClick={() => {
+                                                    openCourseCreator(false, "chapter", index)
+                                                }}>
                                                     <span className="material-icons">edit</span>
                                                 </Button>
                                             </Tooltip>

@@ -1,6 +1,6 @@
 import React from "react"
 import Paper from "@mui/material/Paper"
-import { Button, Dialog, DialogTitle, useMediaQuery, TextField, InputAdornment, Tooltip, Tab, Tabs, Stack, Divider, Typography, Box } from "@mui/material"
+import { Button, Dialog, DialogTitle, useMediaQuery, TextField, InputAdornment, Tooltip, Tab, Tabs, Stack, Divider, Typography, Box, Switch } from "@mui/material"
 import SnackbarUtils from "../SnackbarUtils"
 import { useState } from "react"
 import { useEffect } from "react"
@@ -16,22 +16,28 @@ const CourseEditor = props => {
     const tagsRef = useRef()
     const coverImageRef = useRef()
     const [values, setValues] = useState(
-        props.details.details
-            ? props.details.details
-            : {
-                courseName: "",
-                courseShortDescription: "",
-                courseLongDescription: "",
-                coursePrice: "",
-                courseChapters: "",
-                courseSearchTags: "",
+        props.details.details || {
+            shortDesc: "",
+            price: "",
+            name: "",
+            active: false,
+            buyers: "",
+            chapters: "",
+            cover: "",
+            created: "",
+            longDesc: "",
+            price: 0,
+            tags: "",
+            _id: ""
             }
     )
+    
+    console.log(values.tags)
 
     const uploadCourse = () => {
         const formData = new FormData()
         for (const value in values) {
-            if (values[value]) formData.append(value, values[value])
+            if (values[value] != null || values[value] != undefined) formData.append(value, values[value])
         }
         formData.append("mode", props.details.details && props.details.details._id ? "update" : "create")
         if (coverImageRef.current.files.length > 0) formData.append("chapterCoverImage", coverImageRef.current.files[0])
@@ -88,26 +94,22 @@ const CourseEditor = props => {
             <Paper elevation={3} sx={{ padding: 4, minWidth: 520 }}>
                 <DialogTitle>
                     <span className="material-icons-outlined">post_add</span> Course Editor
+                    <Switch
+                        sx={{ float: "right" }}
+                        color="primary"
+                        checked={values.active}
+                        onChange={() => setValues({ ...values, active: !values.active })}
+                        inputProps={{ "aria-label": "controlled" }} />
+                    <span style={{ float: "right", fontSize: "small", margin: 8 }}>{props.details.details ? props.details.details._id : ""}</span>
                 </DialogTitle>
                 <Stack spacing={2}>
-                    <TextField label="Course Name" value={values.courseName} onChange={event => setValues({ ...values, courseName: event.target.value })} variant="outlined" />
-                    <TextField
-                        label="Course Short Descrpition"
-                        value={values.courseShortDescription}
-                        onChange={event => setValues({ ...values, courseShortDescription: event.target.value })}
-                        variant="outlined"
-                    />
-                    <TextField
-                        label="Course Price ( Rupees )"
-                        value={values.coursePrice}
-                        onChange={event => setValues({ ...values, coursePrice: event.target.value })}
-                        type="number"
-                        variant="outlined"
-                    />
+                    <TextField label="Course Name" value={values.name} onChange={event => setValues({ ...values, name: event.target.value })} variant="outlined" />
+                    <TextField label="Course Short Descrpition" value={values.shortDesc} onChange={event => setValues({ ...values, shortDesc: event.target.value })} variant="outlined" />
+                    <TextField label="Course Price ( Rupees )" value={values.price} onChange={event => setValues({ ...values, price: event.target.value })} type="number" variant="outlined" />
                     <TextField
                         label="Course Long Description"
-                        value={values.courseLongDescription}
-                        onChange={event => setValues({ ...values, courseLongDescription: event.target.value })}
+                        value={values.longDesc}
+                        onChange={event => setValues({ ...values, longDesc: event.target.value })}
                         multiline
                         minRows={4}
                         maxRows={9}
@@ -120,16 +122,24 @@ const CourseEditor = props => {
                         onClose={() => setAutoCompleteOpen(false)}
                         options={props.chapterLists}
                         getOptionLabel={option => option.name}
-                        // value={values.courseChapters}
+                        defaultValue={() => {
+                            let arr = []
+                            props.chapterLists.map(chapter => {
+                                if (values.chapters.includes(chapter._id)) arr.push(chapter)
+                            })
+                            return arr
+                        }}
+                        isOptionEqualToValue={(option, value) => option._id === value._id}
+                        // value={values.chapters}
                         onChange={(event, newInputValue) => {
                             // console.log(newInputValue)
                             if (newInputValue && newInputValue.length > 0) {
                                 let idList = []
-                                newInputValue.map((val) => {
+                                newInputValue.map(val => {
                                     idList.push(val._id)
                                 })
                                 // console.log(idList)
-                                setValues({ ...values, courseChapters: idList })
+                                setValues({ ...values, chapters: idList })
                             }
                         }}
                         // freeSolo
@@ -141,10 +151,14 @@ const CourseEditor = props => {
                         // open={autoCompleteOpen}
                         // onOpen={loadList}
                         // onClose={() => setAutoCompleteOpen(false)}
+                        value={values.tags}
                         options={[]}
                         freeSolo
-                        onChange={(event, newInputValue) => setValues({ ...values, courseSearchTags: newInputValue })}
-                        renderTags={(value, getTagProps) => value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)}
+                        onChange={(event, newInputValue) => setValues({ ...values, tags: newInputValue })}
+                        renderTags={(value, getTagProps) => {
+                            console.log(value)
+                            // value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
+                        }}
                         renderInput={params => <TextField {...params} inputRef={tagsRef} variant="outlined" label="Search Tags" placeholder="Tags..." />}
                     />
                     <Typography variant="h6" color="initial">

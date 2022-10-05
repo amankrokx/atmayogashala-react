@@ -9,6 +9,7 @@ import Rating from "@mui/material/Rating"
 import Chip from "@mui/material/Chip"
 import Avatar from "@mui/material/Avatar"
 import { Link } from "react-router-dom"
+import webShareAPI from "../webShareAPI"
 
 export default function ImgMediaCard(props) {
     return (
@@ -28,7 +29,9 @@ export default function ImgMediaCard(props) {
                     {props.info.title}
                     <div>
                         <Button>
-                            <span className="material-icons">share</span>
+                            <span className="material-icons" onClick={() => {
+                                webShareAPI("http://" + window.location.host + "/courses/" + props.info._id, props.info.title, props.info.description)
+                            }}>share</span>
                         </Button>
                         <Chip
                             avatar={

@@ -102,7 +102,7 @@ class Database {
     updateOne = ({collection, query, data}) => {
         return new Promise((resolve, reject) => {
             console.log(query)
-            this.db.collection(collection).updateOne(query, {$set : data },(err, result) => {
+            this.db.collection(collection).updateOne(query, {$set : data }, { multi: false, runValidators: true, omitUndefined: true }, (err, result) => {
                 if (err) {
                     console.log(err)
                     reject(err)

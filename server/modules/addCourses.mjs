@@ -4,7 +4,7 @@ import storage from "../firebase/storage/index.mjs"
 
 const YT = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
 
-const addChapter = (req, res) => {
+const addChapter = async (req, res) => {
     let k = req.body
     let p = req.files
     console.log("getting chapter")
@@ -205,47 +205,58 @@ const addChapter = (req, res) => {
     else console.log("maybe delete")
 }
 
-const addCourse = (req, res) => {
+const addCourse = async (req, res) => {
     console.log("getting course")
     console.log(req.body)
     console.log(req.files)
     let k = req.body
     if (k.mode === "create") {
         // Validate
+        // shortDesc: "",
+        //     price: "",
+        //     name: "",
+        //     active: false,
+        //     buyers: "",
+        //     chapters: "",
+        //     cover: "",
+        //     created: "",
+        //     longDesc: "",
+        //     price: 0,
+        //     shortDesc: "",
+        //     tags: "",
+        //     _id: ""
         if (
-            k.courseName &&
-            k.courseName.length > 0 &&
-            k.courseShortDescription &&
-            k.courseShortDescription.length > 0 &&
-            k.courseLongDescription &&
-            k.courseLongDescription.length > 0 &&
-            k.coursePrice &&
-            k.courseChapters &&
-            k.courseChapters.length > 0 &&
-            k.courseSearchTags &&
-            k.courseSearchTags.length > 0 &&
+            k.name &&
+            k.name.length > 0 &&
+            k.shortDesc &&
+            k.shortDesc.length > 0 &&
+            k.longDesc &&
+            k.longDesc.length > 0 &&
+            k.price &&
+            k.chapters &&
+            k.chapters.length > 0 &&
+            k.tags &&
+            k.tags.length > 0 &&
             req.files &&
             req.files.length > 0
         ) {
-            parseInt(k.coursePrice) > 0 ? (k.coursePrice = parseInt(k.coursePrice)) : 0
-            k.courseChapters = k.courseChapters.split(',')
             const ar = req.files[0].originalname.split(".")
-            req.files[0].originalname = k.courseName + "." + ar[ar.length - 1]
+            req.files[0].originalname = k.name + "." + ar[ar.length - 1]
             storage
                 .upload("Courses", req.files[0])
                 .then(courseUrl => {
-                    const data = {
-                        name: k.courseName,
-                        created: new Date(k.date),
-                        active: false,
-                        buyers: 0,
-                        longDesc: k.courseLongDescription,
-                        shortDesc: k.courseShortDescription,
-                        price: parseInt(k.coursePrice),
-                        cover: courseUrl,
-                        chapters: k.courseChapters,
-                        tags: k.courseSearchTags,
-                    }
+                    let data = {...k}
+                    delete data.mode
+                    delete data._id
+                    data.price = parseInt(data.price)
+                    data.buyers = 0
+                    data.created = new Date()
+                    data.date = new Date(data.date)
+                    data.tags = data.tags.split(",")
+                    data.chapters = data.chapters.split(",")
+                    data.active = data.active === "true" ? true : false
+                    data.cover = courseUrl
+                    console.log(data)
                     database
                         .insertOne({ collection: "courses", data })
                         .then(() => {
@@ -277,12 +288,48 @@ const addCourse = (req, res) => {
             })
         }
     }
+    else if (k.mode === "update") {
+        console.log("update record")    
+
+        if (!k._id) res.json({
+            status: "error",
+            message: "Course id not provided",
+        })
+        let data = {...k}
+        delete data.mode
+        delete data._id
+        data.price = parseInt(data.price)
+        data.buyers = parseInt(data.buyers)
+        data.date = new Date(data.date)
+        data.created = new Date(data.created)
+        data.tags = await data.tags.split(",")
+        data.chapters = await data.chapters.split(",")
+        data.active = data.active === "true" ? true : false
+        console.log(data)
+        database
+            .updateOne({ collection: "courses", query: { _id: ObjectId(k._id) }, data })
+            .then(() => {
+                res.json({
+                    status: "success",
+                    data,
+                    message: "Course Updated",
+                })
+            })
+            .catch(err => {
+                console.log(err)
+                res.json({
+                    status: "error",
+                    message: err.toString(),
+                })
+            })
+
+    }
 }
 
 const getCourseList = (req, res) => {
     console.log("get Course List")
-    // only for admins !!!!!!!!!!!!!!!!!!!!
     if (req.params && req.params.ref === "admin" && req.session.isAdmin)
+    // only for admins !!!!!!!!!!!!!!!!!!!!
         database
             .find({ collection: "courses", projection: { _id: 1, name: 1, created: 1, active: 1, buyers: 1 } })
             .then(list => {
@@ -340,7 +387,7 @@ const getCourseList = (req, res) => {
 const getChapterList = (req, res) => {
     console.log("get Course List")
     // only for admins !!!!!!!!!!!!!!!!!!!!
-    database.find({collection: "chapters", projection: {_id: 1, name: 1, created: 1, active : 1, buyers: 1}}).sort(sort).then(list => {
+    database.find({collection: "chapters", projection: {_id: 1, name: 1, created: 1, active : 1, buyers: 1}}, { sort: {buyers: 1}}).then(list => {
         res.json({
             status: "success",
             list

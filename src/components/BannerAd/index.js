@@ -12,7 +12,8 @@ function BannerAd(props) {
         fetch(backPath() + '/getAds')
             .then(data => data.json())
             .then(res => {
-                if (res.status === "success") {
+                if (res.length > 0) {
+                    console.log(res)
                     setAds(res)
                     setAdIndex(0)
                     const timer = window.setInterval(() => {

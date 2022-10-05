@@ -9,7 +9,8 @@
 /coverage
 
 # production
-# /build
+/server/firebase/firebase-admin-service-account.mjs
+/build
 
 # misc
 .DS_Store

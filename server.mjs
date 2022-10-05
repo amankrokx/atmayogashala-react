@@ -26,7 +26,7 @@ const app = express()
 const PORT = process.env.PORT || 3069
 
 let origins = ["https://atmayogashala.herokuapp.com", "https://gray-plant-0e1feea00.1.azurestaticapps.net"]
-if (process.env.NODE_ENV === "development") origins.push("http://localhost:3069", "http://localhost:3000")
+if (process.env.NODE_ENV === "development") origins.push("http://localhost:3069", "http://localhost:3000", "http://192.168.29.47:3000")
 app.use(function (req, res, next) {
     if (origins.includes(req.headers.origin)) {
         res.header("Access-Control-Allow-Origin", req.headers.origin) // restrict it to the required domain

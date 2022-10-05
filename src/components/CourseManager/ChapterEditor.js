@@ -19,18 +19,29 @@ const ChapterEditor = props => {
     const [disableUrl, setDisableUrl] = useState(false)
     const imageRef = useRef()
     const coverImageRef = useRef()
-    const [values, setValues] = useState(props.details.details ? props.details.details : {
-        chapterName: "",
-        chapterShortDescription: "",
-        chapterDuration: "",
-        chapterLongDescription: "",
-        chapterSearchTags: "",
-        chapterVideoUrl: "" 
+    const [values, setValues] = useState(
+        props.details.details || {
+            chapterName: "",
+            chapterShortDescription: "",
+            chapterDuration: "",
+            chapterLongDescription: "",
+            chapterSearchTags: "",
+            chapterVideoUrl: "" ,
+            // ######################################### Continue from here #########################################
+            // active : false,
+            // buyers : 0,
+            // chapters : [],
+            // cover: "",
+            // longDesc : "",
+            // name : "",
+            // price : 0,
+            // shortDesc : "",
+            // tags : [],
     })
     const tagsRef = useRef()
     const urlRef = useRef()
     const videoRef = useRef()
-
+    console.log(props.details)
     const uploadChapter = () => {
         if (req) {
             // Uploading in progress
