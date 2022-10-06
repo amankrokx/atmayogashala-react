@@ -14,6 +14,7 @@ import addVideo from "./server/modules/addVideo.mjs"
 import session from "express-session"
 import MongoStore from "connect-mongo"
 import { isAdmin, logout, verifyCred } from "./server/auth.mjs"
+import getChapter from "./server/modules/getChapter.mjs"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const upload = multer()
@@ -67,6 +68,7 @@ app.post('/addVideo', isAdmin, upload.single('video'), addVideo)
 app.get('/getCourseList', getCourseList)
 app.get("/getChapterList", isAdmin, getChapterList)
 app.get('/logout', logout)
+app.post("/getChapter", isAdmin, getChapter)
 app.post("/addCourse", isAdmin, upload.any(), addCourse)
 app.post("/addChapter", isAdmin, upload.any(), addChapter)
 app.post("/addAd", isAdmin, upload.single("photo"), addAd)

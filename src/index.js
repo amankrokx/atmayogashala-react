@@ -29,8 +29,11 @@ const theme = createTheme({
             main: "#ffffff",
         },
         contrastThreshold: 3,
+        // mode: "dark",
     },
 })
+
+// document.body.style.backgroundColor = theme.palette.background.default
 
 window.theme = theme
 

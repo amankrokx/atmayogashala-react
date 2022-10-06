@@ -51,7 +51,7 @@ const verifyCred = (req, res) => {
 }
 
 const isAdmin = (req, res, next) => {
-    // console.log("session details :", req.session)
+    console.log("session details :", req.session)
     if (req.session && req.session.isAdmin) next()
     else {
         if (req.body && req.body.jwt) {

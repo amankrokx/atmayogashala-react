@@ -13,13 +13,14 @@ const addChapter = async (req, res) => {
     if (k.mode === "create") {
         // Create a new chapter
         // Validation
+        delete k.mode
         if (
-            (k.chapterName && k.chapterName.length > 0) &&
-            (k.chapterShortDescription && k.chapterShortDescription.length > 0) &&
-            (k.chapterDuration && parseInt(k.chapterDuration) > 0) &&
-            (k.chapterSearchTags && k.chapterSearchTags.length > 0) &&
+            (k.name && k.name.length > 0) &&
+            (k.shortDesc && k.shortDesc.length > 0) &&
+            (k.duration && parseInt(k.duration) > 0) &&
+            (k.tags && k.tags.length > 0) &&
             (
-                (k.chapterVideoUrl && YT.test(k.chapterVideoUrl))
+                (k.video && YT.test(k.video))
                 ||
                 (p.length > 0 && (p[0].fieldname === 'chapterImage' || p[1].fieldname === 'chapterImage'))
             ) &&
@@ -27,30 +28,29 @@ const addChapter = async (req, res) => {
         ) {
             // Looks good, start uploading
             let ar
-            const chapterNamedId = k.chapterName.toString() + Date.now()
+            const namedId = k.name.toString() + Date.now()
             if (p[0].fieldname === "chapterCoverImage") {
                 ar = p[0].originalname.split('.')
                 p[0].originalname = "chapterCoverImage." + ar[ar.length - 1]
-                storage.upload(`Chapters/${chapterNamedId}`, p[0]).then(coverUrl => {
+                storage.upload(`Chapters/${namedId}`, p[0]).then(coverUrl => {
                     if (p.length > 1) {
                         ar = p[1].originalname.split(".")
                         p[1].originalname = "chapterImage." + ar[ar.length - 1]
-                        storage.upload(`Chapters/${chapterNamedId}`, p[1])
+                        storage.upload(`Chapters/${namedId}`, p[1])
                         .then(chapterUrl => {
                             // Both photos uploaded, add to db
-                            const data = {
-                                name: k.chapterName,
-                                created: new Date(k.date),
-                                active: false,
-                                buyers: 0,
-                                longDesc: k.chapterLongDescription ? k.chapterLongDescription : null,
-                                shortDesc: k.chapterShortDescription,
-                                duration: parseInt(k.chapterDuration),
-                                video: k.chapterVideoUrl ? k.chapterVideoUrl : null,
+                            let data = {
+                                created: new Date(),
                                 photo: chapterUrl,
                                 cover: coverUrl,
-                                tags: k.chapterSearchTags
+                                ...k
                             }
+                            data.date = new Date(data.date)
+                            data.active = data.active === "true" ? true : false
+                            data.buyers = 0
+                            data.duration = parseInt(data.duration)
+                            data.tags = data.tags.split(",")
+
                             database.insertOne({
                                 collection: "chapters",
                                 data
@@ -78,18 +78,16 @@ const addChapter = async (req, res) => {
                     }
                     else {
                         // photo not provided
-                        const data = {
-                            name: k.chapterName,
-                            created: k.date,
-                            active: false,
-                            buyers: 0,
-                            longDesc: k.chapterLongDescription ? k.chapterLongDescription : null,
-                            shortDesc: k.chapterShortDescription,
-                            duration: k.chapterDuration,
-                            video: k.chapterVideoUrl ? k.chapterVideoUrl : null,
+                        let data = {
+                            created: new Date(),
                             cover: coverUrl,
-                            tags: k.chapterSearchTags,
+                            ...k,
                         }
+                        data.date = new Date(data.date)
+                        data.active = data.active === "true" ? true : false
+                        data.buyers = 0
+                        data.duration = parseInt(data.duration)
+                        data.tags = data.tags.split(",")
                         database
                             .insertOne({
                                 collection: "chapters",
@@ -124,27 +122,25 @@ const addChapter = async (req, res) => {
                 ar = p[0].originalname.split(".")
                 p[0].originalname = "chapterImage." + ar[ar.length - 1]
                 storage
-                    .upload(`Chapters/${chapterNamedId}`, p[0])
+                    .upload(`Chapters/${namedId}`, p[0])
                     .then(coverUrl => {
                         ar = p[1].originalname.split(".")
                         p[1].originalname = "chapterCoverImage." + ar[ar.length - 1]
                         storage
-                            .upload(`Chapters/${chapterNamedId}`, p[1])
+                            .upload(`Chapters/${namedId}`, p[1])
                             .then(chapterUrl => {
                                 // Both photos uploaded, add to db
-                                const data = {
-                                    name: k.chapterName,
-                                    created: k.date,
-                                    active: false,
-                                    buyers: 0,
-                                    longDesc: k.chapterLongDescription ? k.chapterLongDescription : null,
-                                    shortDesc: k.chapterShortDescription,
-                                    duration: k.chapterDuration,
-                                    video: k.chapterVideoUrl ? k.chapterVideoUrl : null,
+                                let data = {
+                                    created: new Date(),
                                     photo: chapterUrl,
                                     cover: coverUrl,
-                                    tags: k.chapterSearchTags,
+                                    ...k,
                                 }
+                                data.date = new Date(data.date)
+                                data.active = data.active === "true" ? true : false
+                                data.buyers = 0
+                                data.duration = parseInt(data.duration)
+                                data.tags = data.tags.split(",")
                                 database
                                     .insertOne({
                                         collection: "chapters",
@@ -200,7 +196,41 @@ const addChapter = async (req, res) => {
         }
     }
     else if (k.mode === "update") {
-        console.log("update record")
+        console.log("update chapter")
+        delete k.mode
+        if (!k._id)
+            res.json({
+                status: "error",
+                message: "Course id not provided",
+            })
+        let data = {
+            ...k,
+        }
+        delete data._id
+        data.created = new Date(data.created)
+        data.date = new Date()
+        data.active = data.active === "true" ? true : false
+        data.buyers = parseInt(data.buyers)
+        data.duration = parseInt(data.duration)
+        data.tags = data.tags.split(",")
+
+        console.log(data)
+        database
+            .updateOne({ collection: "chapters", query: { _id: ObjectId(k._id) }, data })
+            .then(() => {
+                res.json({
+                    status: "success",
+                    data,
+                    message: "Course Updated",
+                })
+            })
+            .catch(err => {
+                console.log(err)
+                res.json({
+                    status: "error",
+                    message: err.toString(),
+                })
+            })
     }
     else console.log("maybe delete")
 }
@@ -291,16 +321,19 @@ const addCourse = async (req, res) => {
     else if (k.mode === "update") {
         console.log("update record")    
 
-        if (!k._id) res.json({
-            status: "error",
-            message: "Course id not provided",
-        })
+        if (!k._id) {
+            res.json({
+                status: "error",
+                message: "Course id not provided",
+            })
+            return
+        }
         let data = {...k}
         delete data.mode
         delete data._id
         data.price = parseInt(data.price)
         data.buyers = parseInt(data.buyers)
-        data.date = new Date(data.date)
+        data.date = new Date()
         data.created = new Date(data.created)
         data.tags = await data.tags.split(",")
         data.chapters = await data.chapters.split(",")

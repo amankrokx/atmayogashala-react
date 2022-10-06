@@ -148,7 +148,39 @@ const CourseManager = () => {
                                         <TableCell align="center">
                                             <Tooltip title="View / Edit Chapter" arrow>
                                                 <Button variant="text" color="secondary" onClick={() => {
-                                                    openCourseCreator(false, "chapter", index)
+                                                    if (!chapterLists[index].shortDesc) fetch(backPath() + "/getChapter", {
+                                                        method: "POST", // *GET, POST, PUT, DELETE, etc.
+                                                        mode: "cors", // no-cors, *cors, same-origin
+                                                        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                                                        credentials: "include",
+                                                        // headers: {
+                                                        //     "Content-Type": "application/json",
+                                                        // },
+                                                        redirect: "follow", // manual, *follow, error
+                                                        headers: {
+                                                            "Content-Type": "application/json",
+                                                        },
+                                                        body: JSON.stringify({
+                                                            _id: chapterLists[index]._id,
+                                                        }),
+                                                    })
+                                                        .then(res => res.json())
+                                                        .then(result => {
+                                                            if (result.status === "success") {
+                                                                delete result.status
+                                                                setChapterLists(ls => {
+                                                                    ls[index] = result
+                                                                    return ls
+                                                                })
+                                                                openCourseCreator(false, "chapter", index)
+                                                            }
+                                                            else SnackbarUtils.error(result.message)
+                                                        })
+                                                        .catch(err => {
+                                                            console.log(err)
+                                                            SnackbarUtils.error(err.message)
+                                                        })
+                                                    else openCourseCreator(false, "chapter", index)
                                                 }}>
                                                     <span className="material-icons">edit</span>
                                                 </Button>

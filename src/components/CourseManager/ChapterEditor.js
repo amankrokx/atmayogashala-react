@@ -1,6 +1,6 @@
 import React from "react"
 import Paper from "@mui/material/Paper"
-import { Button, Dialog, DialogTitle, useMediaQuery, LinearProgress, TextField, InputAdornment, Tooltip, Tab, Tabs, Stack, Divider, Typography, Box } from "@mui/material"
+import { Button, Dialog, DialogTitle, useMediaQuery, LinearProgress, TextField, InputAdornment, Tooltip, Tab, Tabs, Stack, Divider, Typography, Box, Switch } from "@mui/material"
 import SnackbarUtils from "../SnackbarUtils"
 import { useState } from "react"
 import { useEffect } from "react"
@@ -15,33 +15,28 @@ const ChapterEditor = props => {
     const [videoProgress, setVideoProgress] = useState(-1)
     const [videoTab, setVideoTab] = useState(props.details && props.details.details && props.details.details.videoUrl ? "url" : "upload")
     const [req, setReq] = useState(null)
-    const [videoUrl, setVideoUrl] = useState("")
     const [disableUrl, setDisableUrl] = useState(false)
     const imageRef = useRef()
     const coverImageRef = useRef()
     const [values, setValues] = useState(
         props.details.details || {
-            chapterName: "",
-            chapterShortDescription: "",
-            chapterDuration: "",
-            chapterLongDescription: "",
-            chapterSearchTags: "",
-            chapterVideoUrl: "" ,
-            // ######################################### Continue from here #########################################
-            // active : false,
-            // buyers : 0,
-            // chapters : [],
-            // cover: "",
-            // longDesc : "",
-            // name : "",
-            // price : 0,
-            // shortDesc : "",
-            // tags : [],
+            active : false,
+            buyers : 0,
+            chapters : [],
+            cover: "",
+            longDesc : "",
+            name : "",
+            price : 0,
+            shortDesc : "",
+            tags : [],
+            duration : 0,
+            video : "",
+            photo : "",
+            cover : "",  
     })
-    const tagsRef = useRef()
     const urlRef = useRef()
     const videoRef = useRef()
-    console.log(props.details)
+
     const uploadChapter = () => {
         if (req) {
             // Uploading in progress
@@ -114,7 +109,7 @@ const ChapterEditor = props => {
                     setVideoTab("url")
                     setTimeout(() => {
                         setDisableUrl(true)
-                        setValues({ ...values, chapterVideoUrl: "https://www.youtube.com/watch?v=" + data.videoId })
+                        setValues({ ...values, video: "https://www.youtube.com/watch?v=" + data.videoId })
                         setReq(null)
                     }, 400)
                 }
@@ -134,7 +129,6 @@ const ChapterEditor = props => {
             open={close}
             onClose={() => {
                 SnackbarUtils.warning("Changes Discarded !")
-                console.log(tagsRef.current.value)
                 setClose(false)
                 setTimeout(() => {
                     props.setOpenEditor({ open: false, details: null })
@@ -144,27 +138,30 @@ const ChapterEditor = props => {
             <Paper elevation={3} sx={{ padding: 4, minWidth: 520 }}>
                 <DialogTitle>
                     <span className="material-icons-outlined">post_add</span> Chapter Editor
+                    <Switch
+                        sx={{ float: "right" }}
+                        color="primary"
+                        checked={values.active}
+                        onChange={() => setValues({ ...values, active: !values.active })}
+                        inputProps={{ "aria-label": "controlled" }}
+                    />
+                    <span style={{ float: "right", fontSize: "small", margin: 8 }}>{props.details.details ? props.details.details._id : ""}</span>
                 </DialogTitle>
                 <Stack spacing={2}>
-                    <TextField label="Chapter Name" value={values.chapterName} onChange={(event, value) => setValues({ ...values, chapterName: event.target.value })} variant="outlined" />
-                    <TextField
-                        label="Chapter Short Descrpition"
-                        value={values.chapterShortDescription}
-                        onChange={(event, value) => setValues({ ...values, chapterShortDescription: event.target.value })}
-                        variant="outlined"
-                    />
+                    <TextField label="Chapter Name" value={values.name} onChange={(event, value) => setValues({ ...values, name: event.target.value })} variant="outlined" />
+                    <TextField label="Chapter Short Descrpition" value={values.shortDesc} onChange={(event, value) => setValues({ ...values, shortDesc: event.target.value })} variant="outlined" />
                     <TextField
                         label="Chapter Duration ( minutes )"
-                        value={values.chapterDuration}
-                        onChange={(event, value) => setValues({ ...values, chapterDuration: event.target.value })}
+                        value={values.duration}
+                        onChange={(event, value) => setValues({ ...values, duration: event.target.value })}
                         type="number"
                         variant="outlined"
                     />
                     <TextField
                         label="Chapter Long Description"
-                        value={values.chapterLongDescription}
+                        value={values.longDesc}
                         onChange={(event, value) => {
-                            setValues({ ...values, chapterLongDescription: event.target.value })
+                            setValues({ ...values, longDesc: event.target.value })
                         }}
                         multiline
                         minRows={4}
@@ -173,15 +170,13 @@ const ChapterEditor = props => {
                     />
                     <Autocomplete
                         multiple
-                        id="tags-outlined"
                         // open={autoCompleteOpen}
                         // onOpen={loadList}
                         // onClose={() => setAutoCompleteOpen(false)}
+                        value={values.tags}
                         options={[]}
                         freeSolo
-                        onChange={(event, newInputValue) => {
-                            setValues({ ...values, chapterSearchTags: newInputValue })
-                        }}
+                        onChange={(event, newInputValue) => setValues({ ...values, tags: newInputValue })}
                         renderTags={(value, getTagProps) => value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)}
                         renderInput={params => <TextField {...params} variant="outlined" label="Search Tags" placeholder="Tags..." />}
                     />
@@ -202,7 +197,7 @@ const ChapterEditor = props => {
                         }}
                         //   onChange={}
                         variant="outlined"
-                        />
+                    />
                     <TextField
                         label="Chapter Image"
                         type="file"
@@ -269,9 +264,9 @@ const ChapterEditor = props => {
                                     // defaultValue={null}
                                     disabled={disableUrl}
                                     type="url"
-                                    value={values.chapterVideoUrl}
+                                    value={values.video}
                                     onChange={(event, value) => {
-                                        setValues({ ...values, chapterVideoUrl: event.target.value })
+                                        setValues({ ...values, video: event.target.value })
                                     }}
                                     inputRef={urlRef}
                                     fullWidth
@@ -287,7 +282,7 @@ const ChapterEditor = props => {
                                                 <Button
                                                     variant="text"
                                                     onClick={() => {
-                                                        if ("clipboard" in navigator) navigator.clipboard.writeText(videoUrl).then(() => SnackbarUtils.success("Url Copied !"))
+                                                        if ("clipboard" in navigator) navigator.clipboard.writeText(values.video).then(() => SnackbarUtils.success("Url Copied !"))
                                                     }}
                                                     sx={{ position: "relative", right: -20 }}
                                                 >

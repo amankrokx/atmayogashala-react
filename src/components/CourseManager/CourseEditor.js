@@ -13,7 +13,6 @@ import Autocomplete from "@mui/material/Autocomplete"
 const CourseEditor = props => {
     const [close, setClose] = useState(true)
     const [autoCompleteOpen, setAutoCompleteOpen] = useState(false)
-    const tagsRef = useRef()
     const coverImageRef = useRef()
     const [values, setValues] = useState(
         props.details.details || {
@@ -84,7 +83,6 @@ const CourseEditor = props => {
             open={close}
             onClose={() => {
                 SnackbarUtils.warning("Changes Discarded !")
-                console.log(tagsRef.current.value)
                 setClose(false)
                 setTimeout(() => {
                     props.setOpenEditor({ open: false, details: null })
@@ -122,13 +120,13 @@ const CourseEditor = props => {
                         onClose={() => setAutoCompleteOpen(false)}
                         options={props.chapterLists}
                         getOptionLabel={option => option.name}
-                        defaultValue={() => {
+                        defaultValue={(() => {
                             let arr = []
                             props.chapterLists.map(chapter => {
                                 if (values.chapters.includes(chapter._id)) arr.push(chapter)
                             })
                             return arr
-                        }}
+                        })()}
                         isOptionEqualToValue={(option, value) => option._id === value._id}
                         // value={values.chapters}
                         onChange={(event, newInputValue) => {
@@ -155,11 +153,8 @@ const CourseEditor = props => {
                         options={[]}
                         freeSolo
                         onChange={(event, newInputValue) => setValues({ ...values, tags: newInputValue })}
-                        renderTags={(value, getTagProps) => {
-                            console.log(value)
-                            // value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
-                        }}
-                        renderInput={params => <TextField {...params} inputRef={tagsRef} variant="outlined" label="Search Tags" placeholder="Tags..." />}
+                        renderTags={(value, getTagProps) => value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)}
+                        renderInput={params => <TextField {...params} variant="outlined" label="Search Tags" placeholder="Tags..." />}
                     />
                     <Typography variant="h6" color="initial">
                         Uploads

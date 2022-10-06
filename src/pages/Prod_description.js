@@ -9,6 +9,7 @@ import LoaderUtils from "../components/Loader/LoaderUtils";
 import SnackbarUtils from "../components/SnackbarUtils";
 
 function Prod_description() {
+    // #################################################### Start working here  ####################################################
     const [courseDetails, setCourseDetails] = useState({
                 _id: "62f91db7478ffb7c1fdfd3b6",
                 cover: null,
@@ -22,7 +23,7 @@ function Prod_description() {
                     name: "Infinite_n00b",
                 },
                 buyers: 0,
-                tags: "these are the search tags",
+                tags: ["these are the search tags"],
                 chapters: "62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d",
                 message: "No course found."
             })
