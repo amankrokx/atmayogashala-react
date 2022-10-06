@@ -10,6 +10,7 @@ import SnackbarUtils from "../components/SnackbarUtils";
 
 function Prod_description() {
     // #################################################### Start working here  ####################################################
+    // #################################################### add author info to courses  ####################################################
     const [courseDetails, setCourseDetails] = useState({
                 _id: "62f91db7478ffb7c1fdfd3b6",
                 cover: null,
