@@ -7,7 +7,7 @@ import Button from "@mui/material/Button"
 import NavBar from "./components/navbar"
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from "@mui/material/IconButton"
-import { useTheme } from "@mui/styles"
+import { useTheme } from "@mui/material/styles"
 import { SnackbarProvider, useSnackbar } from "notistack"
 import Snack from "./components/Snack"
 import Loader from "./components/Loader"

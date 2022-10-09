@@ -9,7 +9,7 @@ const getCourse = (req, res) => {
             result.status = "success"
             if (!result.author) result.author = {
                     name: "AYS",
-                },
+            }
             res.json(result)
         }
         else if (req.params["0"] === "test") {

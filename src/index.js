@@ -8,7 +8,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import SnackbarUtils from './components/SnackbarUtils';
 import { useSnackbar } from 'notistack';
-import Snack from './components/Snack';
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 const theme = createTheme({
@@ -17,7 +16,7 @@ const theme = createTheme({
             main: "#4caf50", // This is an orange looking color
             light: "#80e27e",
             dark: "#087f23",
-            contrastText: "#fff"
+            contrastText: "#fff",
         },
         secondary: {
             main: "#2979ff", //Another orange-ish color
@@ -27,6 +26,9 @@ const theme = createTheme({
         },
         white: {
             main: "#ffffff",
+        },
+        black: {
+            main: "#323232",
         },
         contrastThreshold: 3,
         // mode: "dark",
