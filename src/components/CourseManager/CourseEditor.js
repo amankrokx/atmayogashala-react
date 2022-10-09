@@ -24,6 +24,7 @@ const CourseEditor = props => {
             chapters: "",
             cover: "",
             created: "",
+            author: "",
             longDesc: "",
             price: 0,
             tags: "",
@@ -103,6 +104,7 @@ const CourseEditor = props => {
                 <Stack spacing={2}>
                     <TextField label="Course Name" value={values.name} onChange={event => setValues({ ...values, name: event.target.value })} variant="outlined" />
                     <TextField label="Course Short Descrpition" value={values.shortDesc} onChange={event => setValues({ ...values, shortDesc: event.target.value })} variant="outlined" />
+                    <TextField label="Author Name" value={values.author} onChange={event => setValues({ ...values, author: event.target.value })} variant="outlined" />
                     <TextField label="Course Price ( Rupees )" value={values.price} onChange={event => setValues({ ...values, price: event.target.value })} type="number" variant="outlined" />
                     <TextField
                         label="Course Long Description"

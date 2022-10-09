@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from '@mui/material/Typography';
-import Card from "../components/Description"
-import Course_card from "../components/Card"
+import Card from "../components/Card"
 import pp from "../media/product4.jpg"
 import backPath from "../backPath";
 import LoaderUtils from "../components/Loader/LoaderUtils";
 import SnackbarUtils from "../components/SnackbarUtils";
 
-function Prod_description() {
+
+function Course() {
     // #################################################### Start working here  ####################################################
     // #################################################### add author info to courses  ####################################################
     const [courseDetails, setCourseDetails] = useState({
@@ -58,31 +58,9 @@ function Prod_description() {
     }, [])
     return (
         <div>
-            <Toolbar></Toolbar>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-around",
-                }}
-            >
-                {courseDetails.status === "success" ? (
-                    <Card info={courseDetails}></Card>
-                ) : (
-                    <Typography variant="h4" color="warning">
-                        {courseDetails.message}
-                    </Typography>
-                )}
-            </div>
-            <Typography
-                style={{
-                    margin: 30,
-                    alignSelf: "center",
-                    fontWeight: 700,
-                    fontSize: 18,
-                }}
-            >
+            <Typography variant="h5" color="initial">
                 Recomended Courses:
-            </Typography>
+            </Typography>            
             <div
                 style={{
                     display: "flex",
@@ -95,7 +73,7 @@ function Prod_description() {
                     width: "100%",
                 }}
             >
-                <Course_card
+                <Card
                     info={{
                         photo: pp,
                         title: "Fit Yogi",
@@ -106,46 +84,10 @@ function Prod_description() {
                             name: "Aman",
                         },
                     }}
-                ></Course_card>
-                <Course_card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Course_card>
-                <Course_card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Course_card>
-                <Course_card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Course_card>
+                ></Card>
             </div>
         </div>
     )
 }
 
-export default Prod_description
+export default Course
