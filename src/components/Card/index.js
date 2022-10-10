@@ -11,10 +11,11 @@ import Avatar from "@mui/material/Avatar"
 import { Link } from "react-router-dom"
 import webShareAPI from "../webShareAPI"
 
-export default function ImgMediaCard(props) {
+export default function ImgMediaCard({ info }) {
+    console.log(info)
     return (
         <Card sx={{ width: 345, minWidth: 345, margin: "10px" }}>
-            <CardMedia component="img" alt="green iguana" height="160" image={props.info.photo} />
+            <CardMedia component="img" alt="green iguana" height="160" image={info.cover} />
             <CardContent>
                 <Typography
                     gutterBottom
@@ -26,20 +27,20 @@ export default function ImgMediaCard(props) {
                         justifyContent: "space-between",
                     }}
                 >
-                    {props.info.title}
+                    {info.name}
                     <div>
                         <Button>
                             <span className="material-icons" onClick={() => {
-                                webShareAPI("http://" + window.location.host + "/courses/" + props.info._id, props.info.title, props.info.description)
+                                webShareAPI("http://" + window.location.host + "/courses/" + info._id, info.name, info.shortDesc)
                             }}>share</span>
                         </Button>
                         <Chip
                             avatar={
-                                <Avatar alt={props.info.author.name} src={props.info.author.photo || null}>
-                                    {props.info.author.photo ? null : props.info.author.name.charAt(0)}
+                                <Avatar alt={info.author.toString()}>
+                                    {info.author.toString().charAt(0)}
                                 </Avatar>
                             }
-                            label={props.info.author.name}
+                            label={info.author}
                             color="secondary"
                             size="small"
                             variant="filled"
@@ -47,12 +48,12 @@ export default function ImgMediaCard(props) {
                     </div>
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {props.info.description}
+                    {info.shortDesc}
                 </Typography>
-                <Rating name="read-only" value={props.info.rating} precision={0.5} defaultValue={1} readOnly style={{ marginTop: 10 }} />
+                <Rating name="read-only" value={info.rating || 2.5} precision={0.5} defaultValue={1} readOnly style={{ marginTop: 10 }} />
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <span>₹</span>
-                    <span style={{ marginLeft: 5 }}>{props.info.price}</span>
+                    <span style={{ marginLeft: 5 }}>{info.price}</span>
                     <span className="material-icons" style={{ fontSize: 18, marginLeft: 5 }}>
                         sell
                     </span>
@@ -60,7 +61,7 @@ export default function ImgMediaCard(props) {
             </CardContent>
             <CardActions style={{ justifyContent: "flex-end", paddingRight: 20, paddingBottom: 15 }} onClick={() => {}}>
                 <Link
-                    to={'/course/' + props.info._id}
+                    to={'/course/' + info._id}
                     style={{
                         color: "inherit",
                         textDecoration: "none",

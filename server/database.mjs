@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb"
 
 // const url = "mongodb://localhost:27017/placement"
-let collections = ["ads", "courses", "chapters"]
+let collections = ["ads", "courses", "chapters", "users"]
 
 /**
  * courses
@@ -32,6 +32,11 @@ let collections = ["ads", "courses", "chapters"]
  *      duration    <Number minutes>+
  *      video       <Youtube URL>
  *      photo       <Firebase storage URL>
+ * 
+ * users
+ *     _id         <uid Firebase UID>
+ *     courses     <Course { _id: progress INT}>
+ * 
  */
 
 class Database {

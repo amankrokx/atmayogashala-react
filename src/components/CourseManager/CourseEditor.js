@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import Paper from "@mui/material/Paper"
 import { Button, Dialog, DialogTitle, useMediaQuery, TextField, InputAdornment, Tooltip, Tab, Tabs, Stack, Divider, Typography, Box, Switch } from "@mui/material"
 import SnackbarUtils from "../SnackbarUtils"
@@ -9,6 +9,8 @@ import backPath from "../../backPath"
 import LoaderUtils from "../Loader/LoaderUtils"
 import Chip from "@mui/material/Chip"
 import Autocomplete from "@mui/material/Autocomplete"
+import RichTextEditor from "react-rte"
+const BodyTextEditor = React.lazy(() => import("../BodyTextEditor"))
 
 const CourseEditor = props => {
     const [close, setClose] = useState(true)
@@ -21,18 +23,17 @@ const CourseEditor = props => {
             name: "",
             active: false,
             buyers: "",
-            chapters: "",
+            chapters: [],
             cover: "",
             created: "",
             author: "",
-            longDesc: "",
+            longDesc: "Long Description for course",
             price: 0,
-            tags: "",
+            tags: [],
             _id: ""
             }
     )
     
-    console.log(values.tags)
 
     const uploadCourse = () => {
         const formData = new FormData()
@@ -43,7 +44,7 @@ const CourseEditor = props => {
         if (coverImageRef.current.files.length > 0) formData.append("chapterCoverImage", coverImageRef.current.files[0])
         formData.append("date", new Date())
         LoaderUtils.open()
-        fetch(backPath() + "/addCourse", {
+        fetch(backPath + "/addCourse", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -98,7 +99,8 @@ const CourseEditor = props => {
                         color="primary"
                         checked={values.active}
                         onChange={() => setValues({ ...values, active: !values.active })}
-                        inputProps={{ "aria-label": "controlled" }} />
+                        inputProps={{ "aria-label": "controlled" }}
+                    />
                     <span style={{ float: "right", fontSize: "small", margin: 8 }}>{props.details.details ? props.details.details._id : ""}</span>
                 </DialogTitle>
                 <Stack spacing={2}>
@@ -106,7 +108,10 @@ const CourseEditor = props => {
                     <TextField label="Course Short Descrpition" value={values.shortDesc} onChange={event => setValues({ ...values, shortDesc: event.target.value })} variant="outlined" />
                     <TextField label="Author Name" value={values.author} onChange={event => setValues({ ...values, author: event.target.value })} variant="outlined" />
                     <TextField label="Course Price ( Rupees )" value={values.price} onChange={event => setValues({ ...values, price: event.target.value })} type="number" variant="outlined" />
-                    <TextField
+                    <Suspense fallback={<div><center>Loading...</center></div>}>
+                        <BodyTextEditor values={values} setValues={setValues} />
+                    </Suspense>
+                    {/* <TextField
                         label="Course Long Description"
                         value={values.longDesc}
                         onChange={event => setValues({ ...values, longDesc: event.target.value })}
@@ -114,7 +119,7 @@ const CourseEditor = props => {
                         minRows={4}
                         maxRows={9}
                         variant="outlined"
-                    />
+                    /> */}
                     <Autocomplete
                         multiple
                         open={autoCompleteOpen}

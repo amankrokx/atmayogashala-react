@@ -53,7 +53,7 @@ const ChapterEditor = props => {
         if (coverImageRef.current.files.length > 0) formData.append("chapterCoverImage", coverImageRef.current.files[0])
         formData.append('date', new Date())
         LoaderUtils.open()
-        fetch(backPath() + "/addChapter", {
+        fetch(backPath + "/addChapter", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -92,7 +92,7 @@ const ChapterEditor = props => {
         data.append("video", videoRef.current.files[0])
 
         let request = new XMLHttpRequest()
-        request.open("POST", backPath() + "/addVideo")
+        request.open("POST", backPath + "/addVideo")
         // upload progress event
         request.upload.addEventListener("progress", function (e) {
             // upload progress as percentage

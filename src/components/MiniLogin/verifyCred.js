@@ -3,7 +3,7 @@ import auth from "../../firebase/auth"
 
 const verifyCred = (user)  => {
     return new Promise((resolve, reject) => {
-        fetch(backPath() + "/verifyCred", {
+        fetch(backPath + "/verifyCred", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -26,7 +26,7 @@ const verifyCred = (user)  => {
             }
             if (!user) user = auth.currentUser
             user.getIdToken(true).then(idToken => {
-                fetch(backPath() + "/verifyCred", {
+                fetch(backPath + "/verifyCred", {
                     method: "POST", // *GET, POST, PUT, DELETE, etc.
                     mode: "cors", // no-cors, *cors, same-origin
                     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

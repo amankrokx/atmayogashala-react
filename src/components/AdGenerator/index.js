@@ -33,7 +33,7 @@ const AdForm = (props) => {
         formData.append('mode', _id ? 'update' : 'create')
         formData.append('date', new Date())
         LoaderUtils.open()
-        fetch(backPath() + '/addAd', {
+        fetch(backPath + '/addAd', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -165,7 +165,7 @@ const AdGenerator = () => {
     const [openMaker, setOpenMaker] = useState({open: false, details: null})
     const [reload, setReload] = useState(0)
     useEffect(() => {
-        fetch(backPath() + "/getAds")
+        fetch(backPath + "/getAds")
             .then(data => data.json())
             .then(res => {
                 setAdLists(res)
@@ -182,7 +182,7 @@ const AdGenerator = () => {
         formData.append('mode', 'delete')
         formData.append('_id', id)
         LoaderUtils.open()
-        fetch(backPath() + "/addAd", {
+        fetch(backPath + "/addAd", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

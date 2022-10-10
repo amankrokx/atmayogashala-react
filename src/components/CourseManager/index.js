@@ -32,7 +32,7 @@ const CourseManager = () => {
         console.log(`fetching ${tab} lists`)
         LoaderUtils.open()
         const path = (tab === "course") ? "/getCourseList?ref=admin" : "/getChapterList?ref=admin"
-        fetch(backPath() + path, {
+        fetch(backPath + path, {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -148,7 +148,7 @@ const CourseManager = () => {
                                         <TableCell align="center">
                                             <Tooltip title="View / Edit Chapter" arrow>
                                                 <Button variant="text" color="secondary" onClick={() => {
-                                                    if (!chapterLists[index].shortDesc) fetch(backPath() + "/getChapter", {
+                                                    if (!chapterLists[index].shortDesc) fetch(backPath + "/getChapter", {
                                                         method: "POST", // *GET, POST, PUT, DELETE, etc.
                                                         mode: "cors", // no-cors, *cors, same-origin
                                                         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

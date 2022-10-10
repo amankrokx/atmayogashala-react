@@ -101,7 +101,7 @@ function Home() {
 
     useEffect(() => {
         LoaderUtils.open()
-        fetch(backPath() + "/getCourseList?orderBy=popularity", {
+        fetch(backPath + "/getCourseList?orderBy=popularity", {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -231,7 +231,8 @@ function Home() {
                 }}
             >
                 {courses.map(course => (
-                    <Card key={course._id}
+                    <Card
+                        key={course._id}
                         info={{
                             _id: course._id,
                             photo: course.cover,
@@ -245,7 +246,7 @@ function Home() {
                         }}
                     ></Card>
                 ))}
-                
+
                 {/* <Card
                     info={{
                         photo: pp,
@@ -276,38 +277,50 @@ function Home() {
             >
                 <Card
                     info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
+                        _id: "62f91db7478ffb7c1fdfd3b6",
+                        cover: pp,
+                        name: "Fit Yogi",
+                        created: "69/69/6969",
+                        shortDesc: "This is a space to put on a tagline for the course",
+                        longDesc: "This is a space to put on a tagline for the course",
+                        rating: 4.5,
                         price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
+                        author: "Infinite_n00b",
+                        buyers: 0,
+                        tags: [],
+                        chapters: ["62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d"],
                     }}
                 ></Card>
                 <Card
                     info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
+                        _id: "62f91db7478ffb7c1fdfd3b6",
+                        cover: pp,
+                        name: "Fit Yogi",
+                        created: "69/69/6969",
+                        shortDesc: "This is a space to put on a tagline for the course",
+                        longDesc: "This is a space to put on a tagline for the course",
+                        rating: 4.5,
                         price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
+                        author: "Infinite_n00b",
+                        buyers: 0,
+                        tags: [],
+                        chapters: ["62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d"],
                     }}
                 ></Card>
                 <Card
                     info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
+                        _id: "62f91db7478ffb7c1fdfd3b6",
+                        cover: pp,
+                        name: "Fit Yogi",
+                        created: "69/69/6969",
+                        shortDesc: "This is a space to put on a tagline for the course",
+                        longDesc: "This is a space to put on a tagline for the course",
+                        rating: 4.5,
                         price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
+                        author: "Infinite_n00b",
+                        buyers: 0,
+                        tags: [],
+                        chapters: ["62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d"],
                     }}
                 ></Card>
             </div>

@@ -339,22 +339,55 @@ const addCourse = async (req, res) => {
         data.chapters = await data.chapters.split(",")
         data.active = data.active === "true" ? true : false
         console.log(data)
-        database
-            .updateOne({ collection: "courses", query: { _id: ObjectId(k._id) }, data })
-            .then(() => {
-                res.json({
-                    status: "success",
-                    data,
-                    message: "Course Updated",
+        if (req.files && req.files.length > 0) {
+            const ar = req.files[0].originalname.split(".")
+            req.files[0].originalname = k.name + "." + ar[ar.length - 1]
+            storage
+                .upload("Courses", req.files[0])
+                .then(courseUrl => {
+                    data.cover = courseUrl
+                    database
+                        .updateOne({ collection: "courses", query: { _id: ObjectId(k._id) }, data })
+                        .then(() => {
+                            res.json({
+                                status: "success",
+                                data,
+                                message: "Course Updated",
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            res.json({
+                                status: "error",
+                                message: err.toString(),
+                            })
+                        })
                 })
-            })
-            .catch(err => {
-                console.log(err)
-                res.json({
-                    status: "error",
-                    message: err.toString(),
+                .catch(err => {
+                    console.log(err)
+                    res.json({
+                        status: "error",
+                        message: err.toString(),
+                    })
                 })
-            })
+        }
+        else
+            database
+                .updateOne({ collection: "courses", query: { _id: ObjectId(k._id) }, data })
+                .then(() => {
+                    res.json({
+                        status: "success",
+                        data,
+                        message: "Course Updated",
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                    res.json({
+                        status: "error",
+                        message: err.toString(),
+                    })
+                })
 
     }
 }
@@ -384,36 +417,62 @@ const getCourseList = (req, res) => {
         if (req.query) {
             const k = req.query
             if (!(req.session && req.session.isAdmin)) query.active = true
-            if (k.orderBy === "popularity") sort = {buyers : -1}
-            if (k._id) {
+            if (k._id)
                 query._id = ObjectId(k._id)
-            }
+            else if (k.s)
+                query.$or = [{ name: new RegExp(".*" + decodeURI(k.s).replaceAll(" ", ".*") + ".*", "i") }, { tags: new RegExp(".*" + decodeURI(k.s).replace(" ", ".*") + ".*", "i") }]
             else {
-                if (k.s) {
-                    query.$or = [{ name: new RegExp(".*" + decodeURI(k.s).replaceAll(" ", ".*") + ".*", "i") }, { tags: new RegExp(".*" + decodeURI(k.s).replace(" ", ".*") + ".*", "i") }]
+                if (k.orderBy === "popularity") sort = {buyers : -1}
+                if (k.orderBy === "date") sort = {created : 1}
+                if (k.orderBy === "price") sort = {price : 1}
+                if (k.related) {
+                    sort.percentage = -1
+                    const tagsList = k.related.split(",")
+                    const aggregate = [
+                        // { $unwind: "$tags" },
+                        { $match: { tags: { $in: tagsList } } },
+                        { $group: { _id: "$_id", doc: { $first: "$$ROOT" }, number: { $sum: 1 } } },
+                        { $addFields: { percentage: { $divide: ["$number", tagsList.length] } } },
+                        { $sort: sort },
+                        { $replaceRoot: { newRoot: "$doc" } },
+                    ]
+                    database.db.collection("courses").aggregate(aggregate).toArray((err, result) => {
+                        if (err) {
+                            res.json({
+                                status: "error",
+                                message: err.toString(),
+                            })
+                            return
+                        } 
+                        res.json({
+                            status: "success",
+                            result,
+                        })
+                    })
+                    return
                 }
-                // projection = {_id: 1, name: 1, created: 1, shortDesc: 1, duration: 1, cover: 1}
 
             }
+
             console.log(k, query)
             database
                 .find({
                     collection: "courses",
                     projection,
-                    query,
+                    query
                 })
-                    .then(list => {
-                        res.json({
-                            status: "success",
-                            list,
-                        })
+                .then(list => {
+                    res.json({
+                        status: "success",
+                        list,
                     })
-                    .catch(err => {
-                        res.json({
-                            status: "error",
-                            message: err.toString(),
-                        })
+                })
+                .catch(err => {
+                    res.json({
+                        status: "error",
+                        message: err.toString(),
                     })
+                })
         }
     }
 }

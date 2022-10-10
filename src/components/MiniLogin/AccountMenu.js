@@ -26,7 +26,7 @@ export default function AccountMenu() {
     const logout = () => {
         LoaderUtils.open()
         signOut(auth).then(() => {
-            fetch(backPath() + "/logout", {
+            fetch(backPath + "/logout", {
                 method: "GET", // *GET, POST, PUT, DELETE, etc.
                 mode: "cors", // no-cors, *cors, same-origin
                 cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

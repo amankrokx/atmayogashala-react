@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from '@mui/material/Typography';
-import Card from "../components/Card"
-import pp from "../media/product4.jpg"
 import backPath from "../backPath";
 import LoaderUtils from "../components/Loader/LoaderUtils";
 import SnackbarUtils from "../components/SnackbarUtils";
 import { useTheme } from "@mui/material/styles"
 import { Rating, Button, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
-import { minWidth } from "@mui/system";
 import { useWindowDimension } from "../components/useWindowDimension"
+import Recommended from "../components/Recommended";
 
 function Course() {
     const theme = useTheme();
     const [coverHeight, setCoverHeight] = useState(0);
-    const [trigger, setTrigger] = useState(0);
     // #################################################### Start working here  ####################################################
     // #################################################### add author info to courses  ####################################################
     const [courseDetails, setCourseDetails] = useState({
@@ -29,16 +26,18 @@ function Course() {
                 price: 1999,
                 author: "Infinite_n00b",
                 buyers: 0,
-                tags: ["these are the search tags"],
-                chapters: "62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d",
+                tags: [],
+                chapters: ["62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d"],
                 message: "No course found."
-            })
+        })
+    
+        const [courses, setCourses] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
         LoaderUtils.open()
         let course = window.location.pathname.split("/")[2].toString()
-        fetch(backPath() + '/getCourse/' + course, {
+        fetch(backPath + '/getCourse/' + course, {
             method: "GET", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, *cors, same-origin
             // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -61,6 +60,7 @@ function Course() {
                 console.error(err)
             })
     }, [])
+
     return (
         <div>
             <section
@@ -221,13 +221,15 @@ function Course() {
                             </div>
 
                             <Divider />
-                            <Typography variant="h6" color="initial" sx={{ p: 3, pb: 0}}>
+                            <Typography variant="h6" color="initial" sx={{ p: 3, pb: 0 }}>
                                 Training lots of people ?
                             </Typography>
-                            <Typography variant="body2" color="initial" sx={{ pl: 3, pr: 3, pb: 1}}>
+                            <Typography variant="body2" color="initial" sx={{ pl: 3, pr: 3, pb: 1 }}>
                                 Get Bulk access to courses and save upto 50%.
                             </Typography>
-                            <Button variant="outlined" color="primary" style={{ width: "calc(100% - 48px)", marginLeft: 24, borderRadius: 0, textTransform: "none" }}>Contact Sales</Button>
+                            <Button variant="outlined" color="primary" style={{ width: "calc(100% - 48px)", marginLeft: 24, borderRadius: 0, textTransform: "none" }}>
+                                Contact Sales
+                            </Button>
                             <br />
                             <br />
                         </div>
@@ -239,134 +241,13 @@ function Course() {
                         maxWidth: "calc(100% - 32% - 200px)",
                         minWidth: "calc(100% - 32% - 400px)",
                         width: "38%",
-                        padding: "50px 15%"
+                        padding: "50px 15%",
                     }}
                 >
-                    {courseDetails.longDesc}
+                    <td dangerouslySetInnerHTML={{ __html: courseDetails.longDesc }} />
                 </div>
             </section>
-            <Typography
-                variant="h5"
-                color="initial"
-                style={{
-                    margin: "0 30px",
-                    fontWeight: "bold",
-                    marginTop: "20px",
-                }}
-            >
-                Recomended Courses:
-            </Typography>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    flexWrap: "nowrap",
-                    alignItems: "center",
-                    overflow: "scroll hidden",
-                    padding: 20,
-                    boxSizing: "border-box",
-                    width: "100%",
-                    flexDirection: "row",
-                    alignContent: "center",
-                }}
-            >
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-                <Card
-                    info={{
-                        photo: pp,
-                        title: "Fit Yogi",
-                        description: "Something as description about the course to be included here fro the card .",
-                        rating: 3.5,
-                        price: 1999,
-                        author: {
-                            name: "Aman",
-                        },
-                    }}
-                ></Card>
-            </div>
+            { courseDetails.tags && courseDetails.tags.length > 0 ? <Recommended tags={courseDetails.tags} /> : null }
         </div>
     )
 }
