@@ -180,12 +180,14 @@ function Course() {
                             <Typography variant="h4" color="initial" style={{ padding: "0 24px", fontWeight: "bold" }}>
                                 {"₹" + courseDetails.price}
                             </Typography>
-                            <Button variant="contained" color="primary" style={{ width: "calc(100% - 48px)", marginLeft: 24, borderRadius: 0, textTransform: "none" }}>
-                                Buy now
-                                <span className="material-icons" style={{ position: "relative", left: 10 }}>
-                                    shopping_cart
-                                </span>
-                            </Button>
+                            <Link to={"/checkout/" + courseDetails._id} style={{ textDecoration: "none" }}>
+                                <Button variant="contained" color="primary" style={{ width: "calc(100% - 48px)", marginLeft: 24, borderRadius: 0, textTransform: "none" }}>
+                                    Buy now
+                                    <span className="material-icons" style={{ position: "relative", left: 10 }}>
+                                        shopping_cart
+                                    </span>
+                                </Button>
+                            </Link>
                             <br />
                             <br />
                             <Button variant="outlined" color="primary" style={{ width: "calc(100% - 48px)", marginLeft: 24, borderRadius: 0, textTransform: "none" }}>

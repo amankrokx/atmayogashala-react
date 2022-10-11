@@ -13,7 +13,7 @@ import Snack from "./components/Snack"
 import Loader from "./components/Loader"
 import Footer from "./components/Footer/index.js"
 import Course from "./pages/Course"
-
+import Checkout from "./pages/Checkout"
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(true)
@@ -50,6 +50,7 @@ function App() {
                     <Route exact path="/prod" element={<Products setSignin={{ setLoggedIn, loggedIn }} />} />
                     <Route exact path="/but" element={<Button variant="contained">But</Button>} />
                     <Route exact path="/course/*" element={<Course/>} />
+                    <Route exact path="/checkout/*" element={<Checkout/>} />
                 </Routes>
                 <Footer />
             </div>

@@ -1,6 +1,6 @@
 import { getAuth } from "firebase-admin/auth"
 import firebaseApp from "./firebase/index.mjs"
-
+import database from "./database.mjs"
 const auth = getAuth(firebaseApp)
 
 const logout = (req, res) => {
@@ -29,11 +29,28 @@ const verifyCred = (req, res) => {
                 req.session.profile = r
                 req.session.isAdmin = r.email === "amankumar.spj410@gmail.com"
                 req.session.lastModified = new Date()
-                // console.log(req.session)
-                res.json({
-                    status: "success",
-                    mode: (req.session.isAdmin) ? "admin" : "user"
+                database.findOne({ collection: 'users', query: { _id: req.session.profile.uid    } }).then(result => {
+                    if (result) {
+                        req.session = {...req.session, ...result}
+                        res.json({
+                            status: "success",
+                            mode: (req.session.isAdmin) ? "admin" : "user",
+                        })
+                        return
+                    }
+                    else {
+                        database.insertOne({ collection: 'users', data: { _id: req.session.profile.uid, points: 1, courses: [] } }).then(result => {
+                            // console.log(result)
+                            req.session = {...req.session, _id: req.session.profile.uid, points: 1, courses: []}
+                            res.json({
+                                status: "success",
+                                mode: req.session.isAdmin ? "admin" : "user",
+                            })
+
+                        })
+                    }
                 })
+                // console.log(req.session)
                 console.log("verified jwt token")
             })
             .catch(e => {
