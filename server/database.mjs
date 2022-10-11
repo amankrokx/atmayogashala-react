@@ -35,7 +35,15 @@ let collections = ["ads", "courses", "chapters", "users"]
  * 
  * users
  *     _id         <uid Firebase UID>
- *     courses     <Course { _id: progress INT}>
+ *     courses     <Course { 
+ *                      _id: <Course _id>,
+ *                      purchaseDate: <Date>,
+ *                      progress: <Number>,
+ *                      cost: <Number>
+ *                      promo: <String>
+ *                  }
+ *                  >
+ *     points      <Number>
  * 
  */
 

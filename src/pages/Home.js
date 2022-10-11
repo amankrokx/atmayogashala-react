@@ -230,20 +230,10 @@ function Home() {
                     alignItems: "flex-start",
                 }}
             >
-                {courses.map(course => (
+                {courses.map((course, index) => (
                     <Card
-                        key={course._id}
-                        info={{
-                            _id: course._id,
-                            photo: course.cover,
-                            title: course.name,
-                            description: course.shortDesc,
-                            rating: course.rating || 0,
-                            price: course.price,
-                            author: {
-                                name: course.authorName || "AYS",
-                            },
-                        }}
+                        key={index}
+                        info={course}
                     ></Card>
                 ))}
 

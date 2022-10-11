@@ -7,7 +7,7 @@ import SnackbarUtils from '../SnackbarUtils'
 
 export default function Recommended({tags}) {
     const [courses, setCourses] = useState([])
-    console.log(courses)
+    // console.log(courses)
     useEffect(() => {
         if (tags && tags.length <= 0) return
         LoaderUtils.open()
@@ -15,7 +15,7 @@ export default function Recommended({tags}) {
             path: "/getCourseList?related=" + encodeURI(tags.join(","))
         }).then(data => {
             LoaderUtils.close()
-            if (data.status === "success") setCourses(data.list)
+            if (data.status === "success") setCourses(data.result)
             else SnackbarUtils.error(data.message || "Server Error with Recommended Courses")
         })
     }, [tags])
@@ -48,7 +48,7 @@ export default function Recommended({tags}) {
                 }}
             >
                 {
-                    courses ? courses.map((course, index) => <Card info={course} key={index} />) : null
+                    courses.map((course, index) => <Card info={course} key={index} />)
                 }
             </div>
         </>

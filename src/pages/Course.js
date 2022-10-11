@@ -5,14 +5,15 @@ import backPath from "../backPath";
 import LoaderUtils from "../components/Loader/LoaderUtils";
 import SnackbarUtils from "../components/SnackbarUtils";
 import { useTheme } from "@mui/material/styles"
-import { Rating, Button, Divider } from "@mui/material";
+import { Rating, Button, Divider, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useWindowDimension } from "../components/useWindowDimension"
 import Recommended from "../components/Recommended";
 
 function Course() {
     const theme = useTheme();
-    const [coverHeight, setCoverHeight] = useState(0);
+    const matches = useMediaQuery("(min-width:756px)")
+     const [coverHeight, setCoverHeight] = useState(0);
     // #################################################### Start working here  ####################################################
     // #################################################### add author info to courses  ####################################################
     const [courseDetails, setCourseDetails] = useState({
@@ -66,7 +67,7 @@ function Course() {
             <section
                 style={{
                     width: "100%",
-                    position: "relative",
+                    position: matches ? "relative" : null,
                 }}
             >
                 {/* // top black section course header */}
@@ -75,15 +76,20 @@ function Course() {
                         width: "100%",
                         backgroundColor: theme.palette.black.main,
                         color: theme.palette.grey.A400,
-                        padding: "50px 15%",
+                        padding: matches ? "50px 15%" : "0 0 24px 0",
                     }}
                 >
                     <div
-                        style={{
-                            maxWidth: "calc(100% - 32% - 200px)",
-                            minWidth: "calc(100% - 32% - 400px)",
-                            width: "38%",
-                        }}
+                        style={ matches ? {
+                                maxWidth: "calc(100% - 32% - 200px)",
+                                minWidth: "calc(100% - 32% - 400px)",
+                                width: "38%",
+                            } : {
+                                width: "100%",
+                                boxSizing: "border-box",
+                                padding: "24px",
+                            }
+                        }
                     >
                         <Typography variant="h4" color="white">
                             {courseDetails.name}
@@ -121,21 +127,42 @@ function Course() {
                     </div>
                     {/* // Floating product card */}
                     <div
-                        style={{
-                            width: "30%",
-                            minWidth: "200px",
-                            maxWidth: "400px",
-                            position: "absolute",
-                            top: 50,
-                            right: "15%",
-                            minHeight: 600,
-                            border: "2px solid " + theme.palette.white.main,
-                            borderRadius: 2,
-                            zIndex: 2,
-                            backgroundColor: theme.palette.white.main,
-                            boxShadow: theme.shadows[5],
-                        }}
+                        style={ 
+                            matches ? {
+                                width: "30%",
+                                minWidth: "200px",
+                                maxWidth: "400px",
+                                position: "absolute",
+                                top: 50,
+                                right: "15%",
+                                minHeight: 600,
+                                border: "2px solid " + theme.palette.white.main,
+                                borderRadius: 2,
+                                zIndex: 2,
+                                backgroundColor: theme.palette.white.main,
+                                boxShadow: theme.shadows[5],
+                            } : {
+                                border: "2px solid " + theme.palette.white.main,
+                                borderRadius: 2,
+                                zIndex: 2,
+                                backgroundColor: theme.palette.white.main,
+                                boxShadow: theme.shadows[5],
+                                width: "calc(100% - 36px)",
+                                margin: "0 auto",
+                                bozSizing: "border-box",
+                                position: "relative",
+                            }
+                        }
                     >
+                        <img
+                            src={courseDetails.cover}
+                            id="coverImg"
+                            alt="course cover"
+                            style={{ width: "100%" }}
+                            onLoad={e => {
+                                setCoverHeight(e.target.height)
+                            }}
+                        />
                         <div
                             style={{
                                 position: "absolute",
@@ -146,15 +173,6 @@ function Course() {
                                 boxShadow: "rgb(0 0 0 / 70%) 0px 0px 40px 10px inset",
                             }}
                         ></div>
-                        <img
-                            src={courseDetails.cover}
-                            id="coverImg"
-                            alt="course cover"
-                            style={{ width: "100%" }}
-                            onLoad={e => {
-                                setCoverHeight(e.target.height)
-                            }}
-                        />
                         <div>
                             <Typography variant="h6" color={theme.palette.grey.A700} style={{ padding: "24px 0 0 24px" }}>
                                 Get this course for
@@ -244,7 +262,13 @@ function Course() {
                         padding: "50px 15%",
                     }}
                 >
-                    <td dangerouslySetInnerHTML={{ __html: courseDetails.longDesc }} />
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td dangerouslySetInnerHTML={{ __html: courseDetails.longDesc }} />
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
             { courseDetails.tags && courseDetails.tags.length > 0 ? <Recommended tags={courseDetails.tags} /> : null }

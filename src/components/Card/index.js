@@ -12,7 +12,7 @@ import { Link } from "react-router-dom"
 import webShareAPI from "../webShareAPI"
 
 export default function ImgMediaCard({ info }) {
-    console.log(info)
+    // console.log(info)
     return (
         <Card sx={{ width: 345, minWidth: 345, margin: "10px" }}>
             <CardMedia component="img" alt="green iguana" height="160" image={info.cover} />
