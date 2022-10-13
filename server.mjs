@@ -15,6 +15,7 @@ import session from "express-session"
 import MongoStore from "connect-mongo"
 import { isAdmin, logout, verifyCred } from "./server/auth.mjs"
 import getChapter from "./server/modules/getChapter.mjs"
+import("./server/razorpay/index.mjs")
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const upload = multer()
@@ -60,7 +61,14 @@ app.use(
     
 app.use(express.json())
 // app.use(isAdmin)
-
+app.get("/razorpay", (req, res) => {
+    console.log(req.body, req.params, req.query)
+    res.sendStatus(200)
+})
+app.post("/razorpay", (req, res) => {
+    console.log(req.body, req.params, req.query)
+    res.sendStatus(200)
+})
 app.get('/api', testRoute)
 app.get('/getAds', getAds)
 app.get('/getCourse/*', getCourse)

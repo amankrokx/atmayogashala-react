@@ -31,7 +31,7 @@ const verifyCred = (req, res) => {
                 req.session.lastModified = new Date()
                 database.findOne({ collection: 'users', query: { _id: req.session.profile.uid    } }).then(result => {
                     if (result) {
-                        req.session = {...req.session, ...result}
+                        Object.assign(req.session, result)
                         res.json({
                             status: "success",
                             mode: (req.session.isAdmin) ? "admin" : "user",
@@ -41,7 +41,7 @@ const verifyCred = (req, res) => {
                     else {
                         database.insertOne({ collection: 'users', data: { _id: req.session.profile.uid, points: 1, courses: [] } }).then(result => {
                             // console.log(result)
-                            req.session = {...req.session, _id: req.session.profile.uid, points: 1, courses: []}
+                            Object.assign(req.session, { _id: req.session.profile.uid, points: 1, courses: [] })
                             res.json({
                                 status: "success",
                                 mode: req.session.isAdmin ? "admin" : "user",
