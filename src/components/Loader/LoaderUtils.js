@@ -2,11 +2,23 @@ class LoaderUtils {
     #loader = {
         s: true,
         h: () => {},
+        sh: false,
+        hh: () => {},
     }
 
-    setLoader(loading, setLoading) {
+    setLoader(loading, setLoading, halt, setHalt) {
         this.#loader.s = loading
         this.#loader.h = setLoading
+        this.#loader.sh = halt
+        this.#loader.hh = setHalt
+    }
+
+    halt() {
+        return this.#loader.hh(true)
+    }
+
+    unhalt() {
+        return this.#loader.hh(false)
     }
 
     open() {

@@ -11,6 +11,7 @@ const logout = (req, res) => {
 }
 
 const verifyCred = (req, res) => {
+    console.log(req.session.profile)
     if (req.body.mode === "test") {
         // console.log(req.session)
         if (req.session && req.session.profile) 
@@ -67,6 +68,18 @@ const verifyCred = (req, res) => {
     }
 }
 
+const isLoggedIn = (req, res, next) => {
+    console.log()
+    if (req.session && req.session.profile)
+        next()
+    else
+        res.status(401).json({
+            status: "error",
+            loginRequired: true,
+            message: "You are not logged in."
+        })
+}
+
 const isAdmin = (req, res, next) => {
     console.log("session details :", req.session)
     if (req.session && req.session.isAdmin) next()
@@ -98,4 +111,4 @@ const isAdmin = (req, res, next) => {
     }
 }
 
-export { isAdmin, verifyCred, logout }
+export { isAdmin, verifyCred, logout, isLoggedIn }

@@ -9,7 +9,6 @@ import backPath from "../../backPath"
 import LoaderUtils from "../Loader/LoaderUtils"
 import Chip from "@mui/material/Chip"
 import Autocomplete from "@mui/material/Autocomplete"
-import RichTextEditor from "react-rte"
 const BodyTextEditor = React.lazy(() => import("../BodyTextEditor"))
 
 const CourseEditor = props => {

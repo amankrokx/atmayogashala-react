@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import Paper from "@mui/material/Paper"
 import { Button, Dialog, DialogTitle, useMediaQuery, LinearProgress, TextField, InputAdornment, Tooltip, Tab, Tabs, Stack, Divider, Typography, Box, Switch } from "@mui/material"
 import SnackbarUtils from "../SnackbarUtils"
@@ -9,6 +9,8 @@ import backPath from "../../backPath"
 import LoaderUtils from "../Loader/LoaderUtils"
 import Chip from "@mui/material/Chip"
 import Autocomplete from "@mui/material/Autocomplete"
+const BodyTextEditor = React.lazy(() => import("../BodyTextEditor"))
+
 
 const ChapterEditor = props => {
     const [close, setClose] = useState(true)
@@ -157,7 +159,16 @@ const ChapterEditor = props => {
                         type="number"
                         variant="outlined"
                     />
-                    <TextField
+                    <Suspense
+                        fallback={
+                            <div>
+                                <center>Loading...</center>
+                            </div>
+                        }
+                    >
+                        <BodyTextEditor values={values} setValues={setValues} />
+                    </Suspense>
+                    {/* <TextField
                         label="Chapter Long Description"
                         value={values.longDesc}
                         onChange={(event, value) => {
@@ -167,7 +178,7 @@ const ChapterEditor = props => {
                         minRows={4}
                         maxRows={9}
                         variant="outlined"
-                    />
+                    /> */}
                     <Autocomplete
                         multiple
                         // open={autoCompleteOpen}

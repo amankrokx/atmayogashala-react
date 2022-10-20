@@ -1,4 +1,5 @@
 import backPath from "../../backPath"
+import SnackbarUtils from "../SnackbarUtils"
 
 export default function bring({
     path,
@@ -27,11 +28,17 @@ export default function bring({
         // body: formData // body data type must match "Content-Type" header
         ...options,
     }
+    // console.log(options)
     path = path.includes("://") ? path : backPath + (path.startsWith("/") ? path : "/" + path)
     return new Promise((resolve, reject) => {
         fetch(path, options)
             .then(response => {
                 const contentType = response.headers.get("content-type")
+                if ( 200 > response.status >= 300 ) {
+                    if (response.status === 401 ) SnackbarUtils.error("Please login to continue")
+                    reject(response)
+
+                }
                 if (contentType && contentType.indexOf("application/json") !== -1)
                     response
                         .json()

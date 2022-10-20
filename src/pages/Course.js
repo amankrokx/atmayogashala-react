@@ -13,7 +13,7 @@ import Recommended from "../components/Recommended";
 function Course() {
     const theme = useTheme();
     const matches = useMediaQuery("(min-width:756px)")
-     const [coverHeight, setCoverHeight] = useState(0);
+    const [coverHeight, setCoverHeight] = useState(0);
     // #################################################### Start working here  ####################################################
     // #################################################### add author info to courses  ####################################################
     const [courseDetails, setCourseDetails] = useState({
@@ -32,7 +32,6 @@ function Course() {
                 message: "No course found."
         })
     
-        const [courses, setCourses] = useState([])
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -50,12 +49,14 @@ function Course() {
             // body: course // body data type must match "Content-Type" header
         }).then(res => res.json())
             .then(data => {
+                setTimeout(() => LoaderUtils.close(), 1000)
                 LoaderUtils.close()
                 setCourseDetails(data)
                 console.log(data)
             })
             .catch(err => {
                 LoaderUtils.close()
+                setTimeout(() => LoaderUtils.close(), 1000)
                 setCourseDetails()
                 SnackbarUtils.error("Failed to find this course .")
                 console.error(err)

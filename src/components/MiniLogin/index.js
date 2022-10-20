@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography'
 import LoginWindow from "./LoginWindow"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import verifyCred from "./verifyCred"
+import LoaderUtils from "../Loader/LoaderUtils"
 
 function MiniLogin (props) {
     const [logged, setLogged] = useState(false)
@@ -34,8 +35,9 @@ function MiniLogin (props) {
     
     useEffect(() => {
         onAuthStateChanged(auth, user => {
+            LoaderUtils.unhalt()
             if (user) {
-                if (user.email === "amankumar.spj410@gmail.com") verifyCred(user).then(a => setAccess(a)).catch(err => SnackbarUtils.error(err))
+                verifyCred(user).then(a => setAccess(a)).catch(err => SnackbarUtils.error(err))
                 // user.getIdToken(true).then(idToken => {
                 //     console.log(idToken)
                 // })

@@ -6,8 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import SnackbarUtils from './components/SnackbarUtils';
-import { useSnackbar } from 'notistack';
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 const theme = createTheme({

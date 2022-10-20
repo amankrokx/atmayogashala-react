@@ -1,3 +1,4 @@
+import { Backdrop, CircularProgress } from "@mui/material"
 import LinearProgress from "@mui/material/LinearProgress"
 import React, { useEffect, useState } from "react"
 import LoaderUtils from "./LoaderUtils"
@@ -5,28 +6,33 @@ import LoaderUtils from "./LoaderUtils"
 const Loader = props => {
     const providerRef = React.useRef()
     const [ loading, setLoading ] = useState(true)
-    LoaderUtils.setLoader(loading, setLoading)
+    const [halt, setHalt] = useState(true)
+    LoaderUtils.setLoader(loading, setLoading, halt, setHalt)
     useEffect(() => {
         //2. Store both  enqueueSnackbar & closeSnackbar to class variables
-        LoaderUtils.setLoader(loading, setLoading)
+        LoaderUtils.setLoader(loading, setLoading, halt, setHalt)
     }, [])
-    if (!loading) {
-        return (
-            <>
-                <LinearProgress ref={providerRef} color="secondary" style={{
-                    position: "fixed",
-                    top: "0",
-                    left: "0",
-                    zIndex: "1000000",
-                    width: "100%"
-                }}>
-                </LinearProgress>
-                {props.children}
-            </>
-        )
-    } else {
-        return (<>{props.children}</>)
-    }
+    return (
+        <>
+            {!loading ? (
+                <LinearProgress
+                    ref={providerRef}
+                    color="secondary"
+                    style={{
+                        position: "fixed",
+                        top: "0",
+                        left: "0",
+                        zIndex: "1000000",
+                        width: "100%",
+                    }}
+                ></LinearProgress>
+            ) : null}
+            { halt ? <Backdrop sx={{ color: "#fff", zIndex: theme => theme.zIndex.drawer + 1 }} open={halt} >
+                <CircularProgress color="inherit" />
+            </Backdrop> : null }
+            {props.children}
+        </>
+    )
 }
 
 export default Loader

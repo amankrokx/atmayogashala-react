@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb"
 
 // const url = "mongodb://localhost:27017/placement"
-let collections = ["ads", "courses", "chapters", "users"]
+let collections = ["ads", "courses", "chapters", "users", "orders"]
 
 /**
  * courses
