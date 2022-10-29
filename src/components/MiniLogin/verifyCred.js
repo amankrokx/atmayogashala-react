@@ -17,10 +17,10 @@ const verifyCred = (user)  => {
         .then(data => data.json())
         .then(res => {
             if (res.status === "success") {
-                resolve(res.mode)
+                resolve(res)
                 return
             }
-            else if (res.status === "error") {
+            else if (res.status === "error" || res.status === "undefined") {
                 reject(res.message)
                 return
             }

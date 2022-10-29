@@ -17,7 +17,7 @@ function NavBar(props) {
 
     return (
         <Slide appear={false} direction="down" in={!trigger}>
-            <AppBar position="fixed" style={{ zIndex: 5 }}>
+            <AppBar position="sticky" style={{ zIndex: 5 }}>
                 <Container maxWidth="xl">
                     <Toolbar
                         disableGutters

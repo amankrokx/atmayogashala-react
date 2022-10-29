@@ -11,13 +11,14 @@ const logout = (req, res) => {
 }
 
 const verifyCred = (req, res) => {
-    console.log(req.session.profile)
+    console.log(req.session)
     if (req.body.mode === "test") {
         // console.log(req.session)
         if (req.session && req.session.profile) 
             res.json({
                 status: "success",
-                mode : (req.session.isAdmin) ? "admin" : "user"
+                mode : (req.session.isAdmin) ? "admin" : "user",
+                courses: req.session.courses
             })
         else res.json({
             status: "unVerified",
@@ -35,7 +36,8 @@ const verifyCred = (req, res) => {
                         Object.assign(req.session, result)
                         res.json({
                             status: "success",
-                            mode: (req.session.isAdmin) ? "admin" : "user",
+                            mode: req.session.isAdmin ? "admin" : "user",
+                            courses: req.session.courses,
                         })
                         return
                     }
@@ -46,6 +48,7 @@ const verifyCred = (req, res) => {
                             res.json({
                                 status: "success",
                                 mode: req.session.isAdmin ? "admin" : "user",
+                                courses: req.session.courses,
                             })
 
                         })

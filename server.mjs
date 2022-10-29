@@ -5,7 +5,7 @@ import express from "express"
 import testRoute from "./server/modules/testRoute.mjs"
 import getAds from "./server/modules/getAds.mjs"
 import addAd from "./server/modules/addAd.mjs"
-import getCourse from "./server/modules/getCourse.mjs"
+import {getCourse, getAChapter} from "./server/modules/getCourse.mjs"
 import { config } from "dotenv"
 import bodyParser from "body-parser"
 import multer from "multer"
@@ -95,6 +95,7 @@ app.get('/getCourse/*', getCourse)
 app.get('/getCourseList', getCourseList)
 app.get("/getChapterList", isAdmin, getChapterList)
 app.get('/logout', logout)
+app.post("/getAChapter", isLoggedIn, getAChapter)
 app.post('/addVideo', isAdmin, upload.single('video'), addVideo)
 app.post("/getChapter", isAdmin, getChapter)
 app.post("/addCourse", isAdmin, upload.any(), addCourse)

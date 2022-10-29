@@ -1,0 +1,12 @@
+.course {
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.course:hover {
+    background-color: #e3e3e3;
+}
