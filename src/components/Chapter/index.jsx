@@ -83,7 +83,6 @@ function Chapter(props) {
                             height: "100%",
                         }}
                         title={chapter.name}
-                        allow="fullscreen;"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                         src={"https://www.youtube.com/embed/" + YouTubeGetID(chapter.video)}
