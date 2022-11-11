@@ -48,7 +48,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const upload = multer()
 let dotenv;
 if (process.env.NODE_ENV !== 'production')  dotenv = config({path: "./.env"})
-console.log(dotenv)
+    console.log(dotenv)
 console.log(process.env.NODE_ENV)
 
 const app = express()

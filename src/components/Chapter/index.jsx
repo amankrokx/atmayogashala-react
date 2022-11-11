@@ -30,13 +30,23 @@ function Chapter(props) {
     })
 
     useEffect(() => {
+        const handleContextmenu = e => {
+            e.preventDefault()
+        }
+        document.addEventListener("contextmenu", handleContextmenu)
+        return function cleanup() {
+            document.removeEventListener("contextmenu", handleContextmenu)
+        }
+    }, [])
+
+    useEffect(() => {
         console.log("Chapter component mounted");
         bring({ path: "/getAChapter?course=" + props.course + "&chapter=" + props.chapter, options: {method: "POST"} })
             .then((res) =>setChapter(res))
             .catch((err) => SnackbarUtils.error(err.message || "Some error Occurred"));
     }, [props.chapter]);
     return (
-        <article>
+        <article >
             <div
                 style={{
                     // maxWidth: "calc(100% - 32% - 200px)",
@@ -74,7 +84,7 @@ function Chapter(props) {
                         height: 0,
                     }}
                 >
-                    <iframe
+                    {/* <iframe
                         style={{
                             position: "absolute",
                             top: 0,
@@ -87,7 +97,24 @@ function Chapter(props) {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                         src={"https://www.youtube.com/embed/" + YouTubeGetID(chapter.video)}
                         allowFullScreen
-                    ></iframe>
+                    ></iframe> */}
+                    {chapter.formats ? <video
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                        }}
+                        controls
+                        controlsList="nodownload"
+                        autoPlay
+                        loop
+                        >
+                            <source src={chapter.formats.hd} ></source>
+                            <source src={chapter.formats.sd} ></source>
+                            <track src={chapter.formats.audio} ></track>
+                        </video> : null }
                 </div>
             </div>
         </article>

@@ -1,5 +1,19 @@
 import { ObjectId } from "mongodb"
 import database from "../database.mjs"
+import ytdl from 'ytdl-core'
+
+async function getVideoInfo(url) {
+    const id = ytdl.getURLVideoID(url)
+    var videoInfo = await ytdl.getInfo(id)
+    var hd
+    try {
+        hd = videoInfo.formats.find(x => x.itag == 22).url
+    } catch (e) {}
+    var sd = videoInfo.formats.find(x => x.itag == 18).url
+    var audio = videoInfo.formats.find(x => x.itag == 140).url
+    var formats = { hd, sd, audio }
+    return formats
+}
 
 let courseCache = {}
 
@@ -45,13 +59,17 @@ const getAChapter = (req, res) => {
     if (
         req.query.course && 
         req.query.chapter &&
-        req.session.courses.some(course => course.courseId === req.query.course) &&
-        courseCache[req.query.course].chapters.includes(req.query.chapter)
+        req.session.courses.some(course => course.courseId === req.query.course) //&&
+        // courseCache[req.query.course].chapters.includes(req.query.chapter)
     ) {
         database.findOne({ collection: 'chapters', query: {_id: ObjectId(req.query.chapter)}}).then(result => {
             if (result) {
-                result.status = "success"
-                res.json(result)
+                getVideoInfo(result.video).then(formats => {
+                    result.status = "success"
+                    result.formats = formats
+                    res.json(result)
+                    // courseCache[req.query.course].chapters[req.query.chapter] = result
+                })
             }
             else
                 res.json({
