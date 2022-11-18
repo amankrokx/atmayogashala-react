@@ -231,10 +231,7 @@ function Home() {
                 }}
             >
                 {courses.map((course, index) => (
-                    <Card
-                        key={index}
-                        info={course}
-                    ></Card>
+                    <Card key={index} info={course}></Card>
                 ))}
 
                 {/* <Card
@@ -257,7 +254,12 @@ function Home() {
                     photoBackground: AdBackground,
                 }}
             />
-            <div
+            <br></br>
+            <div className="elfsight-app-ad00bd32-9b53-4b14-bce5-f2d6c203d78b" style={{
+                width: "calc(100% - 80px)",
+                margin: "15px 40px"
+            }}></div>
+            {/* <div
                 style={{
                     display: "flex",
                     justifyContent: "space-evenly",
@@ -313,7 +315,7 @@ function Home() {
                         chapters: ["62f24aee72a5d4646611a40e,62f91b678c980c179c511f5d"],
                     }}
                 ></Card>
-            </div>
+            </div> */}
         </div>
     )
 }
