@@ -69,7 +69,7 @@ function MiniLogin (props) {
                             // Display course glossary
                             // SnackbarUtils.info("Notifications Clicked .")
                             // setNotifs(noNotifs + 1)
-                            setDrawer(d => (true))
+                            setDrawer(d => true)
                         }}
                     >
                         <span className="material-icons" color="white">
@@ -83,33 +83,33 @@ function MiniLogin (props) {
                         <Typography variant="h4" color="initial">
                             My Courses
                         </Typography>
-                        {authcontext.userData && authcontext.userData.courses.map((course, index, arr) => (
-                            <div
-                                key={index}
-                                className="course"
-                                style={{
-                                    padding: "8px 8px 12px 12px",
-                                    margin: 8,
-                                    border: "1px solid " + theme.palette.grey.A700,
-                                    borderRadius: 4,
-                                    userSelect: "none",
-                                }}
-                                onClick={() => {
-                                    navigate("/course/" + course.courseId)
-                                    setDrawer(false)
-                                }}
-                            >
-                                <Typography variant="caption" color="initial">
-                                    {course.courseId}
-                                </Typography>
-                                <IconButton>
-                                    <span className="material-icons">
-                                        play_arrow
-                                    </span>
-                                </IconButton>
-                                <LinearProgressWithLabel style={{ display: "block", width: "100%" }} variant="determinate" value={course.progress} />
-                            </div>
-                        ))}
+                        {authcontext.userData &&
+                            authcontext.userData.courses &&
+                            authcontext.userData.courses.map((course, index, arr) => (
+                                <div
+                                    key={index}
+                                    className="course"
+                                    style={{
+                                        padding: "8px 8px 12px 12px",
+                                        margin: 8,
+                                        border: "1px solid " + theme.palette.grey.A700,
+                                        borderRadius: 4,
+                                        userSelect: "none",
+                                    }}
+                                    onClick={() => {
+                                        navigate("/course/" + course.courseId)
+                                        setDrawer(false)
+                                    }}
+                                >
+                                    <Typography variant="caption" color="initial">
+                                        {course.courseId}
+                                    </Typography>
+                                    <IconButton>
+                                        <span className="material-icons">play_arrow</span>
+                                    </IconButton>
+                                    <LinearProgressWithLabel style={{ display: "block", width: "100%" }} variant="determinate" value={course.progress} />
+                                </div>
+                            ))}
                     </div>
                 </SwipeableDrawer>
             </>

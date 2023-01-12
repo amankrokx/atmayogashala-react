@@ -1,6 +1,6 @@
 {
     "name": "atmayogashala-react",
-    "version": "18.2.0",
+    "version": "16.19.0",
     "private": true,
     "dependencies": {
         "@emotion/react": "^11.10.4",
